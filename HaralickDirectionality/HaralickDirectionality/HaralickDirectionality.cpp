@@ -40,19 +40,23 @@ using namespace boost::filesystem;
 
 int main(int argc, char* argv[])
 {
+	// Only 1 argument: xml filename
 	if (argc < 2)
 	{
 		cout << "\nTo few arguments.";
 		return 0;
 	}
 
+	// Path is a structure from Boost file system
 	path ConfigFile(argv[1]);
 	if (!exists(ConfigFile))
 	{
 		cout << ConfigFile.filename().string() << " not exists " << '\n';
 		return 0;
 	}
+	// ProcessOptions is a class that contains all necessary parameters
 	ProcessOptions ProcOptions;
+	// Read parameters from the XML file
 	ProcOptions.LoadParams(ConfigFile.string());
 	string ProcOptionsStr = ProcOptions.ShowParams();
 	cout << ProcOptionsStr;
@@ -81,16 +85,17 @@ int main(int argc, char* argv[])
 
 	regex FilePattern(ProcOptions.InFilePattern1);
 
+	// Create ROI. The ROI could be the whole image or a tile of specific size and shape
 	Mat Roi;
-	int roiMaxX, roiMaxY;
-	switch (ProcOptions.tileShape)
-	{
-	case 1:
+	int roiMaxX, roiMaxY; // Bounding box sizes for ROI 
+	switch (ProcOptions.tileShape) // Different tile shapes
+	{ 
+	case 1: // Rectangle
 		roiMaxX = ProcOptions.maxTileX;
 		roiMaxY = ProcOptions.maxTileY;
 		Roi = Mat::ones(roiMaxY, roiMaxX, CV_16U);
 		break;
-	case 2:
+	case 2: // Ellipse
 		roiMaxX = ProcOptions.maxTileX;
 		roiMaxY = ProcOptions.maxTileY;
 		Roi = Mat::zeros(roiMaxY, roiMaxX, CV_16U);
@@ -98,7 +103,7 @@ int main(int argc, char* argv[])
 					Size(roiMaxX / 2, roiMaxY / 2), 0.0, 0.0, 360.0,
 					1, -1);
 		break;
-	case 3:
+	case 3: // Hexagon
 		{
 			  int edgeLength = ProcOptions.maxTileX;
 			  roiMaxX = edgeLength * 2;
@@ -147,8 +152,9 @@ int main(int argc, char* argv[])
 		break;
 	}
 
-	int stepNr = (int)(180.0 / ProcOptions.angleStep);
+	int stepNr = (int)(180.0 / ProcOptions.angleStep); // angle step for computations (number of steps)
 
+	// data vector
 	float *Energy = new float[stepNr];
 	float *Contrast = new float[stepNr];
 	float *Correlation = new float[stepNr];
@@ -156,6 +162,7 @@ int main(int argc, char* argv[])
 
 	int *Angles = new int[stepNr]; // vector for best angles histogtam
 
+	// check how many features to compute
 	float featCount = 0;
 	if (ProcOptions.useContrast)
 		featCount++;
@@ -166,18 +173,20 @@ int main(int argc, char* argv[])
 	if (ProcOptions.useCorrelation)
 		featCount++;
 
+	// loop through all files in the inpur directory
 	for (directory_entry& FileToProcess : directory_iterator(PathToProcess))
 	{
 		path InPath = FileToProcess.path();
 
 		string OutString = ProcOptionsStr;
 
+		// check if the filename follows the input regular expression
 		if (!regex_match(InPath.filename().string().c_str(), FilePattern))
 			continue;
 
 		if (!exists(InPath))
 		{
-			cout << InPath.filename().string() << " File not exists" << "\n";
+			cout << InPath.filename().string() << " File does not exist" << "\n";
 			continue;
 		}
 
@@ -185,7 +194,7 @@ int main(int argc, char* argv[])
 		cout << "In file  - " << InPath.filename().string() << "\n";
 
 		Mat ImIn = imread(InPath.string(), CV_LOAD_IMAGE_ANYDEPTH);
-
+		// check if it is an image file
 		if (!ImIn.size)
 		{
 			cout << "this is not a valid image file";
