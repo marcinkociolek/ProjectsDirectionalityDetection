@@ -15,18 +15,18 @@
 #include <fstream>
 #//include <Windows.h>
 
-#include "Functions.h"
+#include "..\..\..\ProjectsLib\LibMarcin\Functions.h"
 //#include "RedundantWaveletLib.h"
-#include "NormalizationLib.h"
-#include "HaralickLib.h"
-#include "RegionU16Lib.h"
+#include "..\..\..\ProjectsLib\LibMarcin\NormalizationLib.h"
+#include "..\..\..\ProjectsLib\LibMarcin\HaralickLib.h"
+#include "..\..\..\ProjectsLib\LibMarcin\RegionU16Lib.h"
 
-#include "ParamFromXML.h"
-#include "DispLib.h"
-#include "StringFcLib.h"
+#include "..\..\..\ProjectsLib\LibMarcin\ParamFromXML.h"
+#include "..\..\..\ProjectsLib\LibMarcin\DispLib.h"
+#include "..\..\..\ProjectsLib\LibMarcin\StringFcLib.h"
 
-#include <tinyxml.h>
-#include <tinystr.h>
+//#include <tinyxml.h>
+//#include <tinystr.h>
 
 #define PI 3.14159265
 
