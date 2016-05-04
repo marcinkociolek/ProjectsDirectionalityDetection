@@ -20,6 +20,8 @@ $RECYCLE.BIN/
 # MSVS
 *.sdf
 *.opensdf
+*.suo
+*.user
 
 # =========================
 # Operating System Files
