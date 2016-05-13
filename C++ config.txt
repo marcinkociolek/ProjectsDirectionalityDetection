@@ -1,0 +1,59 @@
+General
+Output Directory:
+..\..\..\MSVSBuildDir\$(ProjectName)Build\$(Platform)\$(Configuration)\
+Intermediate Directory:
+..\..\..\MSVSBuildDir\$(ProjectName)Build\$(Platform)\$(Configuration)\
+C/C++
+General
+Additional Include directory:
+C:\opencv\build\include;C:\Boost\include\boost-1_60;D:\ProjectsLib\LibMarcin;D:\ProjectsLib\tinyxml;
+Linker
+General:
+Additional library directories:
+C:\opencv\build\x64\vc12\lib;C:\Boost\lib;
+Input
+Additional Dependences:
+opencv_core2411d.lib;opencv_highgui2411d.lib;opencv_imgproc2411d.lib;opencv_contrib2411d.lib;
+
+
+opencv_core2411d.lib
+opencv_highgui2411d.lib
+opencv_imgproc2411d.lib
+
+
+
+
+#include "opencv2\core\core.hpp"
+#include "opencv2\highgui\highgui.hpp"
+#include "opencv2\imgproc\imgproc.hpp"
+
+#include <boost\filesystem.hpp>
+#include <boost/regex.hpp>
+
+#include <iostream>
+#include <fstream>
+
+#include "..\..\..\ProjectsLib\LibMarcin\Functions.h"
+#include "..\..\..\ProjectsLib\LibMarcin\NormalizationLib.h"
+#include "..\..\..\ProjectsLib\LibMarcin\HaralickLib.h"
+#include "..\..\..\ProjectsLib\LibMarcin\RegionU16Lib.h"
+
+#include "..\..\..\ProjectsLib\LibMarcin\ParamFromXML.h"
+#include "..\..\..\ProjectsLib\LibMarcin\DispLib.h"
+#include "..\..\..\ProjectsLib\LibMarcin\StringFcLib.h"
+
+//#include <tinyxml.h>
+//#include <tinystr.h>
+
+#define PI 3.14159265
+
+using namespace cv;
+using namespace std;
+using namespace boost;
+using namespace boost::filesystem;
+
+
+//const int stepNr = 180;
+
+
+int main(int argc, char* argv[])
