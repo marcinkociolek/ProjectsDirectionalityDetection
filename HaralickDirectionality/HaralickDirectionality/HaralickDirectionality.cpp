@@ -384,7 +384,7 @@ int main(int argc, char* argv[])
 					for (int angleIndex = 0; angleIndex < stepNr; angleIndex++)
 					{
 						float angle = ProcOptions.angleStep * angleIndex;
-						Mat COM;
+						Mat COM; // co-occurrence matrix definition
 						if (ProcOptions.tileShape < 2)
 							COM = COMCardone4(SmallIm, offset, angle, ProcOptions.binCount, maxNorm, minNorm, ProcOptions.interpolation);
 						else
