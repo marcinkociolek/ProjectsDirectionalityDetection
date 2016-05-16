@@ -18,39 +18,42 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 	std::string FileName, FolderName, FileNameBase, FileNameExtension;
-	FolderName = "D:\\Testimages\\DirectionalityExtensiveTest\\";
-	FileNameBase = "Bars";
-	FileNameExtension = ".tif";
+	FolderName = "D:\\Testimages\\DirectionalityExtensiveTest\\"; // folder where to save outpute test images (use double slashes, even at the end)
+	FileNameBase = "Bars"; // beginning of test file name
+	FileNameExtension = ".tif"; // test file name extension
 
-	bool saveResult = 0;
-	bool displayResult = 1;
+	bool saveResult = 0; // 1 --> files saved
+	bool displayResult = 1; // 1 --> files only displayed
+	// only one of the following three options should be chosen, or none (type of noise)
 	bool addNoise = 1;
-	bool gausBlur = 0;
-	bool averageBlur = 0;
+	bool gausBlur = 0; // blur kernel if going to have a Gaussian shape (opencv function below, parameter fixed for now)
+	bool averageBlur = 0; // blur kernel if going to have constant value (1/number of pixels in the kernel)
 	
 	int barTickness = 16;
-	int barFrequency = 32;
+	int barFrequency = 32; // distance between corresponding bar location (i.e., barFrequency - barTickness = distance between bars)
 
-	int intensityBright = 65535.0;
-	int intensityDark = 0.0;
+	// other parameters
+	int intensityBright = 65535.0/4.0*3.0;
+	int intensityDark = 65535.0 / 4.0;
 
-	int noiseMean = 0;
-	int noiseSDTBase = 2000;
+	int noiseMean = 0; // mean of the Gaussian noise function 
+	int noiseSDTBase = 2000; // increasing step for Gaussian noise STD starting from noiseSTD below
 
-	bool rotateImage = 1;
+	bool rotateImage = 1; // Image rotation: 1-->yes; 0-->no
 	int rotationAngle = 88;
-	bool cropImage = 1;
+	bool cropImage = 1; // Crop image after rotation: 1-->yes; 0-->no
 
-	int iterNr = 10;
+	int iterNr = 10; // number of modifed images (blur or noise): 0 means not distortion applied
 
+	// the resulting image size if always half of these values, if cropping is on (see above)
 	int maxX = 512;
 	int maxY = 512;
 
 	int offset = 0;
 
 	//donot change
-	int noiseSTD = 0;
-	int kernelSize = 0;
+	int noiseSTD = 0; // Initial value for Gaussian noise STD
+	int kernelSize = 0; // not needed for now, defined below
 
 // iteration from here
 	for (int k = 0; k <= iterNr; k++)
