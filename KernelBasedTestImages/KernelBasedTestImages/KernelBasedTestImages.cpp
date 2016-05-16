@@ -55,6 +55,8 @@ int main(int argc, char* argv[])
 	bool gausBlur = 0;
 	bool averageBlur = 0;
 
+	int kernelShape = 1; //0 - rectangle; 1 - ellipse 
+
 	//int barTickness = 16;
 	//int barFrequency = 32;
 
@@ -85,22 +87,25 @@ int main(int argc, char* argv[])
 	int offsetX = stepX/2;
 	int offsetY = stepY/2;
 
-
-	
-	
-	
 	//donot change
 	int noiseSTD = 0;
 	int kernelSize = 0;
 
 	int kernelMax = 41;
-	int shapeSizeX = 7;
-	int shapeSizeY = 21;
+	int shapeSizeX = 9;
+	int shapeSizeY = 27;
 
 	Mat Kernel = Mat::zeros(kernelMax, kernelMax, CV_32F);
 
-	rectangle(Kernel, Rect(kernelMax / 2 - shapeSizeX / 2, kernelMax / 2 - shapeSizeY / 2, shapeSizeX, shapeSizeY), 1.0, -1);
-	
+	switch (kernelShape)
+	{
+	case 1:
+		ellipse(Kernel, Point(kernelMax / 2, kernelMax / 2), Size(shapeSizeX / 2, shapeSizeY / 2), 0.0, 0.0, 360.0, 1, -1);
+		break;
+	default:
+		rectangle(Kernel, Rect(kernelMax / 2 - shapeSizeX / 2, kernelMax / 2 - shapeSizeY / 2, shapeSizeX, shapeSizeY), 1.0, -1);
+		break;
+	}
 	Point rotationCenter = Point(kernelMax / 2, kernelMax / 2);
 	Mat rotationMatrix = getRotationMatrix2D(rotationCenter, rotationAngle, 1);
 	warpAffine(Kernel, Kernel, rotationMatrix, Kernel.size());

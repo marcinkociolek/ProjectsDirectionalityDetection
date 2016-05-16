@@ -150,10 +150,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\ProjectsLib\LibMarcin\DispLib.cpp" />
+    <ClCompile Include="..\..\..\ProjectsLib\LibMarcin\StringFcLib.cpp" />
     <ClCompile Include="KernelBasedTestImages.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\ProjectsLib\LibMarcin\DispLib.h" />
+    <ClInclude Include="..\..\..\ProjectsLib\LibMarcin\StringFcLib.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

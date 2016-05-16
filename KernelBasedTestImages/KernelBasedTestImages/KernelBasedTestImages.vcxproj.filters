@@ -21,9 +21,15 @@
     <ClCompile Include="..\..\..\ProjectsLib\LibMarcin\DispLib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\ProjectsLib\LibMarcin\StringFcLib.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\ProjectsLib\LibMarcin\DispLib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ProjectsLib\LibMarcin\StringFcLib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
