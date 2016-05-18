@@ -45,17 +45,17 @@ static void onMouse(int event, int x, int y, int, void*)
 int main(int argc, char* argv[])
 {
 	string FileName, FolderName, FileNameBase, FileNameExtension;
-	FolderName = "D:\\Testimages\\DirectionalityExtensiveTest\\";
+	FolderName = "D:\\Testimages\\KernelBased02\\";
 	FileNameBase = "Bars";
 	FileNameExtension = ".tif";
 
-	bool saveResult = 0;
+	bool saveResult = 1;
 	bool displayResult = 1;
 	bool addNoise = 1;
 	bool gausBlur = 0;
 	bool averageBlur = 0;
 
-	int kernelShape = 1; //0 - rectangle; 1 - ellipse 
+	int kernelShape = 0; //0 - rectangle; 1 - ellipse 
 
 	//int barTickness = 16;
 	//int barFrequency = 32;
@@ -67,11 +67,12 @@ int main(int argc, char* argv[])
 	int noiseMean = 0;
 	int noiseSDTBase = 2000;
 
-	//bool rotateImage = 1;
+	bool rotateImage = 1;
 	int rotationAngle = 41;
-	//bool cropImage = 1;
+	bool cropImage = 1;
+	int kernelRotationAngle = 0;
 
-	int iterNr = 10;
+	int iterNr = 1;
 
 	int maxX = 512;
 	int maxY = 512;
@@ -92,7 +93,7 @@ int main(int argc, char* argv[])
 	int kernelSize = 0;
 
 	int kernelMax = 41;
-	int shapeSizeX = 9;
+	int shapeSizeX = 13;
 	int shapeSizeY = 27;
 
 	Mat Kernel = Mat::zeros(kernelMax, kernelMax, CV_32F);
@@ -107,12 +108,12 @@ int main(int argc, char* argv[])
 		break;
 	}
 	Point rotationCenter = Point(kernelMax / 2, kernelMax / 2);
-	Mat rotationMatrix = getRotationMatrix2D(rotationCenter, rotationAngle, 1);
+	Mat rotationMatrix = getRotationMatrix2D(rotationCenter, kernelRotationAngle, 1);
 	warpAffine(Kernel, Kernel, rotationMatrix, Kernel.size());
 	
 	imshow("Kernel", ShowImageF32PseudoColor(Kernel, 0.0, 1.0));
 
-	namedWindow("imageOut", 0);
+	namedWindow("imageOut");
 	setMouseCallback("imageOut", onMouse, 0);
 
 	// iteration from here
@@ -133,6 +134,12 @@ int main(int argc, char* argv[])
 		filter2D(Im, Im, -1, Kernel);
 		Im += intensityDark;
 
+		if (rotateImage)
+		{
+			Point rotationCenter = Point(Im.cols / 2, Im.rows / 2);
+			Mat rotationMatrix = getRotationMatrix2D(rotationCenter, rotationAngle, 1);
+			warpAffine(Im, Im, rotationMatrix, Im.size());
+		}
 
 		if (addNoise && k)
 		{
@@ -143,6 +150,29 @@ int main(int argc, char* argv[])
 			//Im.convertTo(Im, CV_16U);
 		}
 
+		if (gausBlur && k)
+		{
+			Mat ImOut;
+			kernelSize = k * 2 + 1;
+			GaussianBlur(Im, ImOut, Size(kernelSize, kernelSize), 10000, 10000);
+			Im = ImOut;
+		}
+		if (averageBlur && k)
+		{
+			Mat ImOut;
+			kernelSize = k * 2 + 1;
+			float kernelPixelCount = kernelSize * kernelSize;
+			Mat Kernel = Mat::ones(kernelSize, kernelSize, CV_32F) / kernelPixelCount;
+			filter2D(Im, ImOut, -1, Kernel);
+
+			Im = ImOut;
+		}
+		if (cropImage)
+		{
+			// croped image by chalf
+			Im = Im.rowRange(Im.rows / 4, Im.rows / 4 * 3);
+			Im = Im.colRange(Im.cols / 4, Im.cols / 4 * 3);
+		}
 
 
 
@@ -157,10 +187,22 @@ int main(int argc, char* argv[])
 			FileName += "Bars";
 			FileName += "SizeY" + ItoStrLZ(shapeSizeY, 2);
 			FileName += "eSizeX" + ItoStrLZ(shapeSizeX, 2);
-			FileName += "Angle" + ItoStrLZ(rotationAngle, 3);
+			switch(kernelShape)
+			{
+			case 1:
+				FileName += "Elipse";
+				break;
+			default:
+				FileName += "Rectangle"; 
+				break;
+			}
+			
+			FileName += "KernelAngle" + ItoStrLZ(kernelRotationAngle, 3);
 
 			FileName += "Spacing" + ItoStrLZ(spacing, 2);
 
+			if (rotateImage)
+				FileName += "Angle" + ItoStrLZ(rotationAngle, 3);
 
 			if (addNoise)
 				FileName += "NoiseSTD" + ItoStrLZ(noiseSTD, 5);
@@ -195,14 +237,7 @@ int main(int argc, char* argv[])
 			}
 		}
 
-		//Rotation of image
-		if (rotateImage)
-		{
 
-			Point rotationCenter = Point(Im.cols / 2, Im.rows / 2);
-			Mat rotationMatrix = getRotationMatrix2D(rotationCenter, rotationAngle, 1);
-			warpAffine(Im, Im, rotationMatrix, Im.size());
-		}
 		if (addNoise && k)
 		{
 			noiseSTD = k * noiseSDTBase;
