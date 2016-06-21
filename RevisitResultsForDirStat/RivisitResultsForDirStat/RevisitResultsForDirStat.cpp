@@ -56,10 +56,19 @@ int main(int argc, char* argv[])
 
 
 	int DirHist[360];
+	float LengthHist[360];
 	for (int i = 0; i < 360; i++)
 	{
 		DirHist[i] = 0;
+		LengthHist[i] = 0;
 	}
+	float Samples[65536];
+	for (int i = 0; i < 360; i++)
+	{
+		Samples[i] = 0.0;
+	}
+
+
 	string StringOut = "";
 	StringOut += ProcOptions.ShowParams();
 	StringOut += "\n";
@@ -167,6 +176,8 @@ int main(int argc, char* argv[])
 			{
 				DirHist[(int)dir1]++;
 				DirHist[(int)dir1 + 180]++;
+				if (histCount < 65000)
+					Samples[histCount] = dir1;
 				histCount++;
 			}
 		}
@@ -194,7 +205,11 @@ int main(int argc, char* argv[])
 			maxLength = length;
 			dirForMaxLength = atan2(b, a)/PI * 180.0;
 		}
+		LengthHist[i] = length;
+		LengthHist[i+180] = length;
 	}
+	if (dirForMaxLength < 0)
+		dirForMaxLength = 180 + dirForMaxLength;
 	StringOut += "\n";
 	StringOut += "max Lenght\t";
 	StringOut += to_string(maxLength);
@@ -213,9 +228,13 @@ int main(int argc, char* argv[])
 	StringOut += "\n";
 	for (int i = 0; i < 360; i++)
 	{
-		StringOut += to_string(i);
+		StringOut += to_string(180 - i);
 		StringOut += "\t";
-		StringOut += to_string(DirHist[i]);
+		StringOut += to_string(DirHist[359 - i]);
+		//StringOut += "\t";
+		//StringOut += to_string(LengthHist[359 - i]);
+		//StringOut += "\t";
+		//StringOut += to_string(DirHist[359 - i] - dirForMaxLength);
 		StringOut += "\n";
 
 	}
@@ -224,6 +243,25 @@ int main(int argc, char* argv[])
 
 	outFile << StringOut;
 	outFile.close();
+
+	string StringOut2 = "";
+	for (int i = 0; i < 65000; i++)
+	{
+		if (i >= histCount )
+			break;
+		StringOut2 += to_string(Samples[i] - dirForMaxLength);
+		StringOut2 += "\n";
+
+	}
+
+	string CommonFullFileNameOut2 = ConfigFile.string() + "_DirForTTest" + ".txt";
+	std::ofstream outFile2(CommonFullFileNameOut2);//FileToProcess.path().filename().string());
+
+	outFile2 << StringOut2;
+	outFile2.close();
+
+
+
 	string in;
 	cin >> in;
 	return 0;

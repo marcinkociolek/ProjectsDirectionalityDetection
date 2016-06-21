@@ -22,6 +22,7 @@
     <ProjectGuid>{1A1EE59F-2999-43B0-94B0-BEF3B929ED73}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>RivisitResultsForDirStat</RootNamespace>
+    <ProjectName>RevisitResultsForDirStat</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -151,7 +152,7 @@
     <ClCompile Include="..\..\..\ProjectsLib\tinyxml\tinyxml.cpp" />
     <ClCompile Include="..\..\..\ProjectsLib\tinyxml\tinyxmlerror.cpp" />
     <ClCompile Include="..\..\..\ProjectsLib\tinyxml\tinyxmlparser.cpp" />
-    <ClCompile Include="RivisitResultsForDirStat.cpp" />
+    <ClCompile Include="RevisitResultsForDirStat.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\ProjectsLib\LibMarcin\DispLib.h" />
