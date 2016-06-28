@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{A11C9673-51FA-4133-910D-F03D352193D8}</ProjectGuid>
+    <ProjectGuid>{C3656DEE-0FC1-4C95-A729-3AB5C7FD2FF2}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>HaralickDirectionality</RootNamespace>
+    <RootNamespace>ImageParamsCheckV002</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -71,16 +71,14 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\..\..\MSVSBuildDir\$(ProjectName)Build\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>..\..\..\MSVSBuildDir\$(ProjectName)Build\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>D:\MSVSBuildDir\$(ProjectName)Build\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>D:\MSVSBuildDir\$(ProjectName)Build\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\..\..\MSVSBuildDir\$(ProjectName)BuildR\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>..\..\..\MSVSBuildDir\$(ProjectName)BuildR\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -102,13 +100,14 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\opencv\build\include;C:\Boost\include\boost-1_60;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\opencv\build\include;C:\Boost\include\boost-1_60;D:\ProjectsLib\LibMarcin;D:\ProjectsLib\tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\opencv\build\x64\vc12\lib;C:\Boost\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opencv_core2411d.lib;opencv_highgui2411d.lib;opencv_imgproc2411d.lib;opencv_contrib2411d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -137,38 +136,31 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\opencv\build\include;C:\Boost\include\boost-1_60;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\opencv\build\x64\vc12\lib;C:\Boost\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opencv_core2411.lib;opencv_highgui2411.lib;opencv_imgproc2411.lib;opencv_contrib2411.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\ProjectsLib\LibMarcin\DispLib.cpp" />
     <ClCompile Include="..\..\..\ProjectsLib\LibMarcin\Functions.cpp" />
-    <ClCompile Include="..\..\..\ProjectsLib\LibMarcin\HaralickLib.cpp" />
     <ClCompile Include="..\..\..\ProjectsLib\LibMarcin\NormalizationLib.cpp" />
     <ClCompile Include="..\..\..\ProjectsLib\LibMarcin\ParamFromXML.cpp" />
-    <ClCompile Include="..\..\..\ProjectsLib\LibMarcin\RegionU16Lib.cpp" />
     <ClCompile Include="..\..\..\ProjectsLib\LibMarcin\StringFcLib.cpp" />
     <ClCompile Include="..\..\..\ProjectsLib\tinyxml\tinystr.cpp" />
     <ClCompile Include="..\..\..\ProjectsLib\tinyxml\tinyxml.cpp" />
     <ClCompile Include="..\..\..\ProjectsLib\tinyxml\tinyxmlerror.cpp" />
     <ClCompile Include="..\..\..\ProjectsLib\tinyxml\tinyxmlparser.cpp" />
-    <ClCompile Include="HaralickDirectionality.cpp" />
+    <ClCompile Include="ImageParamsCheckV002.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\ProjectsLib\LibMarcin\DispLib.h" />
     <ClInclude Include="..\..\..\ProjectsLib\LibMarcin\Functions.h" />
-    <ClInclude Include="..\..\..\ProjectsLib\LibMarcin\HaralickLib.h" />
     <ClInclude Include="..\..\..\ProjectsLib\LibMarcin\NormalizationLib.h" />
     <ClInclude Include="..\..\..\ProjectsLib\LibMarcin\ParamFromXML.h" />
-    <ClInclude Include="..\..\..\ProjectsLib\LibMarcin\RegionU16Lib.h" />
     <ClInclude Include="..\..\..\ProjectsLib\LibMarcin\StringFcLib.h" />
     <ClInclude Include="..\..\..\ProjectsLib\tinyxml\tinystr.h" />
     <ClInclude Include="..\..\..\ProjectsLib\tinyxml\tinyxml.h" />

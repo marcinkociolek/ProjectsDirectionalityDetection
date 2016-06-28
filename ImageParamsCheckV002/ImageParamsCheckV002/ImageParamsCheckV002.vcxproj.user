@@ -4,8 +4,4 @@
     <LocalDebuggerCommandArguments>E:\Sumona2\Sumona28dActinDAPI_TS42.xml</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LocalDebuggerCommandArguments>E:\Sumona2\Sumona28dActinDAPI_TS42.xml</LocalDebuggerCommandArguments>
-    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-  </PropertyGroup>
 </Project>

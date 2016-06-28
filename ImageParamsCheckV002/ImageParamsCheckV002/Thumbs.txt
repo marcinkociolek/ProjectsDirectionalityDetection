@@ -1,0 +1,74 @@
+Input Directory 1:	E:\Sumona2\InputData\7d\20150722_7d_All4_LiveCalc_perm_63x_1\Actin
+Input File Name Base 1:	
+File Name Extension 1:	
+Input File Name Base 1:	.+(.tif)
+Input Directory 2:	
+Input File Name Base 2:	
+File Name Extensiom 2:	
+Input File Name Pattern 2:	
+Input Directory 3:	
+Input File Name Base 3:	
+File Name Extension 3:	
+Input File Name Pattern 3:	
+Input Directory 4:	
+Input File Name Base 4:	
+File Name Extension 4:	
+Input File Name Pattern 4:	
+Input Directory 5:	
+Input File Name Base 5:	
+File Name Extension 5:	
+Input File Name Pattern 5:	
+Input Directory 6:	
+Input File Name Base 6:	
+File Name Extension 6:	
+Input File Name Base 6:	
+Output Directory:	E:\Sumona2\out\7d\20150722_7d_All4_LiveCalc_perm_63x_1\Actin
+Output Directory 2:	
+Preprocess Type:	0 - none
+Preprocess kernel size:	3
+Display result:	Y
+Display small image:	N
+Tile Shape:	1 - Rectangular
+Tile size x:	64
+Tile size y:	64
+Tile shift x:	40
+Tile shift y:	40
+Tile offset x:	40
+Tile offset y:	40
+Show tiles:	Y
+Tile Line Thickness>:	2
+Go thru:	Y
+Use second image:	N
+Text out:	Y
+Normalisation:	5 - Tile min - max
+Bin count:	16
+Min Ofset:	2
+Max Ofset:	16
+Use Contrast:	N
+Use Energy:	N
+Use Homogeneity:	Y
+Use Correlation:	Y
+Min Hit:	4
+Use Min Mean:	N
+Min Mean:	500.000000
+Min Norm:	0.000000
+Max Norm:	4000.000000
+Min Norm Global:	0.000000
+Max Norm Global:	10000.000000
+Use fixt display normalisation:	N
+Display Max:	45.000000
+Display Min:	-15.000000
+Display Max2:	20.000000
+Display Min2:	-5.000000
+Display Max3:	20.000000
+Display Min3:	-5.000000
+Display Max4:	20.000000
+Display Min4:	-5.000000
+Imposed Line Thickness>:	1
+Line Half Length:	20
+Angle Step:	1.000000
+Interpolation:	0
+treshold1:	9.000000
+treshold2:	256.000000
+
+File Name	min	max	mean	std	perc 1	perc99	perc 0.1	perc99.9

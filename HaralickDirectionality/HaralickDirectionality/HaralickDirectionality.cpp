@@ -341,6 +341,16 @@ int main(int argc, char* argv[])
 				float meanSmallIm = -10.0;
 				//if (ProcOptions.useMinMean)
 				meanSmallIm = MatFMeanRoi( SmallIm, Roi,1);
+				bool meanCondition = 0;
+				if (ProcOptions.useMinMean)
+				{
+					if (meanSmallIm >= ProcOptions.minMean)
+						meanCondition = true;
+					else
+						meanCondition = false;
+				}
+				else
+					meanCondition = true;
 
 				float maxNorm, minNorm;
 				
@@ -435,16 +445,7 @@ int main(int argc, char* argv[])
 				int lineOffsetY = (int)round(lineLength * cos((double)(bestAngle)*ProcOptions.angleStep* PI / 180.0));
 
 				//
-				bool meanCondition = 0;
-				if (ProcOptions.useMinMean)
-				{
-					if (meanSmallIm >= ProcOptions.minMean)
-						meanCondition = true;
-					else
-						meanCondition = false;
-				}
-				else
-					meanCondition = true;
+
 
 				if ((maxAngle >= ProcOptions.minHit) && meanCondition)
 				{
