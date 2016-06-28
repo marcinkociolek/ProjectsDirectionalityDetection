@@ -629,26 +629,57 @@ int main(int argc, char* argv[])
 	StringOut += "\n";
 	StringOut += "max Lenght\t";
 	StringOut += to_string(maxLengthA);
+	StringOut += "\t";
+	StringOut += to_string(maxLengthC);
+	StringOut += "\t";
+	StringOut += to_string(maxLengthApC);
+	StringOut += "\t";
+	StringOut += to_string(maxLengthAmC);
+	StringOut += "\t";
+	StringOut += to_string(maxLengthCpA);
+	StringOut += "\t";
+	StringOut += to_string(maxLengthCmA);
 	StringOut += "\n";
+
 	StringOut += "Angle\t";
 	StringOut += to_string(dirForMaxLengthA);
+	StringOut += "\t";
+	StringOut += to_string(dirForMaxLengthC);
+	StringOut += "\t";
+	StringOut += to_string(dirForMaxLengthApC);
+	StringOut += "\t";
+	StringOut += to_string(dirForMaxLengthAmC);
+	StringOut += "\t";
+	StringOut += to_string(dirForMaxLengthCpA);
+	StringOut += "\t";
+	StringOut += to_string(dirForMaxLengthCmA);
 	StringOut += "\n";
 
 	StringOut += "Hist Count\t";
 	StringOut += to_string(histCountA);
+	StringOut += "\t";
+	StringOut += to_string(histCountC);
+	StringOut += "\t";
+	StringOut += to_string(histCountApC);
+	StringOut += "\t";
+	StringOut += to_string(histCountAmC);
+	StringOut += "\t";
+	StringOut += to_string(histCountCpA);
+	StringOut += "\t";
+	StringOut += to_string(histCountCmA);
 	StringOut += "\n";
 
 
 	StringOut += "\n\n";
-	StringOut += "Direction";
-	StringOut += "hist A";
+	StringOut += "Direction\t";
+	StringOut += "hist A\t";
 	if (useSecondFile)
 	{
-		StringOut += "hist C";
-		StringOut += "hist ApC";
-		StringOut += "hist AmC";
-		StringOut += "hist CpA";
-		StringOut += "hist CmA";
+		StringOut += "hist C\t";
+		StringOut += "hist ApC\t";
+		StringOut += "hist AmC\t";
+		StringOut += "hist CpA\t";
+		StringOut += "hist CmA\t";
 	}
 	StringOut += "\n";
 
