@@ -9,6 +9,8 @@
 #include <boost\filesystem.hpp>
 #include <boost/regex.hpp>
 
+#include <chrono>
+
 
 //#include "math.h"
 #include <iostream>
@@ -33,6 +35,7 @@ using namespace cv;
 using namespace std;
 using namespace boost;
 using namespace boost::filesystem;
+using namespace std::chrono;
 
 
 //const int stepNr = 180;
@@ -172,10 +175,19 @@ int main(int argc, char* argv[])
 		featCount++;
 	if (ProcOptions.useCorrelation)
 		featCount++;
+	//Matrix declarations
+	Mat ImIn, ImInF, ImToShow, SmallIm, COM, SmallImToShow;
 
+	steady_clock::time_point timePointOld = steady_clock::now();
 	// loop through all files in the inpur directory
 	for (directory_entry& FileToProcess : directory_iterator(PathToProcess))
 	{
+		
+		steady_clock::time_point timePointPresent = steady_clock::now();
+		duration<double> time_span = duration_cast<duration<double>>(timePointPresent - timePointOld);
+		cout << "file time: " << time_span.count() << "\n";
+		timePointOld = timePointPresent;
+
 		path InPath = FileToProcess.path();
 
 		string OutString = ProcOptionsStr;
@@ -193,7 +205,9 @@ int main(int argc, char* argv[])
 		OutString += "In file - " + InPath.filename().string() + "\n";
 		cout << "In file  - " << InPath.filename().string() << "\n";
 
-		Mat ImIn = imread(InPath.string(), CV_LOAD_IMAGE_ANYDEPTH);
+		//Mat ImIn = imread(InPath.string(), CV_LOAD_IMAGE_ANYDEPTH);
+		ImIn.release();
+		ImIn = imread(InPath.string(), CV_LOAD_IMAGE_ANYDEPTH);
 		// check if it is an image file
 		if (!ImIn.size)
 		{
@@ -207,7 +221,8 @@ int main(int argc, char* argv[])
 		maxXY = maxX * maxY;
 
 		// conversion to float
-		Mat ImInF;						// ,ImInFTemp;
+		//Mat ImInF;						// ,ImInFTemp;
+		ImInF.release();
 		ImIn.convertTo(ImInF, CV_32F);
 		// Filtering
 
@@ -264,8 +279,8 @@ int main(int argc, char* argv[])
 			displayMin = minNormGlobal;
 		}
 
-		Mat ImToShow;
-
+		//Mat ImToShow;
+		ImToShow.release();
 		ImToShow = ShowImageF32PseudoColor(ImInF, displayMin, displayMax);
 
 		if (ProcOptions.showTiles)
@@ -328,7 +343,8 @@ int main(int argc, char* argv[])
 			waitKey(50);
 		}
 
-		Mat SmallIm;
+		//Mat SmallIm;
+		SmallIm.release();
 		int xTileNr = 0;
 		int yTileNr = 0;
 
@@ -394,7 +410,8 @@ int main(int argc, char* argv[])
 					for (int angleIndex = 0; angleIndex < stepNr; angleIndex++)
 					{
 						float angle = ProcOptions.angleStep * angleIndex;
-						Mat COM; // co-occurrence matrix definition
+						//Mat COM; // co-occurrence matrix definition
+						COM.release();
 						if (ProcOptions.tileShape < 2)
 							COM = COMCardone4(SmallIm, offset, angle, ProcOptions.binCount, maxNorm, minNorm, ProcOptions.interpolation);
 						else
@@ -472,8 +489,9 @@ int main(int argc, char* argv[])
 
 				if (ProcOptions.displaySmallImage)
 				{
-					Mat SmallImToShow = ShowImageF32PseudoColor(SmallIm, minNorm, maxNorm);
-				
+					//Mat SmallImToShow = ShowImageF32PseudoColor(SmallIm, minNorm, maxNorm);
+					SmallImToShow.release();
+					SmallImToShow = ShowImageF32PseudoColor(SmallIm, minNorm, maxNorm);
 					line(SmallImToShow, Point(SmallImToShow.cols / 2 - lineOffsetX, SmallImToShow.rows / 2 - lineOffsetY), Point(SmallImToShow.cols / 2 + lineOffsetX, SmallImToShow.rows / 2 + lineOffsetY), Scalar(0, 0.0, 0.0, 0.0), ProcOptions.imposedLineThickness);
 					imshow("ImageSmall", ShowSolidRegionOnImage(GetContour5(Roi), SmallImToShow));
 				}
