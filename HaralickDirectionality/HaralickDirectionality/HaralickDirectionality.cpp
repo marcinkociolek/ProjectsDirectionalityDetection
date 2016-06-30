@@ -469,7 +469,10 @@ int main(int argc, char* argv[])
 					//line(ImToShow, Point(barCenterX - lineOffsetX, barCenterY - lineOffsetY), Point(barCenterX + lineOffsetX, barCenterY + lineOffsetY), Scalar(0, 0.0, 0.0, 0.0), ProcOptions.imposedLineThickness);
 					line(ImToShow, Point(x - lineOffsetX, y - lineOffsetY), Point(x + lineOffsetX, y + lineOffsetY), Scalar(0, 0.0, 0.0, 0.0), ProcOptions.imposedLineThickness);
 				}
-				imshow("Image", ImToShow);
+				if (ProcOptions.displayResult)
+				{
+					imshow("Image", ImToShow);
+				}
 
 				cout << yTileNr << "\t" << xTileNr << "\t" << "A = " << to_string(bestAngle*ProcOptions.angleStep);
 				cout << "  c = " << ItoStrLS(maxAngle, 2) << " mean =  " << to_string(meanSmallIm);
@@ -495,12 +498,16 @@ int main(int argc, char* argv[])
 					line(SmallImToShow, Point(SmallImToShow.cols / 2 - lineOffsetX, SmallImToShow.rows / 2 - lineOffsetY), Point(SmallImToShow.cols / 2 + lineOffsetX, SmallImToShow.rows / 2 + lineOffsetY), Scalar(0, 0.0, 0.0, 0.0), ProcOptions.imposedLineThickness);
 					imshow("ImageSmall", ShowSolidRegionOnImage(GetContour5(Roi), SmallImToShow));
 				}
-				if (ProcOptions.goThru)
-					waitKey(50);
-				else
-					waitKey(0);
-			
-				xTileNr++;
+
+				if (ProcOptions.displayResult || ProcOptions.displaySmallImage)
+				{
+					if (ProcOptions.goThru)
+						waitKey(50);
+					else
+						waitKey(0);
+				}
+					xTileNr++;
+				
 			}
 			yTileNr++;
 			xTileNr = 0;
