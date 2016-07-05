@@ -108,7 +108,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\opencv\build\x64\vc12\lib;C:\Boost\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opencv_core2411d.lib;opencv_highgui2411d.lib;opencv_imgproc2411d.lib;opencv_contrib2411d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opencv_core2411d.lib;opencv_highgui2411d.lib;opencv_imgproc2411d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -145,12 +145,11 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>C:\opencv\build\x64\vc12\lib;C:\Boost\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opencv_core2411.lib;opencv_highgui2411.lib;opencv_imgproc2411.lib;opencv_contrib2411.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opencv_core2411.lib;opencv_highgui2411.lib;opencv_imgproc2411.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\ProjectsLib\LibMarcin\DispLib.cpp" />
-    <ClCompile Include="..\..\..\ProjectsLib\LibMarcin\Functions.cpp" />
     <ClCompile Include="..\..\..\ProjectsLib\LibMarcin\HaralickLib.cpp" />
     <ClCompile Include="..\..\..\ProjectsLib\LibMarcin\NormalizationLib.cpp" />
     <ClCompile Include="..\..\..\ProjectsLib\LibMarcin\ParamFromXML.cpp" />
@@ -164,7 +163,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\ProjectsLib\LibMarcin\DispLib.h" />
-    <ClInclude Include="..\..\..\ProjectsLib\LibMarcin\Functions.h" />
     <ClInclude Include="..\..\..\ProjectsLib\LibMarcin\HaralickLib.h" />
     <ClInclude Include="..\..\..\ProjectsLib\LibMarcin\NormalizationLib.h" />
     <ClInclude Include="..\..\..\ProjectsLib\LibMarcin\ParamFromXML.h" />

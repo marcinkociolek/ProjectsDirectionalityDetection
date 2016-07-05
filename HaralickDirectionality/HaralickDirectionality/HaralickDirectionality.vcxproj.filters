@@ -45,9 +45,6 @@
     <ClCompile Include="..\..\..\ProjectsLib\LibMarcin\NormalizationLib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ProjectsLib\LibMarcin\Functions.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\ProjectsLib\LibMarcin\RegionU16Lib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -72,9 +69,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\ProjectsLib\LibMarcin\NormalizationLib.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ProjectsLib\LibMarcin\Functions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\ProjectsLib\LibMarcin\RegionU16Lib.h">
