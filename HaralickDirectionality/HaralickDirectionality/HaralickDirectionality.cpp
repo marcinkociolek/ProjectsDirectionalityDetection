@@ -4,7 +4,7 @@
 #include "opencv2\core\core.hpp"
 #include "opencv2\highgui\highgui.hpp"
 #include "opencv2\imgproc\imgproc.hpp"
-#include "opencv2\contrib\contrib.hpp"
+//#include "opencv2\contrib\contrib.hpp"
 
 #include <boost\filesystem.hpp>
 #include <boost/regex.hpp>
@@ -477,7 +477,7 @@ int main(int argc, char* argv[])
 				cout << yTileNr << "\t" << xTileNr << "\t" << "A = " << to_string(bestAngle*ProcOptions.angleStep);
 				cout << "  c = " << ItoStrLS(maxAngle, 2) << " mean =  " << to_string(meanSmallIm);
 				cout << " min norm = " << to_string(minNorm) << " max norm = " << to_string(maxNorm) << "\n";
-				OutString += ItoStrLS(yTileNr, 2) + "\t" + ItoStrLS(yTileNr, 2) + "\t";
+				OutString += ItoStrLS(yTileNr, 2) + "\t" + ItoStrLS(xTileNr, 2) + "\t";
 				if ((maxAngle >= ProcOptions.minHit) && meanCondition)
 				{
 					OutString += to_string((float)bestAngle * ProcOptions.angleStep) + "\t";

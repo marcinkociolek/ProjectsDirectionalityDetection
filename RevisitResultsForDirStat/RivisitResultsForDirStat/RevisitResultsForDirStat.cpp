@@ -26,7 +26,7 @@ using namespace boost::filesystem;
 
 int main(int argc, char* argv[])
 {
-	bool useSecondFile = true;
+	bool useSecondFile = 0;
 	if (argc < 2)
 	{
 		cout << "\nTo few arguments.";
@@ -188,10 +188,12 @@ int main(int argc, char* argv[])
 		match_results<std::string::const_iterator> ZNumberStringIterator;
 		match_flag_type flags = boost::match_default;
 		regex ZNumberPattern("z[[:digit:]]{3}");
-		if (!regex_search(start, end, ZNumberStringIterator, ZNumberPattern, flags))
+		if (useSecondFile &&  !regex_search(start, end, ZNumberStringIterator, ZNumberPattern, flags))
 			continue;
 	    
-		string ZNumberString1 = ZNumberStringIterator[0];
+		string ZNumberString1;
+		if (useSecondFile)
+			ZNumberString1 = ZNumberStringIterator[0];
 		//cout << ZNumberString1 << "\n";
 		//string inT;
 		//std::cin >> inT;

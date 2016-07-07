@@ -15,16 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="HaralickDirectionality.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ProjectsLib\LibMarcin\HaralickLib.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ProjectsLib\LibMarcin\ParamFromXML.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ProjectsLib\LibMarcin\StringFcLib.cpp">
+    <ClCompile Include="RevisitOneImageSerie.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\ProjectsLib\tinyxml\tinystr.cpp">
@@ -42,26 +33,14 @@
     <ClCompile Include="..\..\..\ProjectsLib\LibMarcin\DispLib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ProjectsLib\LibMarcin\NormalizationLib.cpp">
+    <ClCompile Include="..\..\..\ProjectsLib\LibMarcin\ParamFromXML.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ProjectsLib\LibMarcin\RegionU16Lib.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ProjectsLib\LibMarcin\Functions.cpp">
+    <ClCompile Include="..\..\..\ProjectsLib\LibMarcin\StringFcLib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\ProjectsLib\LibMarcin\HaralickLib.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ProjectsLib\LibMarcin\ParamFromXML.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ProjectsLib\LibMarcin\StringFcLib.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\ProjectsLib\tinyxml\tinystr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -71,13 +50,10 @@
     <ClInclude Include="..\..\..\ProjectsLib\LibMarcin\DispLib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ProjectsLib\LibMarcin\NormalizationLib.h">
+    <ClInclude Include="..\..\..\ProjectsLib\LibMarcin\ParamFromXML.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ProjectsLib\LibMarcin\RegionU16Lib.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ProjectsLib\LibMarcin\Functions.h">
+    <ClInclude Include="..\..\..\ProjectsLib\LibMarcin\StringFcLib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
