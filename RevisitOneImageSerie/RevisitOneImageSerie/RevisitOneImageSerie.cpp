@@ -7,6 +7,8 @@
 #include <iostream>
 #include <fstream>
 
+#include <math.h>
+
 #include "..\..\..\ProjectsLib\LibMarcin\ParamFromXML.h"
 #include "..\..\..\ProjectsLib\LibMarcin\DispLib.h"
 #include "..\..\..\ProjectsLib\LibMarcin\StringFcLib.h"
@@ -69,6 +71,21 @@ int main(int argc, char* argv[])
 		Samples[i] = 0.0;
 	}
 
+	float *LocalErrors = new float[10000];
+
+	float *DirErrorsMean = new float[91];
+	float *DirErrorsAbsMean = new float[91];
+	float *DirErrorsStd = new float[91];
+	float *DirErrorsMax = new float[91];
+	for (int i = 0; i < 91; i++)
+	{
+		DirErrorsMean[i] = 0.0;
+		DirErrorsAbsMean[i] = 0.0;
+		DirErrorsStd[i] = 0.0;
+		DirErrorsMax[i] = 0.0;
+	}
+
+
 	string StringOut = "";
 	string StringOutCommon = "";
 	StringOut += ProcOptions.ShowParams();
@@ -101,6 +118,16 @@ int main(int argc, char* argv[])
 			continue;
 
 		string AngleString = AngleStringIterator[0];
+		start = AngleString.begin();
+		end = AngleString.end();
+		match_results<std::string::const_iterator> AngleValStringIterator;
+
+		regex AngleValStringPattern("[[:digit:]]{3}");
+		if (!regex_search(start, end, AngleValStringIterator, AngleValStringPattern, flags))
+			continue;
+
+		string AngleValString = AngleValStringIterator[0];
+		float dirFomFileName = stof(AngleValString);
 
 		fileCount++;
 
@@ -122,7 +149,7 @@ int main(int argc, char* argv[])
 		while (inFile1.good())
 		{
 			getline(inFile1, Line1);
-			if (Line1 == "yRoiNr\txRoiNr\tdirection\tDDC\tmean Tile\tstd Tile\tmean tile 2\tstd Tile 2")
+			if (Line1 == "Tile Y\tTile X\tAngle\tBest Angle Count\tMean Intensity\tTile min norm\tTile max norm")//"yRoiNr\txRoiNr\tdirection\tDDC\tmean Tile\tstd Tile\tmean tile 2\tstd Tile 2")
 				break;
 			StringOutCommon += Line1;
 			//StringOutCommon += "\t\t\t\t\t\t\t\t";
@@ -140,68 +167,111 @@ int main(int argc, char* argv[])
 		float dir2, dDC2, mean2, std2;
 		bool dir2IsNAN;
 
+		float dirError;
 
+		int localCounter = 0;
+		for (int i = 0; i < 10000; i++)
+		{
+			LocalErrors[i] = 0.0;
+		}
 
 
 		while (inFile1.good())
 		{
-			//getline(inFile1, Line1);
+
+				//getline(inFile1, Line1);
 			getline(inFile1, Line1, '\t');
-			y1 = atoi(Line1.c_str());
-			StringOutCommon += Line1;
-			StringOutCommon += "\t";
-
-			getline(inFile1, Line1, '\t');
-			x1 = atoi(Line1.c_str());
-			StringOutCommon += Line1;
-			StringOutCommon += "\t";
-
-			getline(inFile1, Line1, '\t');
-			dir1 = atof(Line1.c_str());
-			StringOutCommon += Line1;
-			StringOutCommon += "\t";
-
-			if (Line1 == "NAN")
-				dir1IsNAN = 1;
-			else
-				dir1IsNAN = 0;
-
-			getline(inFile1, Line1, '\t');
-			dDC1 = atof(Line1.c_str());
-			StringOutCommon += Line1;
-			StringOutCommon += "\t";
-
-			getline(inFile1, Line1, '\t');
-			mean1 = atof(Line1.c_str());
-			StringOutCommon += Line1;
-			StringOutCommon += "\t";
-
-			getline(inFile1, Line1, '\n');
-			std1 = atof(Line1.c_str());
-			StringOutCommon += Line1;
-			StringOutCommon += "\t";
-
-			//StringOutCommon += Line1;
-			//StringOutCommon += "\t";
-
-			//StringOutCommon += "\t\t\t";
-			StringOutCommon += "\n";
-
-
-			// Actin dir hist estimation
-			if (!dir1IsNAN& (mean1 >= ProcOptions.treshold1))
+			if (Line1 != "")
 			{
-				DirHist[(int)dir1]++;
-				DirHist[(int)dir1 + 180]++;
-				if (histCount < 65000)
-					Samples[histCount] = dir1;
-				histCount++;
-			}
 
+				y1 = atoi(Line1.c_str());
+				StringOutCommon += Line1;
+				StringOutCommon += "\t";
+
+				getline(inFile1, Line1, '\t');
+				x1 = atoi(Line1.c_str());
+				StringOutCommon += Line1;
+				StringOutCommon += "\t";
+
+				getline(inFile1, Line1, '\t');
+				dir1 = atof(Line1.c_str());
+				StringOutCommon += Line1;
+				StringOutCommon += "\t";
+
+				if (Line1 == "NAN")
+					dir1IsNAN = 1;
+				else
+					dir1IsNAN = 0;
+
+				getline(inFile1, Line1, '\t');
+				dDC1 = atof(Line1.c_str());
+				StringOutCommon += Line1;
+				StringOutCommon += "\t";
+
+				getline(inFile1, Line1, '\t');
+				mean1 = atof(Line1.c_str());
+				StringOutCommon += Line1;
+				StringOutCommon += "\t";
+
+				getline(inFile1, Line1, '\n');
+				std1 = atof(Line1.c_str());
+				StringOutCommon += Line1;
+				StringOutCommon += "\t\t";
+
+				dirError = dirFomFileName - dir1;
+				StringOutCommon += to_string(dirError);
+				//StringOutCommon += Line1;
+				//StringOutCommon += "\t";
+
+				//StringOutCommon += "\t\t\t";
+				StringOutCommon += "\n";
+
+
+				if (localCounter < 10000)
+					LocalErrors[localCounter] = dirError;
+				localCounter++;
+				// Actin dir hist estimation
+				if (!dir1IsNAN& (mean1 >= ProcOptions.treshold1))
+				{
+					DirHist[(int)dir1]++;
+					DirHist[(int)dir1 + 180]++;
+					if (histCount < 65000)
+						Samples[histCount] = dir1;
+					histCount++;
+				}
+			}
+		}
+		StringOutCommon += "\n";
+		//mean error estimation
+		double sumOfAbsErrors = 0;
+		double sumOfErrors = 0;
+		float maxAbsError = 0;
+		for (int i = 0; i < localCounter; i++)
+		{
+			sumOfErrors += (double)(LocalErrors[i]);
+			sumOfAbsErrors += abs((double)(LocalErrors[i]));
+			if (maxAbsError < abs(LocalErrors[i]))
+				maxAbsError = abs(LocalErrors[i]);
 		}
 
+		float errorAbsMean = (float)(sumOfAbsErrors / (double)localCounter);
+		float errorMean = (float)(sumOfErrors / (double)localCounter);
+
+		double sumForStd = 0;
+		for (int i = 0; i < localCounter; i++)
+		{
+			sumForStd += ((double)LocalErrors[i]) * ((double)LocalErrors[i]);
+		}
+
+		DirErrorsMean[(int)dirFomFileName] = errorMean;
+		DirErrorsAbsMean[(int)dirFomFileName] = errorAbsMean;
+		DirErrorsStd[(int)dirFomFileName] = (float)sqrt(sumForStd / (double)localCounter);
+		DirErrorsMax[(int)dirFomFileName] = maxAbsError;
+
+
 	}
-	// Actin resulting direction estimation
+/*
+	//resulting direction estimation
 	float maxLength = 0;
 	float dirForMaxLength = 0;
 	for (int i = 0; i < 180; i++)
@@ -259,11 +329,7 @@ int main(int argc, char* argv[])
 		//StringOut += to_string(DirHist[359 - i] - dirForMaxLength);
 		StringOut += "\n";
 	}
-	string CommonFullFileNameOut = ConfigFile.string() + "_CommonNew" + ".txt";
-	std::ofstream outFileCommon(CommonFullFileNameOut);//FileToProcess.path().filename().string());
 
-	outFileCommon << StringOutCommon;
-	outFileCommon.close();
 
 
 	string HistFullFileNameOut = ConfigFile.string() + "_DirHist" + ".txt";
@@ -287,9 +353,66 @@ int main(int argc, char* argv[])
 
 	outFileA << StringOutA;
 	outFileA.close();
+*/
+
+/*
+	string ErrorPlotsFileNameOut = ConfigFile.string() + "_DirHist" + ".txt";
+	std::ofstream outFile(ErrorPlotsFileNameOut);//FileToProcess.path().filename().string());
+
+	outFile << StringOut;
+	outFile.close();
+
+	string StringOutA = "";
+	for (int i = 0; i < 65000; i++)
+	{
+		if (i >= histCount)
+			break;
+		StringOutA += to_string(Samples[i] - dirForMaxLength);
+		StringOutA += "\n";
+
+	}
+
+	CommonFullFileNameOut = ConfigFile.string() + "_DirForTTest" + ".txt";
+	std::ofstream outFileA(CommonFullFileNameOut);//FileToProcess.path().filename().string());
+
+	outFileA << StringOutA;
+	outFileA.close();
+*/
+
+	string CommonFullFileNameOut = ConfigFile.string() + "_CommonNew" + ".txt";
+	std::ofstream outFileCommon(CommonFullFileNameOut);//FileToProcess.path().filename().string());
+
+	outFileCommon << StringOutCommon;
+	outFileCommon.close();
+
+	string StringDirStats = ProcOptions.ShowParams();
+	StringDirStats += "\n\n";
+	StringDirStats += "direction\tError Mean\tError ABS Mean\tError Std\tError Max";
+	StringDirStats += "\n";
+	for(int i = 0; i < 91; i++)
+	{
+		StringDirStats += to_string(i);
+		StringDirStats += "\t";
+		StringDirStats += to_string(DirErrorsMean[i]);
+		StringDirStats += "\t";
+		StringDirStats += to_string(DirErrorsAbsMean[i]);
+		StringDirStats += "\t";
+		StringDirStats += to_string(DirErrorsStd[i]);
+		StringDirStats += "\t";
+		StringDirStats += to_string(DirErrorsMax[i]);
+		StringDirStats += "\n";
+
+	}
+
+	string DirStatsFileNameOut = ConfigFile.string() + "_DirStats" + ".txt";
+	std::ofstream dirStatsFileCommon(DirStatsFileNameOut);//FileToProcess.path().filename().string());
+
+	dirStatsFileCommon << StringDirStats;
+	dirStatsFileCommon.close();
+
 
 	string in;
-	std::cin >> in;
+	//std::cin >> in;
 	return 0;
 }
 
