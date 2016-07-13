@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
 	ProcOptions.LoadParams(ConfigFile.string());
 	cout << ProcOptions.ShowParams();
 
-	path PathToProcess(ProcOptions.InFolderName1);
+	path PathToProcess(ProcOptions.InFolderName2);
 	if (!exists(PathToProcess))
 	{
 		cout << PathToProcess << " not exists " << '\n';
@@ -103,7 +103,7 @@ int main(int argc, char* argv[])
 			cout << InPath.filename().string() << " File not exists" << "\n";
 			break;
 		}
-		regex FilePattern(ProcOptions.InFilePattern1);
+		regex FilePattern(ProcOptions.InFilePattern2);
 		if (!regex_match(InPath.filename().string().c_str(), FilePattern))
 			continue;
 		// looking for direction in the file name
@@ -219,6 +219,10 @@ int main(int argc, char* argv[])
 				StringOutCommon += "\t\t";
 
 				dirError = dirFomFileName - dir1;
+				if (dirError > 90.0)
+					dirError = dirFomFileName - dir1 - 180;
+				if (dirError < -90.0)
+					dirError = dirFomFileName - dir1 + 180;
 				StringOutCommon += to_string(dirError);
 				//StringOutCommon += Line1;
 				//StringOutCommon += "\t";
@@ -411,7 +415,7 @@ int main(int argc, char* argv[])
 	dirStatsFileCommon.close();
 
 
-	string in;
+	//string in;
 	//std::cin >> in;
 	return 0;
 }

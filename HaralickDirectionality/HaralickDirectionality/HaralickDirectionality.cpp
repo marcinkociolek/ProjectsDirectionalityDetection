@@ -523,8 +523,9 @@ int main(int argc, char* argv[])
 		}
 	}
 	//end
-	string TempStr;
-	cin >> TempStr;
+//for debug only
+	//string TempStr;
+	//cin >> TempStr;
 	return 0;
 }
 
