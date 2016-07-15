@@ -29,7 +29,6 @@ using namespace boost::filesystem;
 
 int main(int argc, char* argv[])
 {
-	bool useSecondFile = 0;
 	if (argc < 2)
 	{
 		cout << "\nTo few arguments.";
@@ -46,7 +45,7 @@ int main(int argc, char* argv[])
 	ProcOptions.LoadParams(ConfigFile.string());
 	cout << ProcOptions.ShowParams();
 
-	path PathToProcess(ProcOptions.InFolderName2);
+	path PathToProcess(ProcOptions.OutFolderName1);
 	if (!exists(PathToProcess))
 	{
 		cout << PathToProcess << " not exists " << '\n';
@@ -57,7 +56,7 @@ int main(int argc, char* argv[])
 		cout << PathToProcess << " This is not a directory path " << '\n';
 		return 0;
 	}
-
+/*
 	int *DirHist = new int[360];
 	float *LengthHist = new float[360];
 	for (int i = 0; i < 360; i++)
@@ -65,24 +64,36 @@ int main(int argc, char* argv[])
 		DirHist[i] = 0;
 		LengthHist[i] = 0;
 	}
-	float *Samples = new float[65536];
-	for (int i = 0; i < 65536; i++)
-	{
-		Samples[i] = 0.0;
-	}
+*/
+//	float *Samples = new float[65536];
+//	for (int i = 0; i < 65536; i++)
+//	{
+//		Samples[i] = 0.0;
+//	}
 
-	float *LocalErrors = new float[10000];
+	//float *LocalErrors = new float[10000];
+
+	float globalDirErrorsMean;
+	float globalDirErrorsAbsMean;
+	float globalDirErrorsStd;
+	float globalDirErrorsMax = 0.0;
+	int globalDirErrorsCount = 0;
+
 
 	float *DirErrorsMean = new float[91];
 	float *DirErrorsAbsMean = new float[91];
 	float *DirErrorsStd = new float[91];
 	float *DirErrorsMax = new float[91];
+	int *DirErrorsCount = new int[91];
+	int *DirCount = new int[91];
 	for (int i = 0; i < 91; i++)
 	{
 		DirErrorsMean[i] = 0.0;
 		DirErrorsAbsMean[i] = 0.0;
 		DirErrorsStd[i] = 0.0;
 		DirErrorsMax[i] = 0.0;
+		DirErrorsCount[i] = 0;
+		DirCount[i] = 0;
 	}
 
 
@@ -91,9 +102,13 @@ int main(int argc, char* argv[])
 	StringOut += ProcOptions.ShowParams();
 	StringOut += "\n";
 
-	int histCount = 0;
-
 	int fileCount = 0;
+	int globalCounter = 0;
+	double globalSumOfAbsErrors = 0;
+	double globalSumOfErrors = 0;
+	float globalMaxAbsError = 0;
+	double globalSumForStd = 0;
+
 	for (directory_entry& FileToProcess : directory_iterator(PathToProcess))
 	{
 		path InPath = FileToProcess.path();
@@ -170,12 +185,17 @@ int main(int argc, char* argv[])
 		float dirError;
 
 		int localCounter = 0;
-		for (int i = 0; i < 10000; i++)
-		{
-			LocalErrors[i] = 0.0;
-		}
+//		for (int i = 0; i < 10000; i++)
+//		{
+//			LocalErrors[i] = 0.0;
+//		}
 
+		double sumOfAbsErrors = 0;
+		double sumOfErrors = 0;
+		float maxAbsError = 0;
+		double sumForStd = 0;
 
+		int errorCounter = 0;
 		while (inFile1.good())
 		{
 
@@ -224,6 +244,8 @@ int main(int argc, char* argv[])
 				if (dirError < -90.0)
 					dirError = dirFomFileName - dir1 + 180;
 				StringOutCommon += to_string(dirError);
+
+
 				//StringOutCommon += Line1;
 				//StringOutCommon += "\t";
 
@@ -231,49 +253,58 @@ int main(int argc, char* argv[])
 				StringOutCommon += "\n";
 
 
-				if (localCounter < 10000)
-					LocalErrors[localCounter] = dirError;
+//				if (localCounter < 10000)
+//					LocalErrors[localCounter] = dirError;
+
 				localCounter++;
+				globalCounter++;
 				// Actin dir hist estimation
 				if (!dir1IsNAN& (mean1 >= ProcOptions.treshold1))
 				{
-					DirHist[(int)dir1]++;
-					DirHist[(int)dir1 + 180]++;
-					if (histCount < 65000)
-						Samples[histCount] = dir1;
-					histCount++;
+					sumOfErrors += (double)(dirError);
+					sumOfAbsErrors += abs((double)(dirError));
+					if (maxAbsError < abs(dirError))
+						maxAbsError = abs(dirError);
+					sumForStd += ((double)dirError) * ((double)dirError);
+
+
+					globalSumOfErrors += (double)(dirError);
+					globalSumOfAbsErrors += abs((double)(dirError));
+					if (globalMaxAbsError < abs(dirError))
+						globalMaxAbsError = abs(dirError);
+					globalSumForStd += ((double)dirError) * ((double)dirError);
+
+					if (dirError)
+					{
+						globalDirErrorsCount++;
+						errorCounter++;
+					}
+
+					//DirHist[(int)dir1]++;
+					//DirHist[(int)dir1 + 180]++;
 				}
 			}
 		}
+
 		StringOutCommon += "\n";
 		//mean error estimation
-		double sumOfAbsErrors = 0;
-		double sumOfErrors = 0;
-		float maxAbsError = 0;
-		for (int i = 0; i < localCounter; i++)
-		{
-			sumOfErrors += (double)(LocalErrors[i]);
-			sumOfAbsErrors += abs((double)(LocalErrors[i]));
-			if (maxAbsError < abs(LocalErrors[i]))
-				maxAbsError = abs(LocalErrors[i]);
-		}
 
 		float errorAbsMean = (float)(sumOfAbsErrors / (double)localCounter);
 		float errorMean = (float)(sumOfErrors / (double)localCounter);
-
-		double sumForStd = 0;
-		for (int i = 0; i < localCounter; i++)
-		{
-			sumForStd += ((double)LocalErrors[i]) * ((double)LocalErrors[i]);
-		}
 
 		DirErrorsMean[(int)dirFomFileName] = errorMean;
 		DirErrorsAbsMean[(int)dirFomFileName] = errorAbsMean;
 		DirErrorsStd[(int)dirFomFileName] = (float)sqrt(sumForStd / (double)localCounter);
 		DirErrorsMax[(int)dirFomFileName] = maxAbsError;
-
-
+		DirErrorsCount[(int)dirFomFileName] = errorCounter;
+		DirCount[(int)dirFomFileName] = localCounter;
+		inFile1.close();
 	}
+	globalDirErrorsMean = (float)(globalSumOfErrors / (double)globalCounter);
+	globalDirErrorsAbsMean = (float)(globalSumOfAbsErrors / (double)globalCounter);
+	globalDirErrorsStd = (float)sqrt(globalSumForStd / (double)globalCounter);
+//	globalDirErrorsMax = maxAbsError;
+
 /*
 	//resulting direction estimation
 	float maxLength = 0;
@@ -383,7 +414,7 @@ int main(int argc, char* argv[])
 	outFileA.close();
 */
 
-	string CommonFullFileNameOut = ConfigFile.string() + "_CommonNew" + ".txt";
+	string CommonFullFileNameOut = ProcOptions.OutFolderName2 + ConfigFile.filename().string() + "_CommonNew" + ".txt";
 	std::ofstream outFileCommon(CommonFullFileNameOut);//FileToProcess.path().filename().string());
 
 	outFileCommon << StringOutCommon;
@@ -391,7 +422,28 @@ int main(int argc, char* argv[])
 
 	string StringDirStats = ProcOptions.ShowParams();
 	StringDirStats += "\n\n";
-	StringDirStats += "direction\tError Mean\tError ABS Mean\tError Std\tError Max";
+	StringDirStats += "File\tGlobal Error Mean\tGlobal Error ABS Mean\tGlobal Error Std\tGlobal Error Max\tGlobal Error Count\t Global Sample Count\t\tMin Offset\Max Offset";
+	StringDirStats += "\n";
+	StringDirStats += ConfigFile.string();
+	StringDirStats += "\t";
+	StringDirStats += to_string(globalDirErrorsMean);
+	StringDirStats += "\t";
+	StringDirStats += to_string(globalDirErrorsAbsMean);
+	StringDirStats += "\t";
+	StringDirStats += to_string(globalDirErrorsStd);
+	StringDirStats += "\t";
+	StringDirStats += to_string(globalMaxAbsError);
+	StringDirStats += "\t";
+	StringDirStats += to_string(globalDirErrorsCount);
+	StringDirStats += "\t";
+	StringDirStats += to_string(globalCounter);
+	StringDirStats += "\t\t";
+	StringDirStats += to_string(ProcOptions.minOfset);
+	StringDirStats += "\t";
+	StringDirStats += to_string(ProcOptions.maxOfset);
+
+	StringDirStats += "\n\n";
+	StringDirStats += "direction\tError Mean\tError ABS Mean\tError Std\tError Max\tError Count \tSample Count\t\tMin Offset\Max Offset";
 	StringDirStats += "\n";
 	for(int i = 0; i < 91; i++)
 	{
@@ -404,11 +456,16 @@ int main(int argc, char* argv[])
 		StringDirStats += to_string(DirErrorsStd[i]);
 		StringDirStats += "\t";
 		StringDirStats += to_string(DirErrorsMax[i]);
+		StringDirStats += "\t";
+		StringDirStats += to_string(DirErrorsCount[i]);
+		StringDirStats += "\t";
+		StringDirStats += to_string(DirCount[i]);
+
 		StringDirStats += "\n";
 
 	}
 
-	string DirStatsFileNameOut = ConfigFile.string() + "_DirStats" + ".txt";
+	string DirStatsFileNameOut = ProcOptions.OutFolderName2 + ConfigFile.filename().string() + "_DirStats" + ".txt";
 	std::ofstream dirStatsFileCommon(DirStatsFileNameOut);//FileToProcess.path().filename().string());
 
 	dirStatsFileCommon << StringDirStats;

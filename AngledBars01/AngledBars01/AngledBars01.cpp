@@ -18,7 +18,7 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 	std::string FileName, FolderName, FileNameBase, FileNameExtension;
-	FolderName = "E:\\Testimages\\DirectionalityExtensiveTest\\BarsA0-90F16T08\\"; // folder where to save outpute test images (use double slashes, even at the end)
+	FolderName = "E:\\Testimages\\DirectionalityExtensiveTest\\BarsA0-90F16T08N4000\\"; // folder where to save outpute test images (use double slashes, even at the end)
 	FileNameBase = "Bars"; // beginning of test file name
 	FileNameExtension = ".tif"; // test file name extension
 
@@ -46,7 +46,8 @@ int main(int argc, char* argv[])
 
 	bool cropImage = 1; // Crop image after rotation: 1-->yes; 0-->no
 
-	int iterNr = 0;//10; // number of modifed images (blur or noise): 0 means not distortion applied
+	int iterNr = 2;//10; // number of modifed images (blur or noise): 0 means not distortion applied
+	int iterStart = 2;
 
 	// the resulting image size if always half of these values, if cropping is on (see above)
 	int maxX = 1024;
@@ -56,11 +57,11 @@ int main(int argc, char* argv[])
 
 	//donot change
 	int noiseSTD = 0; // Initial value for Gaussian noise STD
-	int kernelSize = 0; // not needed for now, defined below
+	int kernelSize = 0; // notv needed for now, defined below
 
 // iteration from here
 	for (float rotationAngle = rotationAngleStart; rotationAngle <=  rotationAngleStop; rotationAngle += rotationAngleStep)
-	for (int k = 0; k <= iterNr; k++)
+		for (int k = iterStart; k <= iterNr; k++)
 	{
 
 		Mat Im;
