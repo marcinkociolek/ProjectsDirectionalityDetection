@@ -18,7 +18,7 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 	std::string FileName, FolderName, FileNameBase, FileNameExtension;
-	FolderName = "E:\\Testimages\\DirectionalityExtensiveTest\\BarsA0-90F16T08N4000\\"; // folder where to save outpute test images (use double slashes, even at the end)
+	FolderName = "E:\\Testimages\\DirectionalityExtensiveTest\\BarsA0-90F16T08N08000\\"; // folder where to save outpute test images (use double slashes, even at the end)
 	FileNameBase = "Bars"; // beginning of test file name
 	FileNameExtension = ".tif"; // test file name extension
 
@@ -46,8 +46,8 @@ int main(int argc, char* argv[])
 
 	bool cropImage = 1; // Crop image after rotation: 1-->yes; 0-->no
 
-	int iterNr = 2;//10; // number of modifed images (blur or noise): 0 means not distortion applied
-	int iterStart = 2;
+	int iterNr = 4;//10; // number of modifed images (blur or noise): 0 means not distortion applied
+	int iterStart = 4;
 
 	// the resulting image size if always half of these values, if cropping is on (see above)
 	int maxX = 1024;

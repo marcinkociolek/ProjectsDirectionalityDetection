@@ -29,16 +29,17 @@ using namespace boost::filesystem;
 int main(int argc, char* argv[])
 {
 	
-	path ConfigFile("E:\\TestImages\\DirectionalityExtensiveTest02\\config.xml");
+	path ConfigFile("E:\\TestImages\\DirectionalityExtensiveTest\\config.xml");
 	
-	string InputFolderName = "BarsA0-90F16T08N00000";
+	string InputFolderName = "BarsA0-90F16T08N08000";
 	string CommonName = InputFolderName + "OutF0C61Off";
 	
 	int iterStart = 2;
-	int iterEnd = 4;
+	int iterEnd = 16;
 
 	
 	path ExeFile("D:\\MSVSBuildDir\\HaralickDirectionalityBuildR\\x64\\Release\\HaralickDirectionality.exe");
+	path ExeFile2("D:\\MSVSBuildDir\\RevisitOneImageSerieBuild\\x64\\Debug\\RevisitOneImageSerie.exe");
 	
 	path BaseFolder = ConfigFile.parent_path();
 
@@ -51,6 +52,9 @@ int main(int argc, char* argv[])
 	path AnalisisTxtFile = BaseFolder;
 	AnalisisTxtFile /= path(InputFolderName + ".txt");
 
+	path PostAnalisisTxtFile = BaseFolder;
+	PostAnalisisTxtFile /= path(InputFolderName + "POST.txt");
+
 	cout << ConfigFile.string();
 	cout << "\n";
 	cout << BaseFolder.string();
@@ -59,7 +63,8 @@ int main(int argc, char* argv[])
 	//return 0;
 
 	string AnalisisTxt = "";
-	
+	string PostAnalisisTxt = "";
+
 	if (!exists(ConfigFile))
 	{
 		cout << ConfigFile.filename().string() << " not exists " << '\n';
@@ -90,6 +95,7 @@ int main(int argc, char* argv[])
 
 		
 		AnalisisTxt += ExeFile.string() + " " + NewFile.string() + "\n";
+		PostAnalisisTxt += ExeFile2.string() + " " + NewFile.string() + "\n";
 
 		string TextToModyfy = "";
 		// InFolder name
@@ -207,6 +213,11 @@ int main(int argc, char* argv[])
 
 	dirStatsFileCommon << AnalisisTxt;
 	dirStatsFileCommon.close();
+
+	std::ofstream dirStatsFile2Common(PostAnalisisTxtFile.string());//FileToProcess.path().filename().string());
+
+	dirStatsFile2Common << PostAnalisisTxt;
+	dirStatsFile2Common.close();
 	//string in;
 	//cin >> in;
 	return 0;

@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
 	}
 */
 	//path ConfigFile(argv[1]);
-	path ConfigFile("D:\\Testimages\\execute.txt");
+	path ConfigFile("E:\\TestImages\\DirectionalityExtensiveTest\\BarsA0-90F16T08N08000POST.txt");
 
 	if (!exists(ConfigFile))
 	{
@@ -55,31 +55,39 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 	string Line;
+
+	PROCESS_INFORMATION pi[8];
+	STARTUPINFOA si[8];
+	int processIndex = 0;
+
 	while (inFile1.good())
 	{
 		getline(inFile1, Line);
 		
-		PROCESS_INFORMATION pi;
-		STARTUPINFO si;
 
-		ZeroMemory(&pi, sizeof(pi));
-		ZeroMemory(&si, sizeof(si));
-		si.cb = sizeof(si);
-		//LPWSTR cmdline(Line);
+		ZeroMemory(&pi[processIndex], sizeof(pi[processIndex]));
+		ZeroMemory(&si[processIndex], sizeof(si[processIndex]));
+		si[processIndex].cb = sizeof(si[processIndex]);
+		LPSTR cmdline((char *)Line.c_str());
 		//CreateProcessA
-		if (!CreateProcessA(NULL, Line.c_str(), NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi))
-			cout << "no process created");
-		WaitForSingleObject(pi.hProcess, INFINITE);
+		if (!CreateProcessA(NULL, cmdline, NULL, NULL, FALSE, 0, NULL, NULL, &si[processIndex], &pi[processIndex]))
+			cout << "no process created";
+		WaitForSingleObject(pi[processIndex].hProcess, INFINITE);
 
 		DWORD exitcode;
-		while (!GetExitCodeProcess(pi.hProcess, &exitcode))
+		while (!GetExitCodeProcess(pi[processIndex].hProcess, &exitcode))
 		{
+			//processIndex++;
+			//if (processIndex > 6)
+			//	processIndex = 0;
+
 		}
-		CloseHandle(pi.hProcess);
-		CloseHandle(pi.hThread);
+		CloseHandle(pi[processIndex].hProcess);
+		CloseHandle(pi[processIndex].hThread);
 		cout << "exitcode recived " << exitcode;
 
 	}
+	inFile1.close();
 	string in;
 	cin >> in;
 	return 0;
