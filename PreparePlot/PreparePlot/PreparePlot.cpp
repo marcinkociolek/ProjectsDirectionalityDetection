@@ -29,7 +29,17 @@ using namespace boost::filesystem;
 
 int main(int argc, char* argv[])
 {
-	path PathToProcess("E:\\TestImages\\DirectionalityExtensiveTest\\DataAnalisisBarsA0-90F16T08N2000\\");
+	string arg1 = "E:\\TestImages\\DirectionalityExtensiveTest\\DataAnalisisBarsA0-90F16T08N2000\\";
+
+	string arg2 = "DataAnalisisBarsA0-90F16T08N2000";
+
+	if (argc >2 )
+		arg2 = argv[2];
+
+	if (argc > 1)
+		arg1 = argv[1];
+
+	path PathToProcess(arg1);
 	if (!exists(PathToProcess))
 	{
 		cout << PathToProcess << " not exists " << '\n';
@@ -85,7 +95,8 @@ int main(int argc, char* argv[])
 		inFile1.close();
 	}
 
-	string DirStatsFileNameOut = PathToProcess.string() + "_Plot" + ".txt";
+
+	string DirStatsFileNameOut = PathToProcess.string() + "\\" + arg2;// "_Plot" + ".txt";
 	std::ofstream dirStatsFileCommon(DirStatsFileNameOut);//FileToProcess.path().filename().string());
 
 	dirStatsFileCommon << StringOut;

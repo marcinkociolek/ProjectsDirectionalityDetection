@@ -33,15 +33,16 @@ using namespace boost::filesystem;
 
 int main(int argc, char* argv[])
 {
-/*
+
 	if (argc < 2)
 	{
 		cout << "\nTo few arguments.";
 		return 0;
 	}
-*/
+	//string arg1;// = "E:\\TestImages\\DirectionalityExtensiveTest01\\BarsA0-90F16T08N10000POST.txt";
+
 	//path ConfigFile(argv[1]);
-	path ConfigFile("E:\\TestImages\\DirectionalityExtensiveTest\\BarsA0-90F16T08N08000POST.txt");
+	path ConfigFile(argv[1]);
 
 	if (!exists(ConfigFile))
 	{
@@ -88,8 +89,8 @@ int main(int argc, char* argv[])
 
 	}
 	inFile1.close();
-	string in;
-	cin >> in;
+//	string in;
+//	cin >> in;
 	return 0;
 }
 
