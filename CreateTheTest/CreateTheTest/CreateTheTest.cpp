@@ -29,13 +29,14 @@ using namespace boost::filesystem;
 int main(int argc, char* argv[])
 {
 	
-	path ConfigFile("E:\\TestImages\\DirectionalityExtensiveTest04\\config.xml");
+	path ConfigFile("E:\\TestImages\\DirExtTest06Blur3Offsets\\config.xml");
 	
-	string InputFolderName = "BarsA0-90F16T08N16000";
+	string InputFolderName = "BarsA0-90F16T08B21";
 	string CommonName = InputFolderName + "OutF0C61Off3Min";
 	
 	int iterStart = 2;
-	int iterEnd = 16;
+	int iterEnd = 32;
+	int ofsetRange = 2;
 
 	
 	path ExeFile("D:\\MSVSBuildDir\\HaralickDirectionalityBuildR\\x64\\Release\\HaralickDirectionality.exe");
@@ -200,7 +201,7 @@ int main(int argc, char* argv[])
 //!!!!!!!!!!!!!!! 1 offset
 		//TextToModyfy = ItoStrLZ(i, 2);
 //!!!!!!!!!!!!!!! 3 ofsets
-		TextToModyfy = ItoStrLZ(i+2, 2);
+		TextToModyfy = ItoStrLZ(i + ofsetRange, 2);
 		pElem->Clear();
 		pElem->LinkEndChild(new TiXmlText(TextToModyfy.c_str()));
 
@@ -222,6 +223,7 @@ int main(int argc, char* argv[])
 	
 	std::ofstream dirStatsFile2Common(PostAnalisisTxtFile.string());//FileToProcess.path().filename().string());
 
+	dirStatsFile2Common << AnalisisTxt;
 	dirStatsFile2Common << PostAnalisisTxt;
 	dirStatsFile2Common.close();
 	//string in;

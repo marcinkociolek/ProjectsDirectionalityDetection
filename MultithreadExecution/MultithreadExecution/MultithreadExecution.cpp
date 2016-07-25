@@ -64,7 +64,8 @@ int main(int argc, char* argv[])
 	while (inFile1.good())
 	{
 		getline(inFile1, Line);
-		
+		if (Line == "")
+			continue;
 
 		ZeroMemory(&pi[processIndex], sizeof(pi[processIndex]));
 		ZeroMemory(&si[processIndex], sizeof(si[processIndex]));
