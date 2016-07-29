@@ -29,14 +29,14 @@ using namespace boost::filesystem;
 int main(int argc, char* argv[])
 {
 	
-	path ConfigFile("E:\\TestImages\\DirExtTest06Blur3Offsets\\config.xml");
+	path ConfigFile("E:\\TestImages\\DirExtTest06Blur6Offsets\\config.xml");
 	
 	string InputFolderName = "BarsA0-90F16T08B21";
-	string CommonName = InputFolderName + "OutF0C61Off3Min";
+	string CommonName = InputFolderName + "OutF0C61Off6Min";
 	
 	int iterStart = 2;
 	int iterEnd = 32;
-	int ofsetRange = 2;
+	int ofsetRange = 5;
 
 	
 	path ExeFile("D:\\MSVSBuildDir\\HaralickDirectionalityBuildR\\x64\\Release\\HaralickDirectionality.exe");
@@ -212,18 +212,20 @@ int main(int argc, char* argv[])
 	}
 	create_directory(Out2Folder);
 
-	
+	PostAnalisisTxt += ExeFile3.string() + " " + Out2Folder.string() + " _plot" + InputFolderName + ".txt" + "\n";
+
 	std::ofstream dirStatsFileCommon(AnalisisTxtFile.string());//FileToProcess.path().filename().string());
 
 	dirStatsFileCommon << AnalisisTxt;
+	dirStatsFileCommon << PostAnalisisTxt;
 	dirStatsFileCommon.close();
 
 	
-	PostAnalisisTxt += ExeFile3.string() + " " + Out2Folder.string() + " _plot" + InputFolderName + ".txt" + "\n";
+	
 	
 	std::ofstream dirStatsFile2Common(PostAnalisisTxtFile.string());//FileToProcess.path().filename().string());
 
-	dirStatsFile2Common << AnalisisTxt;
+	//dirStatsFile2Common << AnalisisTxt;
 	dirStatsFile2Common << PostAnalisisTxt;
 	dirStatsFile2Common.close();
 	//string in;

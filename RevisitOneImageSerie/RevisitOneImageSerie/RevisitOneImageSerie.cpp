@@ -256,11 +256,12 @@ int main(int argc, char* argv[])
 //				if (localCounter < 10000)
 //					LocalErrors[localCounter] = dirError;
 
-				localCounter++;
-				globalCounter++;
+
 				// Actin dir hist estimation
-				if (!dir1IsNAN& (mean1 >= ProcOptions.treshold1))
+				if (!dir1IsNAN )//(& mean1 >= ProcOptions.treshold1))
 				{
+					localCounter++;
+					globalCounter++;
 					sumOfErrors += (double)(dirError);
 					sumOfAbsErrors += abs((double)(dirError));
 					if (maxAbsError < abs(dirError))
