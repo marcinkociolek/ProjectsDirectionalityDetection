@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
 	FileNameBase = "Bars"; // beginning of test file name
 	FileNameExtension = ".tif"; // test file name extension
 
-	bool saveResult = 1; // 1 --> files saved
+	bool saveResult = 0; // 1 --> files saved
 	bool displayResult = 1; // 1 --> files only displayed
 	// only one of the following three options should be chosen, or none (type of noise)
 	bool addNoise = 1;

@@ -29,14 +29,14 @@ using namespace boost::filesystem;
 int main(int argc, char* argv[])
 {
 	
-	path ConfigFile("E:\\TestImages\\DirExtTest06Blur6Offsets\\config.xml");
+	path ConfigFile("E:\\TestImages\\DirExtTest06Noise10Offsets\\config.xml");
 	
-	string InputFolderName = "BarsA0-90F16T08B21";
-	string CommonName = InputFolderName + "OutF0C61Off6Min";
+	string InputFolderName = "BarsA0-90F16T08N18000";
+	string CommonName = InputFolderName + "OutF0C61Off10Min";
 	
 	int iterStart = 2;
-	int iterEnd = 32;
-	int ofsetRange = 5;
+	int iterEnd = 20;
+	int ofsetRange = 9;
 
 	
 	path ExeFile("D:\\MSVSBuildDir\\HaralickDirectionalityBuildR\\x64\\Release\\HaralickDirectionality.exe");
