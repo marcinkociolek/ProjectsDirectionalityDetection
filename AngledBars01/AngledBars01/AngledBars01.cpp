@@ -18,19 +18,19 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 	std::string FileName, FolderName, FileNameBase, FileNameExtension;
-	FolderName = "E:\\TestImages\\DirectionalityExtensiveTest02\\BarsA0-90F08T04N00000\\"; // folder where to save outpute test images (use double slashes, even at the end)
+	FolderName = "C:\\Data\\TestImages2\\"; // folder where to save outpute test images (use double slashes, even at the end)
 	FileNameBase = "Bars"; // beginning of test file name
 	FileNameExtension = ".tif"; // test file name extension
 
-	bool saveResult = 0; // 1 --> files saved
+	bool saveResult = 1; // 1 --> files saved
 	bool displayResult = 1; // 1 --> files only displayed
 	// only one of the following three options should be chosen, or none (type of noise)
 	bool addNoise = 1;
 	bool gausBlur = 0; // blur kernel if going to have a Gaussian shape (opencv function below, parameter fixed for now)
 	bool averageBlur = 0; // blur kernel if going to have constant value (1/number of pixels in the kernel)
 	
-	int barTickness = 4;
-	int barFrequency = 8; // distance between corresponding bar location (i.e., barFrequency - barTickness = distance between bars)
+	int barTickness = 8;
+	int barFrequency = 16; // distance between corresponding bar location (i.e., barFrequency - barTickness = distance between bars)
 
 	// other parameters
 	int intensityBright = 65535.0/4.0*3.0;
@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
 	bool rotateImage = 1; // Image rotation: 1-->yes; 0-->no
 	float rotationAngleStart = 0;
 	float rotationAngleStop = 90;
-	float rotationAngleStep = 1;
+	float rotationAngleStep = 30;
 
 	bool cropImage = 1; // Crop image after rotation: 1-->yes; 0-->no
 
