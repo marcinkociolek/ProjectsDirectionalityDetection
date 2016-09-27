@@ -404,80 +404,114 @@ int main(int argc, char* argv[])
 					Angles[i] = 0;
 				}
 
-				// ofset loop
-				for (int offset = ProcOptions.minOfset; offset <= ProcOptions.maxOfset; offset += 1)
-				{
-					for (int angleIndex = 0; angleIndex < stepNr; angleIndex++)
-					{
-						float angle = ProcOptions.angleStep * angleIndex;
-						//Mat COM; // co-occurrence matrix definition
-						COM.release();
-						if (ProcOptions.tileShape < 2)
-							COM = COMCardone4(SmallIm, offset, angle, ProcOptions.binCount, maxNorm, minNorm, ProcOptions.interpolation);
-						else
-							COM = COMCardoneRoi(SmallIm,Roi, offset, angle, ProcOptions.binCount, maxNorm, minNorm, ProcOptions.interpolation, 1);
-						COMParams(COM, &Contrast[angleIndex], &Energy[angleIndex], &Homogenity[angleIndex], &Correlation[angleIndex]);
-					}
-					// best angle for ofset
-					int bestAngleContrast, bestAngleEnergy, bestAngleHomogenity, bestAngleCorrelation;
-					if (ProcOptions.useContrast)
-						bestAngleContrast = FindBestAngleMin(Contrast, stepNr);
-					if (ProcOptions.useEnergy)
-						bestAngleEnergy = FindBestAngleMax(Energy, stepNr);
-					if (ProcOptions.useHomogeneity)
-						bestAngleHomogenity = FindBestAngleMax(Homogenity, stepNr);
-					if (ProcOptions.useCorrelation)
-						bestAngleCorrelation = FindBestAngleMax(Correlation, stepNr);
-
-					if (ProcOptions.useContrast)
-						Angles[bestAngleContrast]++;
-					if (ProcOptions.useEnergy)
-						Angles[bestAngleEnergy]++;
-					if (ProcOptions.useHomogeneity)
-						Angles[bestAngleHomogenity]++;
-					if (ProcOptions.useCorrelation)
-						Angles[bestAngleCorrelation]++;
-				}
 				int bestAngle = 0;
 				int maxAngle = Angles[0];
-				for (int i = 1; i < stepNr; i++)
+
+				if (meanCondition)
 				{
-					if (maxAngle < Angles[i])
+
+					// ofset loop
+					for (int offset = ProcOptions.minOfset; offset <= ProcOptions.maxOfset; offset += 1)
 					{
-						maxAngle = Angles[i];
-						bestAngle = i;
+						for (int angleIndex = 0; angleIndex < stepNr; angleIndex++)
+						{
+							float angle = ProcOptions.angleStep * angleIndex;
+							//Mat COM; // co-occurrence matrix definition
+							COM.release();
+							if (ProcOptions.tileShape < 2)
+								COM = COMCardone4(SmallIm, offset, angle, ProcOptions.binCount, maxNorm, minNorm, ProcOptions.interpolation);
+							else
+								COM = COMCardoneRoi(SmallIm, Roi, offset, angle, ProcOptions.binCount, maxNorm, minNorm, ProcOptions.interpolation, 1);
+							COMParams(COM, &Contrast[angleIndex], &Energy[angleIndex], &Homogenity[angleIndex], &Correlation[angleIndex]);
+						}
+						// best angle for ofset
+						int bestAngleContrast, bestAngleEnergy, bestAngleHomogenity, bestAngleCorrelation;
+						if (ProcOptions.useContrast)
+							bestAngleContrast = FindBestAngleMin(Contrast, stepNr);
+						if (ProcOptions.useEnergy)
+							bestAngleEnergy = FindBestAngleMax(Energy, stepNr);
+						if (ProcOptions.useHomogeneity)
+							bestAngleHomogenity = FindBestAngleMax(Homogenity, stepNr);
+						if (ProcOptions.useCorrelation)
+							bestAngleCorrelation = FindBestAngleMax(Correlation, stepNr);
+
+						if (ProcOptions.useContrast)
+							Angles[bestAngleContrast]++;
+						if (ProcOptions.useEnergy)
+							Angles[bestAngleEnergy]++;
+						if (ProcOptions.useHomogeneity)
+							Angles[bestAngleHomogenity]++;
+						if (ProcOptions.useCorrelation)
+							Angles[bestAngleCorrelation]++;
 					}
-				}
-
-				// show line on image
-				//int barCenterX = ProcOptions.maxTileX / 2 + x;
-				//int barCenterY = ProcOptions.maxTileY / 2 + y;
 				
-				double lineLength;
-				if (ProcOptions.lineLengthPropToConfidence)
-					lineLength = (double)(ProcOptions.lineHalfLength) / (ProcOptions.maxOfset - ProcOptions.minOfset + 1) / featCount * maxAngle;
-				else
-					lineLength = (double)(ProcOptions.lineHalfLength);
-				int lineOffsetX = (int)round(lineLength *  sin((double)(bestAngle)*ProcOptions.angleStep* PI / 180.0));
-				int lineOffsetY = (int)round(lineLength * cos((double)(bestAngle)*ProcOptions.angleStep* PI / 180.0));
+					for (int i = 1; i < stepNr; i++)
+					{
+						if (maxAngle < Angles[i])
+						{
+							maxAngle = Angles[i];
+							bestAngle = i;
+						}
+					}
 
-				//
+
+					// show line on image
+					//int barCenterX = ProcOptions.maxTileX / 2 + x;
+					//int barCenterY = ProcOptions.maxTileY / 2 + y;
+
+					double lineLength;
+					if (ProcOptions.lineLengthPropToConfidence)
+						lineLength = (double)(ProcOptions.lineHalfLength) / (ProcOptions.maxOfset - ProcOptions.minOfset + 1) / featCount * maxAngle;
+					else
+						lineLength = (double)(ProcOptions.lineHalfLength);
+					int lineOffsetX = (int)round(lineLength *  sin((double)(bestAngle)*ProcOptions.angleStep* PI / 180.0));
+					int lineOffsetY = (int)round(lineLength * cos((double)(bestAngle)*ProcOptions.angleStep* PI / 180.0));
+
+					//
 
 
+					if ((maxAngle >= ProcOptions.minHit) && meanCondition)
+					{
+						//line(ImToShow, Point(barCenterX - lineOffsetX, barCenterY - lineOffsetY), Point(barCenterX + lineOffsetX, barCenterY + lineOffsetY), Scalar(0, 0.0, 0.0, 0.0), ProcOptions.imposedLineThickness);
+						line(ImToShow, Point(x - lineOffsetX, y - lineOffsetY), Point(x + lineOffsetX, y + lineOffsetY), Scalar(0, 0.0, 0.0, 0.0), ProcOptions.imposedLineThickness);
+					}
+
+
+
+					if (ProcOptions.displayResult)
+					{
+						imshow("Image", ImToShow);
+					}
+
+
+
+					if (ProcOptions.displaySmallImage)
+					{
+						//Mat SmallImToShow = ShowImageF32PseudoColor(SmallIm, minNorm, maxNorm);
+						SmallImToShow.release();
+						SmallImToShow = ShowImageF32PseudoColor(SmallIm, minNorm, maxNorm);
+						line(SmallImToShow, Point(SmallImToShow.cols / 2 - lineOffsetX, SmallImToShow.rows / 2 - lineOffsetY), Point(SmallImToShow.cols / 2 + lineOffsetX, SmallImToShow.rows / 2 + lineOffsetY), Scalar(0, 0.0, 0.0, 0.0), ProcOptions.imposedLineThickness);
+						imshow("ImageSmall", ShowSolidRegionOnImage(GetContour5(Roi), SmallImToShow));
+					}
+
+
+				}
 				if ((maxAngle >= ProcOptions.minHit) && meanCondition)
 				{
-					//line(ImToShow, Point(barCenterX - lineOffsetX, barCenterY - lineOffsetY), Point(barCenterX + lineOffsetX, barCenterY + lineOffsetY), Scalar(0, 0.0, 0.0, 0.0), ProcOptions.imposedLineThickness);
-					line(ImToShow, Point(x - lineOffsetX, y - lineOffsetY), Point(x + lineOffsetX, y + lineOffsetY), Scalar(0, 0.0, 0.0, 0.0), ProcOptions.imposedLineThickness);
+					cout << yTileNr << "\t" << xTileNr << "\t" << "A = " << to_string(bestAngle*ProcOptions.angleStep);
+					cout << "  c = " << ItoStrLS(maxAngle, 2) << " mean =  " << to_string(meanSmallIm);
+					cout << " min norm = " << to_string(minNorm) << " max norm = " << to_string(maxNorm) << "\n";
+					OutString += ItoStrLS(yTileNr, 2) + "\t" + ItoStrLS(xTileNr, 2) + "\t";
+
 				}
-				if (ProcOptions.displayResult)
+				else
 				{
-					imshow("Image", ImToShow);
+					cout << yTileNr << "\t" << xTileNr << "\t" << "A = " << "NaN";
+					cout << "  c = " <<  "NaN" << " mean =  " << to_string(meanSmallIm);
+					cout << " min norm = " << to_string(minNorm) << " max norm = " << to_string(maxNorm) << "\n";
+					OutString += ItoStrLS(yTileNr, 2) + "\t" + ItoStrLS(xTileNr, 2) + "\t";
 				}
 
-				cout << yTileNr << "\t" << xTileNr << "\t" << "A = " << to_string(bestAngle*ProcOptions.angleStep);
-				cout << "  c = " << ItoStrLS(maxAngle, 2) << " mean =  " << to_string(meanSmallIm);
-				cout << " min norm = " << to_string(minNorm) << " max norm = " << to_string(maxNorm) << "\n";
-				OutString += ItoStrLS(yTileNr, 2) + "\t" + ItoStrLS(xTileNr, 2) + "\t";
 				if ((maxAngle >= ProcOptions.minHit) && meanCondition)
 				{
 					OutString += to_string((float)bestAngle * ProcOptions.angleStep) + "\t";
@@ -490,14 +524,6 @@ int main(int argc, char* argv[])
 				}
 				OutString += to_string(meanSmallIm) + "\t" + to_string(minNorm) + "\t" + to_string(maxNorm) + "\n";
 
-				if (ProcOptions.displaySmallImage)
-				{
-					//Mat SmallImToShow = ShowImageF32PseudoColor(SmallIm, minNorm, maxNorm);
-					SmallImToShow.release();
-					SmallImToShow = ShowImageF32PseudoColor(SmallIm, minNorm, maxNorm);
-					line(SmallImToShow, Point(SmallImToShow.cols / 2 - lineOffsetX, SmallImToShow.rows / 2 - lineOffsetY), Point(SmallImToShow.cols / 2 + lineOffsetX, SmallImToShow.rows / 2 + lineOffsetY), Scalar(0, 0.0, 0.0, 0.0), ProcOptions.imposedLineThickness);
-					imshow("ImageSmall", ShowSolidRegionOnImage(GetContour5(Roi), SmallImToShow));
-				}
 
 				if (ProcOptions.displayResult || ProcOptions.displaySmallImage)
 				{
