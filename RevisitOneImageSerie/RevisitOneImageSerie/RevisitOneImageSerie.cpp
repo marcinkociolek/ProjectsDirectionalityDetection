@@ -10,7 +10,7 @@
 #include <math.h>
 
 #include "..\..\..\ProjectsLib\LibMarcin\ParamFromXML.h"
-#include "..\..\..\ProjectsLib\LibMarcin\DispLib.h"
+//#include "..\..\..\ProjectsLib\LibMarcin\DispLib.h"
 #include "..\..\..\ProjectsLib\LibMarcin\StringFcLib.h"
 
 //#include <tinyxml.h>

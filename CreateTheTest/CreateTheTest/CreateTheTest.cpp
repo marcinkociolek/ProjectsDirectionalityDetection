@@ -29,26 +29,29 @@ using namespace boost::filesystem;
 int main(int argc, char* argv[])
 {
 	
-	path ConfigFile("E:\\TestImages\\DirExtTest06Noise10Offsets\\config.xml");
+	path ConfigFile("C:\\Data\\ExtensiveDirAvgTest\\OutNoise02Offsets\\config.xml");
 	
-	string InputFolderName = "BarsA0-90F16T08N18000";
+	path InFolder("C:\\Data\\ExtensiveDirAvgTest\\InputData");
+
+	string InputFolderName = "BarsA0-90F16T08N20000";
 	string CommonName = InputFolderName + "OutF0C61Off10Min";
 	
 	int iterStart = 2;
-	int iterEnd = 20;
-	int ofsetRange = 9;
+	int iterEnd = 48;
+	int ofsetRange = 2;
 
 	
-	path ExeFile("D:\\MSVSBuildDir\\HaralickDirectionalityBuildR\\x64\\Release\\HaralickDirectionality.exe");
-	path ExeFile2("D:\\MSVSBuildDir\\RevisitOneImageSerieBuild\\x64\\Debug\\RevisitOneImageSerie.exe");
-	path ExeFile3("D:\\MSVSBuildDir\\PreparePlotBuild\\x64\\Debug\\PreparePlot.exe");
+	path ExeFile("C:\\Data\\MSVSBuildDir\\HaralickDirectionalityAvgBuildR\\x64\\Release\\HaralickDirectionalityAvg.exe");
+	path ExeFile2("C:\\Data\\MSVSBuildDir\\RevisitOneImageSerieBuild\\x64\\Debug\\RevisitOneImageSerie.exe");
+	path ExeFile3("C:\\Data\\MSVSBuildDir\\PreparePlotBuild\\x64\\Debug\\PreparePlot.exe");
+
+	
+	InFolder /= path(InputFolderName);
+
 	path BaseFolder = ConfigFile.parent_path();
 
 	path Out2Folder = BaseFolder;
 	Out2Folder /= path(InputFolderName + "DataAnalisis");
-	
-	path InFolder = BaseFolder;
-	InFolder /= path(InputFolderName);
 
 	path AnalisisTxtFile = BaseFolder;
 	AnalisisTxtFile /= path(InputFolderName + ".txt");
@@ -201,7 +204,7 @@ int main(int argc, char* argv[])
 //!!!!!!!!!!!!!!! 1 offset
 		//TextToModyfy = ItoStrLZ(i, 2);
 //!!!!!!!!!!!!!!! 3 ofsets
-		TextToModyfy = ItoStrLZ(i + ofsetRange, 2);
+		TextToModyfy = ItoStrLZ(i + ofsetRange - 1, 2);
 		pElem->Clear();
 		pElem->LinkEndChild(new TiXmlText(TextToModyfy.c_str()));
 

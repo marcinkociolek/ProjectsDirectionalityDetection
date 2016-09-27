@@ -14,15 +14,16 @@
 #include <fstream>
 //#include <Windows.h>
 
-#include "Functions.h"
-#include "ParamFromXML.h"
-#include "DispLib.h"
-#include "NormalizationLib.h"
-#include "HaralickLib.h"
-#include "StringFcLib.h"
+#include "..\..\..\ProjectsLib\LibMarcin\Functions.h"
+#include "..\..\..\ProjectsLib\LibMarcin\ParamFromXML.h"
+#include "..\..\..\ProjectsLib\LibMarcin\DispLib.h"
+#include "..\..\..\ProjectsLib\LibMarcin\NormalizationLib.h"
+//#include "HaralickLib.h"
+#include "..\..\..\ProjectsLib\LibMarcin\StringFcLib.h"
 
-#include <tinyxml.h>
-#include <tinystr.h>
+#include "..\..\..\ProjectsLib\tinyxml\tinyxml.h"
+#include "..\..\..\ProjectsLib\tinyxml\tinystr.h"
+
 
 #define PI 3.14159265
 
@@ -338,7 +339,7 @@ int main(int argc, char* argv[])
 	//handle files
 	if (ProcOptions.textOut)
 	{
-		string TextFileName = ProcOptions.OutFolderName2 + InPath.filename().stem().string() + ".txt";
+		string TextFileName = ProcOptions.OutFolderName1 + InPath.filename().stem().string() + ".txt";
 		std::ofstream out(TextFileName);
 		out << OutString;
 		out.close();
