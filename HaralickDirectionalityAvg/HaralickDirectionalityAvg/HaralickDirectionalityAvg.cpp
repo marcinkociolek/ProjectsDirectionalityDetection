@@ -348,7 +348,7 @@ int main(int argc, char* argv[])
 		int xTileNr = 0;
 		int yTileNr = 0;
 
-		OutString += "Tile Y\tTile X\tAngle\tBest Angle Count\tMean Intensity\tTile min norm\tTile max norm\n";
+		OutString += "Tile Y\tTile X\tAngle Contrast\tAngle Energy\tAngle Hogeneity\tAngle Corelation\tMean Intensity\tTile min norm\tTile max norm\n";
 		for (int y = ProcOptions.offsetTileY; y <= (maxY - ProcOptions.offsetTileY); y += ProcOptions.shiftTileY)
 		{
 			for (int x = ProcOptions.offsetTileX; x <= (maxX - ProcOptions.offsetTileX); x += ProcOptions.shiftTileX)
@@ -496,11 +496,10 @@ int main(int argc, char* argv[])
 				}
 
 				cout << yTileNr << "\t" << xTileNr << "\t";
-				cout << "A Corr = " << to_string(bestAngleCorrelation*ProcOptions.angleStep);
 				cout << "A Cont = " << to_string(bestAngleContrast*ProcOptions.angleStep);
 				cout << "A Ener = " << to_string(bestAngleEnergy*ProcOptions.angleStep);
 				cout << "A Homg = " << to_string(bestAngleHomogenity*ProcOptions.angleStep);
-
+				cout << "A Corr = " << to_string(bestAngleCorrelation*ProcOptions.angleStep);
 
 				//cout << "  c = " << ItoStrLS(maxAngle, 2) << " mean =  " << to_string(meanSmallIm);
 				cout << " min norm = " << to_string(minNorm) << " max norm = " << to_string(maxNorm) << "\n";
@@ -516,6 +515,8 @@ int main(int argc, char* argv[])
 				}
 				else
 				{
+					OutString += "NAN\t";
+					OutString += "NAN\t";
 					OutString += "NAN\t";
 					OutString += "NAN\t";
 				}
@@ -543,7 +544,11 @@ int main(int argc, char* argv[])
 			yTileNr++;
 			xTileNr = 0;
 		}
-		imwrite(ProcOptions.OutFolderName1 + InPath.filename().stem().string() + ".bmp", ImToShow);
+		
+		if (ProcOptions.imgOut)
+		{
+			imwrite(ProcOptions.OutFolderName1 + InPath.filename().stem().string() + ".bmp", ImToShow);
+		}
 
 		if (ProcOptions.textOut)
 		{

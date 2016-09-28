@@ -29,20 +29,20 @@ using namespace boost::filesystem;
 int main(int argc, char* argv[])
 {
 	
-	path ConfigFile("C:\\Data\\ExtensiveDirAvgTest\\OutNoise02Offsets\\config.xml");
+	path ConfigFile("C:\\Data\\ExtensiveDirAvgTest\\OutNoise03Offsets\\config.xml");
 	
 	path InFolder("C:\\Data\\ExtensiveDirAvgTest\\InputData");
 
 	string InputFolderName = "BarsA0-90F16T08N20000";
-	string CommonName = InputFolderName + "OutF0C61Off10Min";
+	string CommonName = InputFolderName + "OutF0C61Off3Min";
 	
 	int iterStart = 2;
-	int iterEnd = 48;
-	int ofsetRange = 2;
+	int iterEnd = 24;
+	int ofsetRange = 3;
 
 	
 	path ExeFile("C:\\Data\\MSVSBuildDir\\HaralickDirectionalityAvgBuildR\\x64\\Release\\HaralickDirectionalityAvg.exe");
-	path ExeFile2("C:\\Data\\MSVSBuildDir\\RevisitOneImageSerieBuild\\x64\\Debug\\RevisitOneImageSerie.exe");
+	path ExeFile2("C:\\Data\\MSVSBuildDir\\RevisitOneImageSerie4featuresBuild\\x64\\Release\\RevisitOneImageSerie4features.exe");
 	path ExeFile3("C:\\Data\\MSVSBuildDir\\PreparePlotBuild\\x64\\Debug\\PreparePlot.exe");
 
 	

@@ -404,8 +404,8 @@ int main(int argc, char* argv[])
 					Angles[i] = 0;
 				}
 
-				int bestAngle = 0;
-				int maxAngle = Angles[0];
+				int bestAngle;
+				int maxAngle;
 
 				if (meanCondition)
 				{
@@ -445,6 +445,9 @@ int main(int argc, char* argv[])
 							Angles[bestAngleCorrelation]++;
 					}
 				
+					// look for most occurring direction
+					bestAngle = 0;
+					maxAngle = Angles[0];
 					for (int i = 1; i < stepNr; i++)
 					{
 						if (maxAngle < Angles[i])
