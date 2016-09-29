@@ -216,13 +216,15 @@ int main(int argc, char* argv[])
 		while (inFile1.good())
 		{
 			getline(inFile1, Line1);
-			if (Line1 == "Tile Y\tTile X\tAngle Contrast\tAngle Energy\tAngle Hogeneity\tAngle Corelation\tMean Intensity\tTile min norm\tTile max norm")//"yRoiNr\txRoiNr\tdirection\tDDC\tmean Tile\tstd Tile\tmean tile 2\tstd Tile 2")
+			if (Line1 == "Tile Y\tTile X\t")
 				break;
 			StringOutCommon += Line1;
 			//StringOutCommon += "\t\t\t\t\t\t\t\t";
 			StringOutCommon += "\n";
 
 		}
+		StringOutCommon += Line1;
+		getline(inFile1, Line1);
 		StringOutCommon += Line1;
 		StringOutCommon += "\n";
 
@@ -312,15 +314,15 @@ int main(int argc, char* argv[])
 				StringOutCommon += Line1;
 				StringOutCommon += "\t";
 
-				getline(inFile1, Line1, '\t');
-				mean1 = atof(Line1.c_str());
+				getline(inFile1, Line1);//getline(inFile1, Line1, '\t');
+				//mean1 = atof(Line1.c_str());
 				StringOutCommon += Line1;
 				StringOutCommon += "\t";
 
-				getline(inFile1, Line1, '\n');
-				std1 = atof(Line1.c_str());
-				StringOutCommon += Line1;
-				StringOutCommon += "\t\t";
+				//getline(inFile1, Line1, '\n');
+				//std1 = atof(Line1.c_str());
+				//StringOutCommon += Line1;
+				//StringOutCommon += "\t\t";
 
 				dirErrorCon = dirFomFileName - dirCon;
 				if (dirErrorCon > 90.0)
