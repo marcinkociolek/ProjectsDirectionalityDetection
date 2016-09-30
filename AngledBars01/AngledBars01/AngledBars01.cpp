@@ -18,15 +18,15 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 	std::string FileName, FolderName, FileNameBase, FileNameExtension;
-	FolderName = "C:\\Data\\ExtensiveDirAvgTest\\InputData\\BarsA0-90F16T08N20000\\"; // folder where to save outpute test images (use double slashes, even at the end)
+	FolderName = "C:\\Data\\ExtensiveDirAvgTest\\InputData\\BarsA0-90F16T08B21\\"; // folder where to save outpute test images (use double slashes, even at the end)
 	FileNameBase = "Bars"; // beginning of test file name
 	FileNameExtension = ".tif"; // test file name extension
 
 	bool saveResult = 1; // 1 --> files saved
 	bool displayResult = 1; // 1 --> files only displayed
 	// only one of the following three options should be chosen, or none (type of noise)
-	bool addNoise = 1;
-	bool gausBlur = 0; // blur kernel if going to have a Gaussian shape (opencv function below, parameter fixed for now)
+	bool addNoise = 0;
+	bool gausBlur = 1; // blur kernel if going to have a Gaussian shape (opencv function below, parameter fixed for now)
 	bool averageBlur = 0; // blur kernel if going to have constant value (1/number of pixels in the kernel)
 	
 	int barTickness = 8;

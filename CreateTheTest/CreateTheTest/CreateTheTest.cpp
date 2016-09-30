@@ -29,7 +29,7 @@ using namespace boost::filesystem;
 int main(int argc, char* argv[])
 {
 	
-	path ConfigFile("C:\\Data\\ExtensiveDirAvgTest\\OutNoise03Offsets\\config.xml");
+	path ConfigFile("C:\\Data\\ExtensiveDirAvgTest\\OutNoise05Offsets\\config.xml");
 	
 	path InFolder("C:\\Data\\ExtensiveDirAvgTest\\InputData");
 
@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
 	
 	int iterStart = 2;
 	int iterEnd = 24;
-	int ofsetRange = 3;
+	int ofsetRange = 5;
 
 	
 	path ExeFile("C:\\Data\\MSVSBuildDir\\HaralickDirectionalityAvgBuildR\\x64\\Release\\HaralickDirectionalityAvg.exe");

@@ -216,16 +216,20 @@ int main(int argc, char* argv[])
 		while (inFile1.good())
 		{
 			getline(inFile1, Line1);
-			if (Line1 == "Tile Y\tTile X\t")
+			regex LinePattern("Tile Y\tTile X\t.+");
+			if (regex_match(Line1.c_str(), LinePattern))
 				break;
+			
+//			if (Line1 == "Tile Y\tTile X\t")
+//				break;
 			StringOutCommon += Line1;
 			//StringOutCommon += "\t\t\t\t\t\t\t\t";
-			StringOutCommon += "\n";
+			//StringOutCommon += "\n";
 
 		}
 		StringOutCommon += Line1;
-		getline(inFile1, Line1);
-		StringOutCommon += Line1;
+		//getline(inFile1, Line1);
+		//StringOutCommon += Line1;
 		StringOutCommon += "\n";
 
 
