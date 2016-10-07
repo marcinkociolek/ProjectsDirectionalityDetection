@@ -1,6 +1,5 @@
-// AngledBars01.cpp : Defines the entry point for the console application.
+// LaticeConstrainedTestImages.cpp : Defines the entry point for the console application.
 //
-
 #include "opencv2\core\core.hpp"
 #include "opencv2\highgui\highgui.hpp"
 #include "opencv2\imgproc\imgproc.hpp"
@@ -18,37 +17,38 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 	std::string FileName, FolderName, FileNameBase, FileNameExtension;
-	FolderName = "C:\\Data\\ExtensiveDirAvgTest\\InputData2\\BarsA0-90F08T04\\"; // folder where to save outpute test images (use double slashes, even at the end)
+	FolderName = "C:\\Data\\GroundTrueForTextFeat\\GTbars\\"; // folder where to save outpute test images (use double slashes, even at the end)
 	FileNameBase = "Bars"; // beginning of test file name
 	FileNameExtension = ".tif"; // test file name extension
 
 	bool saveResult = 1; // 1 --> files saved
 	bool displayResult = 1; // 1 --> files only displayed
 	// only one of the following three options should be chosen, or none (type of noise)
-	bool preprocessBlurr = 1;
 	bool addNoise = 0;
 	bool gausBlur = 0; // blur kernel if going to have a Gaussian shape (opencv function below, parameter fixed for now)
 	bool averageBlur = 0; // blur kernel if going to have constant value (1/number of pixels in the kernel)
-	
-	int barTickness = 4;
-	int barFrequency = 8; // distance between corresponding bar location (i.e., barFrequency - barTickness = distance between bars)
+
+	int barMode = 1;
+
+	int barTickness = 8;
+	int barFrequency = 16; // distance between corresponding bar location (i.e., barFrequency - barTickness = distance between bars)
 
 	// other parameters
-	int intensityBright = 65535.0/4.0*3.0;
+	int intensityBright = 65535.0 / 4.0*3.0;
 	int intensityDark = 65535.0 / 4.0;
 
 	int noiseMean = 0; // mean of the Gaussian noise function 
 	int noiseSDTBase = 2000; // increasing step for Gaussian noise STD starting from noiseSTD below
 
-	bool rotateImage = 1; // Image rotation: 1-->yes; 0-->no
-	float rotationAngleStart = 0;
-	float rotationAngleStop = 360;
-	float rotationAngleStep = 1;
+	//bool rotateImage = 1; // Image rotation: 1-->yes; 0-->no
+	//float rotationAngleStart = 0;
+	//float rotationAngleStop = 90;
+	//float rotationAngleStep = 1;
 
-	bool cropImage = 1; // Crop image after rotation: 1-->yes; 0-->no
+	bool cropImage = 0; // Crop image after rotation: 1-->yes; 0-->no
 
-	int iterNr = 10;//10; // number of modifed images (blur or noise): 0 means not distortion applied
-	int iterStart = 10;
+	int iterNr = 0;//10; // number of modifed images (blur or noise): 0 means not distortion applied
+	int iterStart = 0;
 
 	// the resulting image size if always half of these values, if cropping is on (see above)
 	int maxX = 1024;
@@ -60,9 +60,9 @@ int main(int argc, char* argv[])
 	int noiseSTD = 0; // Initial value for Gaussian noise STD
 	int kernelSize = 0; // notv needed for now, defined below
 
-// iteration from here
-	for (float rotationAngle = rotationAngleStart; rotationAngle <=  rotationAngleStop; rotationAngle += rotationAngleStep)
-		for (int k = iterStart; k <= iterNr; k++)
+	// iteration from here
+//	for (float rotationAngle = rotationAngleStart; rotationAngle <= rotationAngleStop; rotationAngle += rotationAngleStep)
+	for (int k = iterStart; k <= iterNr; k++)
 	{
 
 		Mat Im;
@@ -72,36 +72,61 @@ int main(int argc, char* argv[])
 		//wIm = Im.data;
 
 		Point start, stop;
-		for (int x = offset; x < Im.rows; x += 1)
+		for (int i = offset; i < Im.rows; i += 1)
 		{
-			if (x%barFrequency < barTickness)
+			if (i % barFrequency < barTickness)
 			{
 
-				start.x = x;
-				start.y = 0;
+				switch (barMode)
+				{
+				case 1:
+					start.x = i;
+					start.y = 0;
+					stop.x = 0;
+					stop.y = i;
+					line(Im, start, stop, (float)intensityBright, 1);
+					
+					start.x = maxX;
+					start.y = maxX-i;
+					stop.x = maxX-i;
+					stop.y = maxX;
+					line(Im, start, stop, (float)intensityBright, 1);
+					break;
+				case 2:
+					start.x = 0;
+					start.y = i;
+					stop.x = maxX;
+					stop.y = i;
+					line(Im, start, stop, (float)intensityBright, 1);
+					break;
+				case 3:
+					start.x = i;
+					start.y = 0;
+					stop.x = maxX;
+					stop.y = maxX - i;
+					line(Im, start, stop, (float)intensityBright, 1);
+					start.x = 0;
+					start.y = maxX -i;
+					stop.x = i;
+					stop.y = maxX;
+					line(Im, start, stop, (float)intensityBright, 1);
+					break;
+				default :
+					start.x = i;
+					start.y = 0;
+					stop.x = i;
+					stop.y = maxX;
+					line(Im, start, stop, (float)intensityBright, 1);
+					break;
 
-				stop.x = x;
-				stop.y = maxY;
-				line(Im, start, stop, (float)intensityBright, 1);
+				}
+
+				//line(Im, start, stop, (float)intensityBright, 1);
 			}
-		}
-		if (preprocessBlurr)
-		{
-			Mat ImOut;
-			kernelSize = 3;
-			float kernelPixelCount = kernelSize * kernelSize;
-			Mat Kernel = Mat::zeros(kernelSize, kernelSize, CV_32F);
-			Kernel.at<float>(0, 1) = 0.15;
-			Kernel.at<float>(2, 1) = 0.15;
-			Kernel.at<float>(1, 0) = 0.15;
-			Kernel.at<float>(1, 2) = 0.15;
-			Kernel.at<float>(1, 1) = 0.4;
-			filter2D(Im, ImOut, -1, Kernel);
-
-			Im = ImOut;
 		}
 
 		//Rotation of image
+		/*
 		if (rotateImage)
 		{
 
@@ -109,6 +134,7 @@ int main(int argc, char* argv[])
 			Mat rotationMatrix = getRotationMatrix2D(rotationCenter, rotationAngle, 1);
 			warpAffine(Im, Im, rotationMatrix, Im.size());
 		}
+		*/
 		if (addNoise && k)
 		{
 			noiseSTD = k * noiseSDTBase;
@@ -133,9 +159,10 @@ int main(int argc, char* argv[])
 			float kernelPixelCount = kernelSize * kernelSize;
 			Mat Kernel = Mat::ones(kernelSize, kernelSize, CV_32F) / kernelPixelCount;
 			filter2D(Im, ImOut, -1, Kernel);
-			
+
 			Im = ImOut;
 		}
+		
 		if (cropImage)
 		{
 			// croped image by chalf
@@ -143,23 +170,39 @@ int main(int argc, char* argv[])
 			Im = Im.colRange(Im.cols / 4, Im.cols / 4 * 3);
 		}
 
-
+		
 		if (saveResult)
 		{
 			Mat ImSave;
 			Im.convertTo(ImSave, CV_16U);
 			FileName = FolderName + FileNameBase + "Thickness" + ItoStrLZ(barTickness, 2);
 			FileName += "Spacing" + ItoStrLZ(barFrequency - barTickness, 2);
+			/*
 			if (rotateImage)
-				FileName += "Angle" + ItoStrLZ(rotationAngle,3);
+				FileName += "Angle" + ItoStrLZ(rotationAngle, 3);
 			else
-				FileName += "Angle" + ItoStrLZ(0,3);
-			
+				FileName += "Angle" + ItoStrLZ(0, 3);
+			*/
+			switch(barMode)
+			{
+			case 1:
+				FileName += "D045";
+				break;
+			case 2:
+				FileName += "D090";
+				break;
+			case 3:
+				FileName += "D0135";
+				break;
+			default:
+				FileName += "D000";
+				break;
+			}
 			if (addNoise)
 				FileName += "NoiseSTD" + ItoStrLZ(noiseSTD, 5);
 
 			if (gausBlur)
-				FileName += "BlurKernel" + ItoStrLZ(kernelSize,2);
+				FileName += "BlurKernel" + ItoStrLZ(kernelSize, 2);
 
 			if (averageBlur)
 				FileName += "BlurKernel" + ItoStrLZ(kernelSize, 2);
@@ -180,18 +223,19 @@ int main(int argc, char* argv[])
 
 			Mat ImShow = ShowImageF32PseudoColor(ImTemp, 0.0, 65535.0);
 			//Mat ImShow = ShowImage16PseudoColor(Im, 0.0, 65535.0);
-		//	int normCoef = 65535 / 256;
-		//	ImTemp = Im / normCoef;
+			//	int normCoef = 65535 / 256;
+			//	ImTemp = Im / normCoef;
 
-		//	ImTemp.convertTo(ImTemp, CV_8U);
-		//	applyColorMap(ImTemp, ImShow, COLORMAP_JET);
+			//	ImTemp.convertTo(ImTemp, CV_8U);
+			//	applyColorMap(ImTemp, ImShow, COLORMAP_JET);
 			imshow("Image", ImShow);
-			waitKey(100);
+			waitKey(0);
 
 		}
 
 	}
 	return 0;
 }
+
 
 

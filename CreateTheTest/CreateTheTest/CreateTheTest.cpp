@@ -29,17 +29,19 @@ using namespace boost::filesystem;
 int main(int argc, char* argv[])
 {
 	
-	path ConfigFile("C:\\Data\\ExtensiveDirAvgTest\\OutNoise05Offsets\\config.xml");
+	path ConfigFile("C:\\Data\\ExtensiveDirAvgTest\\OutNoise07Offsets\\config.xml");
 	
 	path InFolder("C:\\Data\\ExtensiveDirAvgTest\\InputData");
 
-	string InputFolderName = "BarsA0-90F16T08N20000";
-	string CommonName = InputFolderName + "OutF0C61Off3Min";
-	
 	int iterStart = 2;
 	int iterEnd = 24;
-	int ofsetRange = 5;
+	int ofsetRange = 7;
 
+
+	string InputFolderName = "BarsA0-90F16T08N20000";
+	string CommonName = InputFolderName + "OutF0C61Off" + ItoStrLZ(ofsetRange, 2) + "Min";
+	
+	
 	
 	path ExeFile("C:\\Data\\MSVSBuildDir\\HaralickDirectionalityAvgBuildR\\x64\\Release\\HaralickDirectionalityAvg.exe");
 	path ExeFile2("C:\\Data\\MSVSBuildDir\\RevisitOneImageSerie4featuresBuild\\x64\\Release\\RevisitOneImageSerie4features.exe");
@@ -51,7 +53,7 @@ int main(int argc, char* argv[])
 	path BaseFolder = ConfigFile.parent_path();
 
 	path Out2Folder = BaseFolder;
-	Out2Folder /= path(InputFolderName + "DataAnalisis");
+	Out2Folder /= path(InputFolderName + "DataAnlOffRng" + ItoStrLZ(ofsetRange, 2));
 
 	path AnalisisTxtFile = BaseFolder;
 	AnalisisTxtFile /= path(InputFolderName + ".txt");

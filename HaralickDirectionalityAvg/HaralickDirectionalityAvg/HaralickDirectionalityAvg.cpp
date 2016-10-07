@@ -410,39 +410,46 @@ int main(int argc, char* argv[])
 				}
 
 				// ofset loop
-				for (int offset = ProcOptions.minOfset; offset <= ProcOptions.maxOfset; offset += 1)
+				if (meanCondition)
 				{
-					for (int angleIndex = 0; angleIndex < stepNr; angleIndex++)
+					for (int offset = ProcOptions.minOfset; offset <= ProcOptions.maxOfset; offset += 1)
 					{
-						float angle = ProcOptions.angleStep * angleIndex;
-						//Mat COM; // co-occurrence matrix definition
-						COM.release();
-						if (ProcOptions.tileShape < 2)
-							COM = COMCardone4(SmallIm, offset, angle, ProcOptions.binCount, maxNorm, minNorm, ProcOptions.interpolation);
-						else
-							COM = COMCardoneRoi(SmallIm, Roi, offset, angle, ProcOptions.binCount, maxNorm, minNorm, ProcOptions.interpolation, 1);
-						float tmpContrast, tmpEnergy, tmpHomogenity, tmpCorrelation;
-						COMParams(COM, &tmpContrast, &tmpEnergy, &tmpHomogenity, &tmpCorrelation);
-						Contrast[angleIndex] += tmpContrast;
-						Energy[angleIndex] += tmpEnergy;
-						Homogenity[angleIndex] += tmpHomogenity;
-						Correlation[angleIndex] = +tmpCorrelation;
-					}
+						for (int angleIndex = 0; angleIndex < stepNr; angleIndex++)
+						{
+							float angle = ProcOptions.angleStep * angleIndex;
+							//Mat COM; // co-occurrence matrix definition
+							COM.release();
+							if (ProcOptions.tileShape < 2)
+								COM = COMCardone4(SmallIm, offset, angle, ProcOptions.binCount, maxNorm, minNorm, ProcOptions.interpolation);
+							else
+								COM = COMCardoneRoi(SmallIm, Roi, offset, angle, ProcOptions.binCount, maxNorm, minNorm, ProcOptions.interpolation, 1);
+							float tmpContrast, tmpEnergy, tmpHomogenity, tmpCorrelation;
+							COMParams(COM, &tmpContrast, &tmpEnergy, &tmpHomogenity, &tmpCorrelation);
+							Contrast[angleIndex] += tmpContrast;
+							Energy[angleIndex] += tmpEnergy;
+							Homogenity[angleIndex] += tmpHomogenity;
+							Correlation[angleIndex] = +tmpCorrelation;
+						}
 
+					}
 				}
 				// best angle for ofset
 				int bestAngle = 0;
 				int bestAngleContrast, bestAngleEnergy, bestAngleHomogenity, bestAngleCorrelation;
-				if (ProcOptions.useContrast || 1)
-					bestAngleContrast = FindBestAngleMin(Contrast, stepNr);
-				if (ProcOptions.useEnergy || 1)
-					bestAngleEnergy = FindBestAngleMax(Energy, stepNr);
-				if (ProcOptions.useHomogeneity || 1)
-					bestAngleHomogenity = FindBestAngleMax(Homogenity, stepNr);
-				if (ProcOptions.useCorrelation || 1)
-					bestAngleCorrelation = FindBestAngleMax(Correlation, stepNr);
+				bestAngleContrast = FindBestAngleMin(Contrast, stepNr);
+				bestAngleEnergy = FindBestAngleMax(Energy, stepNr);
+				bestAngleHomogenity = FindBestAngleMax(Homogenity, stepNr);
+				bestAngleCorrelation = FindBestAngleMax(Correlation, stepNr);
 
-				bestAngle = bestAngleCorrelation;
+				if (ProcOptions.useContrast)
+					bestAngle = bestAngleContrast;
+				if (ProcOptions.useEnergy)
+					bestAngle = bestAngleEnergy;
+				if (ProcOptions.useHomogeneity)
+					bestAngle = bestAngleHomogenity;
+				if (ProcOptions.useCorrelation)
+					bestAngle = bestAngleCorrelation;
+
 				/*
 				int bestAngle = 0;
 				if (ProcOptions.useContrast)

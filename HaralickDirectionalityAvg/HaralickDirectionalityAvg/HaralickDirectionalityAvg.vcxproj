@@ -73,6 +73,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\..\..\MSVSBuildDir\$(ProjectName)BuildR\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>..\..\..\MSVSBuildDir\$(ProjectName)BuildR\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -81,6 +82,7 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>..\..\..\MSVSBuildDir\$(ProjectName)BuildR\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>..\..\..\MSVSBuildDir\$(ProjectName)BuildR\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

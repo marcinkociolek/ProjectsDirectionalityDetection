@@ -11,6 +11,7 @@
 #include <iostream>
 #include <fstream>
 
+
 #include "..\..\..\ProjectsLib\LibMarcin\Functions.h"
 #include "..\..\..\ProjectsLib\LibMarcin\NormalizationLib.h"
 #include "..\..\..\ProjectsLib\LibMarcin\HaralickLib.h"
@@ -37,7 +38,7 @@ using namespace boost::filesystem;
 int main(int argc, char* argv[])
 {
 	std::string FileName, FolderName, FileNameBase, FileNameExtension;
-	FolderName = "C:\\Data\\TestROIs2\\"; // folder where to save outpute test images (use double slashes, even at the end)
+	FolderName = "C:\\Data\\GroundTrueForTextFeat\\ROIs512x512r51x51xCount361\\"; // folder where to save outpute test images (use double slashes, even at the end)
 	FileNameBase = "ROI"; // beginning of test file name
 	FileNameExtension = ".tif"; // test file name extension
 
@@ -51,18 +52,20 @@ int main(int argc, char* argv[])
 	int roiSizeX = 51;
 	int roiSizeY = 51;
 
-	int roiOffsetX = 20;
-	int roiOffsetY = 20;
+	int roiOffsetX = 1;
+	int roiOffsetY = 1;
 
-	int roiStepX = 70;
-	int roiStepY = 60;
+	int roiStepX = 51;
+	int roiStepY = 51;
+
+	int roiCount = 361;
 
 	unsigned short roiIndex = 1;
 
 	Mat ROI = Mat::zeros(maxX, maxY, CV_16U);
-	for (int y = roiOffsetY; y < maxY - roiSizeY; y += roiStepY)
+	for (int y = roiOffsetY; y < maxY + 1- roiSizeY; y += roiStepY)
 	{
-		for (int x = roiOffsetX; x < maxX - roiSizeX; x += roiStepX)
+		for (int x = roiOffsetX; x < maxX + 1 - roiSizeX; x += roiStepX)
 		{
 			rectangle(ROI, Point(x, y), Point(x + roiSizeX, y + roiSizeY), roiIndex, -1);
 
@@ -74,12 +77,21 @@ int main(int argc, char* argv[])
 
 	waitKey(0);
 	
-	FileName = FolderName;
-	FileName += FileNameBase;
-	FileName += FileNameExtension;
-	
-	imwrite(FileName, ROI);
+	for (int i = 0; i < roiCount; i++)
+	{
+		FileName = FolderName;
+		FileName += FileNameBase;
+		FileName += "Size";
+		FileName += to_string(roiSizeY);
+		FileName += "x";
+		FileName += to_string(roiSizeY);
+		FileName += "Nr";
+		FileName += ItoStrLZ(i,3);
+		FileName += FileNameExtension;
 
+		imwrite(FileName, ROI);
+
+	}
 
 }
 
