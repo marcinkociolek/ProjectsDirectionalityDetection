@@ -45,17 +45,17 @@ static void onMouse(int event, int x, int y, int, void*)
 int main(int argc, char* argv[])
 {
 	string FileName, FolderName, FileNameBase, FileNameExtension;
-	FolderName = "D:\\Testimages\\KernelBased02\\";
-	FileNameBase = "Bars";
+	FolderName = "C:\\Data\\GroundTrueForTextFeat\\Circles\\";
+	FileNameBase = "Circles";
 	FileNameExtension = ".tif";
 
 	bool saveResult = 1;
 	bool displayResult = 1;
-	bool addNoise = 1;
+	bool addNoise = 0;
 	bool gausBlur = 0;
 	bool averageBlur = 0;
 
-	int kernelShape = 0; //0 - rectangle; 1 - ellipse 
+	int kernelShape = 1; //0 - rectangle; 1 - ellipse 
 
 	//int barTickness = 16;
 	//int barFrequency = 32;
@@ -67,20 +67,20 @@ int main(int argc, char* argv[])
 	int noiseMean = 0;
 	int noiseSDTBase = 2000;
 
-	bool rotateImage = 1;
+	bool rotateImage = 0;
 	int rotationAngle = 41;
-	bool cropImage = 1;
+	bool cropImage = 0;
 	int kernelRotationAngle = 0;
 
 	int iterNr = 1;
 
-	int maxX = 512;
-	int maxY = 512;
+	int maxX = 2048;
+	int maxY = 2048;
 
 	//int offset = 0;
 
 	// dot matrix definitiom
-	int spacing = 32;
+	int spacing = 12;
 
 	int stepX = spacing;
 	int stepY = spacing;
@@ -93,8 +93,8 @@ int main(int argc, char* argv[])
 	int kernelSize = 0;
 
 	int kernelMax = 41;
-	int shapeSizeX = 13;
-	int shapeSizeY = 27;
+	int shapeSizeX =7;
+	int shapeSizeY = 7;
 
 	Mat Kernel = Mat::zeros(kernelMax, kernelMax, CV_32F);
 
@@ -117,16 +117,16 @@ int main(int argc, char* argv[])
 	setMouseCallback("imageOut", onMouse, 0);
 
 	// iteration from here
-	for (int k = 0; k <= iterNr; k++)
+	for (int k = 0; k < iterNr; k++)
 	{
 
 		Mat Im;
 
 		Im = Mat::zeros(maxX, maxY, CV_32F);
 
-		for (int y = offsetY; y < maxY; y += stepY)
+		for (int y = offsetY; y < maxY - offsetY; y += stepY)
 		{
-			for (int x = offsetX; x < maxX; x += stepX)
+			for (int x = offsetX; x < maxX - offsetX; x += stepX)
 			{
 				Im.at<float>(y, x) = (float)intensityRange;
 			}
@@ -219,7 +219,7 @@ int main(int argc, char* argv[])
 		}
 
 
-		waitKey(0);
+		waitKey(2000);
 	}
 		/*
 		Point start, stop;

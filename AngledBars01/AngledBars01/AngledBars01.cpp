@@ -18,7 +18,7 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 	std::string FileName, FolderName, FileNameBase, FileNameExtension;
-	FolderName = "C:\\Data\\ExtensiveDirAvgTest\\InputData3\\BarsA0-90F08T04\\"; // folder where to save outpute test images (use double slashes, even at the end)
+	FolderName = "C:\\Data\\ExtensiveDirAvgTest\\InputData1a\\BarsA0-180F16T08N20000\\"; // folder where to save outpute test images (use double slashes, even at the end)
 	FileNameBase = "Bars"; // beginning of test file name
 	FileNameExtension = ".tif"; // test file name extension
 
@@ -26,12 +26,12 @@ int main(int argc, char* argv[])
 	bool displayResult = 1; // 1 --> files only displayed
 	// only one of the following three options should be chosen, or none (type of noise)
 	bool preprocessBlurr = 0;
-	bool addNoise = 0;
+	bool addNoise = 1;
 	bool gausBlur = 0; // blur kernel if going to have a Gaussian shape (opencv function below, parameter fixed for now)
-	bool averageBlur = 1; // blur kernel if going to have constant value (1/number of pixels in the kernel)
+	bool averageBlur =0; // blur kernel if going to have constant value (1/number of pixels in the kernel)
 	
-	int barTickness = 4;
-	int barFrequency = 8; // distance between corresponding bar location (i.e., barFrequency - barTickness = distance between bars)
+	int barTickness = 8;
+	int barFrequency = 16; // distance between corresponding bar location (i.e., barFrequency - barTickness = distance between bars)
 
 	// other parameters
 	int intensityBright = 65535.0/4.0*3.0;
@@ -42,13 +42,13 @@ int main(int argc, char* argv[])
 
 	bool rotateImage = 1; // Image rotation: 1-->yes; 0-->no
 	float rotationAngleStart = 0;
-	float rotationAngleStop = 360;
+	float rotationAngleStop = 180;
 	float rotationAngleStep = 1;
 
 	bool cropImage = 1; // Crop image after rotation: 1-->yes; 0-->no
 
-	int iterNr = 1;//10; // number of modifed images (blur or noise): 0 means not distortion applied
-	int iterStart = 1;
+	int iterNr = 10;//10; // number of modifed images (blur or noise): 0 means not distortion applied
+	int iterStart = 10;
 
 	// the resulting image size if always half of these values, if cropping is on (see above)
 	int maxX = 1024;

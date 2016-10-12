@@ -38,28 +38,28 @@ using namespace boost::filesystem;
 int main(int argc, char* argv[])
 {
 	std::string FileName, FolderName, FileNameBase, FileNameExtension;
-	FolderName = "C:\\Data\\GroundTrueForTextFeat\\ROIs512x512c51x51xCount361\\"; // folder where to save outpute test images (use double slashes, even at the end)
+	FolderName = "C:\\Data\\GroundTrueForTextFeat\\ROIs2048x2048r101x101Count10\\"; // folder where to save outpute test images (use double slashes, even at the end)
 	FileNameBase = "ROI"; // beginning of test file name
 	FileNameExtension = ".tif"; // test file name extension
 
 	bool saveResult = 1; // 1 --> files saved
 	bool displayResult = 1;
 
-	int roiShape = 1;
+	int roiShape = 0;
 	// the resulting image size if always half of these values, if cropping is on (see above)
-	int maxX = 512;
-	int maxY = 512;
+	int maxX = 2048;
+	int maxY = 2048;
 
-	int roiSizeX = 51;
-	int roiSizeY = 51;
+	int roiSizeX = 101;
+	int roiSizeY = 101;
 
-	int roiOffsetX = 26;
-	int roiOffsetY = 26;
+	int roiOffsetX = 56;
+	int roiOffsetY = 56;
 
-	int roiStepX = 51;
-	int roiStepY = 51;
+	int roiStepX = 101;
+	int roiStepY = 101;
 
-	int roiCount = 361;
+	int roiCount = 10;
 
 	unsigned short roiIndex = 1;
 
