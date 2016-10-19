@@ -38,28 +38,29 @@ using namespace boost::filesystem;
 int main(int argc, char* argv[])
 {
 	std::string FileName, FolderName, FileNameBase, FileNameExtension;
-	FolderName = "C:\\Data\\GroundTrueForTextFeat\\ROIs1024x1024r101x101Count10\\"; // folder where to save outpute test images (use double slashes, even at the end)
+	FolderName = "C:\\Data\\GroundTrueForTextFeat\\ROIs512x512c41x41xCount361\\"; // folder where to save outpute test images (use double slashes, even at the end)
 	FileNameBase = "ROI"; // beginning of test file name
 	FileNameExtension = ".tif"; // test file name extension
 
 	bool saveResult = 1; // 1 --> files saved
 	bool displayResult = 1;
+	bool writeColor = 0;
 
-	int roiShape = 0;
+	int roiShape = 1;
 	// the resulting image size if always half of these values, if cropping is on (see above)
-	int maxX = 1024;
-	int maxY = 1024;
+	int maxX = 512;
+	int maxY = 512;
 
-	int roiSizeX = 101;
-	int roiSizeY = 101;
+	int roiSizeX = 41;
+	int roiSizeY = 41;
 
-	int roiOffsetX = 56;
-	int roiOffsetY = 56;
+	int roiOffsetX = 26;
+	int roiOffsetY = 26;
 
-	int roiStepX = 101;
-	int roiStepY = 101;
+	int roiStepX = 51;
+	int roiStepY = 51;
 
-	int roiCount = 10;
+	int roiCount = 361;
 
 	unsigned short roiIndex = 1;
 
@@ -92,22 +93,36 @@ int main(int argc, char* argv[])
 	}
 
 	imshow("Image", ShowRegion(ROI));
-
-	waitKey(0);
+	waitKey(50);
+	
 
 	for (int i = 0; i < roiCount; i++)
 	{
 		FileName = FolderName;
 		FileName += FileNameBase;
+		switch (roiShape)
+		{
+		case 1:
+			FileName += "Cir";
+			break;
+		default:
+			FileName += "Rect";
+			break;
+		}
+		
 		FileName += "Size";
 		FileName += to_string(roiSizeY);
 		FileName += "x";
 		FileName += to_string(roiSizeY);
 		FileName += "Nr";
 		FileName += ItoStrLZ(i, 3);
+		
+		if (writeColor)
+			imwrite(FileName + ".bmp", ShowRegion(ROI));
 		FileName += FileNameExtension;
 
 		imwrite(FileName, ROI);
+		
 
 	}
 

@@ -425,6 +425,7 @@ int main(int argc, char* argv[])
 								COM = COMCardoneRoi(SmallIm, Roi, offset, angle, ProcOptions.binCount, maxNorm, minNorm, ProcOptions.interpolation, 1);
 							float tmpContrast, tmpEnergy, tmpHomogenity, tmpCorrelation;
 							COMParams(COM, &tmpContrast, &tmpEnergy, &tmpHomogenity, &tmpCorrelation);
+
 							Contrast[angleIndex] += tmpContrast;
 							Energy[angleIndex] += tmpEnergy;
 							Homogenity[angleIndex] += tmpHomogenity;
