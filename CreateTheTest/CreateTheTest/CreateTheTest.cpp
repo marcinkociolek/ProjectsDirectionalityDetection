@@ -29,25 +29,26 @@ using namespace boost::filesystem;
 int main(int argc, char* argv[])
 {
 	
-	path ConfigFile("C:\\Data\\ExtensiveDirAvgTest\\OutVNoise03Offsets\\config.xml");
+	path ConfigFile("E:\\ExtensiveDirAvgTest\\MapTestNoise6Offsets\\config.xml");
 	
-	path InFolder("C:\\Data\\ExtensiveDirAvgTest\\InputData1a");
+	path InFolder("E:\\ExtensiveDirAvgTest\\InputData");
 
 	int iterStart = 2;
-	int iterEnd = 24;
-	int ofsetRange = 3;
+	int iterEnd = 32;
+	int ofsetRange = 6;
 
 
-	string InputFolderName = "BarsA0-180F16T08N20000";//"BarsA0-90F16T08";
+	string InputFolderName = "BarsA0-90F16T08N00000";//"BarsA0-90F16T08";
 	string CommonName = InputFolderName + "OutF0C61Off" + ItoStrLZ(ofsetRange, 2) + "Min";
 	
 	
 	
 	//path ExeFile("C:\\Data\\MSVSBuildDir\\HaralickDirectionalityAvgBuildR\\x64\\Release\\HaralickDirectionalityAvg.exe");
-	path ExeFile("C:\\Data\\MSVSBuildDir\\HaralickBasedDirectionalityMapBuild\\x64\\Release\\HaralickBasedDirectionalityMap.exe");
-	
-	path ExeFile2("C:\\Data\\MSVSBuildDir\\RevisitOneImageSerie4featuresBuild\\x64\\Release\\RevisitOneImageSerie4features.exe");
-	path ExeFile3("C:\\Data\\MSVSBuildDir\\PreparePlotBuild\\x64\\Debug\\PreparePlot.exe");
+	//path ExeFile("C:\\Data\\MSVSBuildDir\\HaralickBasedDirectionalityMapBuild\\x64\\Release\\HaralickBasedDirectionalityMap.exe");
+	//path ExeFile("D:\\MSVSBuildDir\\HaralickDirectionalityAvgBuildR\\x64\\Release\\HaralickDirectionalityAvg.exe");
+	path ExeFile("D:\\MSVSBuildDir\\HaralickBasedDirectionalityMapBuild\\x64\\Release\\HaralickBasedDirectionalityMap.exe");
+	path ExeFile2("D:\\Data\\MSVSBuildDir\\RevisitOneImageSerie4featuresBuild\\x64\\Release\\RevisitOneImageSerie9features.exe");
+	path ExeFile3("D:\\Data\\MSVSBuildDir\\PreparePlotBuild\\x64\\Debug\\PreparePlot.exe");
 
 	
 	InFolder /= path(InputFolderName);

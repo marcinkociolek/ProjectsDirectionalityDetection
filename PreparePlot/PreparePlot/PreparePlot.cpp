@@ -29,7 +29,7 @@ using namespace boost::filesystem;
 
 int main(int argc, char* argv[])
 {
-	string arg1 = "E:\\TestImages\\DirectionalityExtensiveTest\\DataAnalisisBarsA0-90F16T08N2000\\";
+	string arg1 = "E:\\TestImages\\DirectionalityExtensiveTest\\DataAnalisisBarsA0-90F16T08N00000\\";
 
 	string arg2 = "DataAnalisisBarsA0-90F16T08N2000";
 
