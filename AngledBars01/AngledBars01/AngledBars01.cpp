@@ -18,7 +18,7 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 	std::string FileName, FolderName, FileNameBase, FileNameExtension;
-	FolderName = "C:\\Data\\ExtensiveDirAvgTest\\InputData1a\\BarsA0-180F16T08N20000\\"; // folder where to save outpute test images (use double slashes, even at the end)
+	FolderName = "C:\\Data\\ExtensiveDirectionalityTest\\InData\\BarsA0-180F16T08N20000\\"; // folder where to save outpute test images (use double slashes, even at the end)
 	FileNameBase = "Bars"; // beginning of test file name
 	FileNameExtension = ".tif"; // test file name extension
 
@@ -28,7 +28,7 @@ int main(int argc, char* argv[])
 	bool preprocessBlurr = 0;
 	bool addNoise = 1;
 	bool gausBlur = 0; // blur kernel if going to have a Gaussian shape (opencv function below, parameter fixed for now)
-	bool averageBlur =0; // blur kernel if going to have constant value (1/number of pixels in the kernel)
+	bool averageBlur = 0; // blur kernel if going to have constant value (1/number of pixels in the kernel)
 	
 	int barTickness = 8;
 	int barFrequency = 16; // distance between corresponding bar location (i.e., barFrequency - barTickness = distance between bars)
