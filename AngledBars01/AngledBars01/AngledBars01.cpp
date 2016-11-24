@@ -18,7 +18,7 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 	std::string FileName, FolderName, FileNameBase, FileNameExtension;
-	FolderName = "C:\\Data\\ExtensiveDirectionalityTest\\InData\\BarsA0-180F16T08N20000\\"; // folder where to save outpute test images (use double slashes, even at the end)
+	FolderName = "C:\\Data\\ExtensiveDirectionalityTest\\InData\\BarsA0-180F08T04N20000\\"; // folder where to save outpute test images (use double slashes, even at the end)
 	FileNameBase = "Bars"; // beginning of test file name
 	FileNameExtension = ".tif"; // test file name extension
 
@@ -30,8 +30,8 @@ int main(int argc, char* argv[])
 	bool gausBlur = 0; // blur kernel if going to have a Gaussian shape (opencv function below, parameter fixed for now)
 	bool averageBlur = 0; // blur kernel if going to have constant value (1/number of pixels in the kernel)
 	
-	int barTickness = 8;
-	int barFrequency = 16; // distance between corresponding bar location (i.e., barFrequency - barTickness = distance between bars)
+	int barTickness = 4;
+	int barFrequency = 8; // distance between corresponding bar location (i.e., barFrequency - barTickness = distance between bars)
 
 	// other parameters
 	int intensityBright = 65535.0/4.0*3.0;
@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
 	int noiseSDTBase = 2000; // increasing step for Gaussian noise STD starting from noiseSTD below
 
 	bool rotateImage = 1; // Image rotation: 1-->yes; 0-->no
-	float rotationAngleStart = 0;
+	float rotationAngleStart = 90;
 	float rotationAngleStop = 180;
 	float rotationAngleStep = 1;
 

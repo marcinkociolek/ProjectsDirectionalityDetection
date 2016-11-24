@@ -29,16 +29,16 @@ using namespace boost::filesystem;
 int main(int argc, char* argv[])
 {
 	
-	path ConfigFile("C:\\Data\\ExtensiveDirectionalityTest\\OutMap4Offsets\\config.xml");
+	path ConfigFile("C:\\Data\\ExtensiveDirectionalityTest\\F08T04OutMap8Offsets\\config.xml");
 	
 	path InFolder("C:\\Data\\ExtensiveDirectionalityTest\\InData");
 
 	int iterStart = 2;
-	int iterEnd = 32;
-	int ofsetRange = 4;
+	int iterEnd = 24;
+	int ofsetRange = 8;
 
 
-	string InputFolderName = "BarsA0-180F16T08N20000";//"BarsA0-90F16T08";
+	string InputFolderName = "BarsA0-180F08T04N12000";//"BarsA0-90F16T08";
 	string CommonName = InputFolderName + "OutF0C61Off" + ItoStrLZ(ofsetRange, 2) + "Min";
 	
 	
