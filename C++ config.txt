@@ -6,19 +6,19 @@ Intermediate Directory:
 C/C++
 General
 Additional Include directory:
-C:\opencv\build\include;C:\Boost\include\boost-1_61;D:\ProjectsLib\LibMarcin;D:\ProjectsLib\tinyxml;
+C:\opencv\build\include;C:\Boost\include\boost-1_62;..\..\..\ProjectsLib\LibMarcin;..\..\..\ProjectsLib\tinyxml;
 Linker
 General:
 Additional library directories:
 C:\opencv\build\x64\vc12\lib;C:\Boost\lib;
 Input
 Additional Dependences:
-opencv_core2411d.lib;opencv_highgui2411d.lib;opencv_imgproc2411d.lib
+opencv_core2413d.lib;opencv_highgui2413d.lib;opencv_imgproc2413d.lib
 
 
-opencv_core2411d.lib
-opencv_highgui2411d.lib
-opencv_imgproc2411d.lib
+opencv_core2413d.lib
+opencv_highgui2413d.lib
+opencv_imgproc2413d.lib
 
 
 
