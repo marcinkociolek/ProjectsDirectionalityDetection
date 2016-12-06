@@ -147,13 +147,9 @@ int main(int argc, char* argv[])
 
 
 		int x1, y1;
-		float  dirCon, dirEne, dirHom, dirCor, mean1, std1;
 		bool dir1IsNAN;
-		int x2, y2;
-		float dir2, dDC2, mean2, std2;
-		bool dir2IsNAN;
 
-		float dirErrorCon, dirErrorEne, dirErrorHom, dirErrorCor;
+		//float dirErrorCon, dirErrorEne, dirErrorHom, dirErrorCor;
 
 		int localCounter = 0;
 		//		for (int i = 0; i < 10000; i++)
@@ -161,34 +157,11 @@ int main(int argc, char* argv[])
 		//			LocalErrors[i] = 0.0;
 		//		}
 
-		double sumOfAbsErrorsCon = 0;
-		double sumOfErrorsCon = 0;
-		float maxAbsErrorCon = 0;
-		double sumForStdCon = 0;
-
-		int errorCounterCon = 0;
-
-		double sumOfAbsErrorsEne = 0;
-		double sumOfErrorsEne = 0;
-		float maxAbsErrorEne = 0;
-		double sumForStdEne = 0;
-
-		int errorCounterEne = 0;
-
-		double sumOfAbsErrorsHom = 0;
-		double sumOfErrorsHom = 0;
-		float maxAbsErrorHom = 0;
-		double sumForStdHom = 0;
-
-		int errorCounterHom = 0;
-
-		double sumOfAbsErrorsCor = 0;
-		double sumOfErrorsCor = 0;
-		float maxAbsErrorCor = 0;
-		double sumForStdCor = 0;
-
-		int errorCounterCor = 0;
-
+		for (int i = 0; i < modalityCount; i++)
+		{
+			DirStatPar[i].LocalInit();
+		}
+		
 		while (inFile1.good())
 		{
 
@@ -197,221 +170,111 @@ int main(int argc, char* argv[])
 			if (Line1 != "")
 			{
 
-				y1 = atoi(Line1.c_str());
+				y1 = stoi(Line1);
 				StringOutCommon += Line1;
 				StringOutCommon += "\t";
 
 				getline(inFile1, Line1, '\t');
-				x1 = atoi(Line1.c_str());
+				x1 = stoi(Line1);
 				StringOutCommon += Line1;
 				StringOutCommon += "\t";
 
-				getline(inFile1, Line1, '\t');
-				dirCon = atof(Line1.c_str());
-				StringOutCommon += Line1;
-				StringOutCommon += "\t";
-
-				if (Line1 == "NAN")
-					dir1IsNAN = 1;
-				else
-					dir1IsNAN = 0;
-
-				getline(inFile1, Line1, '\t');
-				dirEne = atof(Line1.c_str());
-				StringOutCommon += Line1;
-				StringOutCommon += "\t";
-
-				getline(inFile1, Line1, '\t');
-				dirHom = atof(Line1.c_str());
-				StringOutCommon += Line1;
-				StringOutCommon += "\t";
-
-				getline(inFile1, Line1, '\t');
-				dirCor = atof(Line1.c_str());
-				StringOutCommon += Line1;
-				StringOutCommon += "\t";
-
-				getline(inFile1, Line1);//getline(inFile1, Line1, '\t');
-				//mean1 = atof(Line1.c_str());
-				StringOutCommon += Line1;
-				StringOutCommon += "\t";
-
-				//getline(inFile1, Line1, '\n');
-				//std1 = atof(Line1.c_str());
-				//StringOutCommon += Line1;
-				//StringOutCommon += "\t\t";
-
-				dirErrorCon = dirFomFileName - dirCon;
-				if (dirErrorCon > 90.0)
-					dirErrorCon = dirFomFileName - dirCon - 180;
-				if (dirErrorCon < -90.0)
-					dirErrorCon = dirFomFileName - dirCon + 180;
-				StringOutCommon += to_string(dirErrorCon);
-
-				dirErrorEne = dirFomFileName - dirEne;
-				if (dirErrorEne > 90.0)
-					dirErrorEne = dirFomFileName - dirEne - 180;
-				if (dirErrorEne < -90.0)
-					dirErrorEne = dirFomFileName - dirEne + 180;
-				StringOutCommon += to_string(dirErrorEne);
-
-				dirErrorHom = dirFomFileName - dirHom;
-				if (dirErrorHom > 90.0)
-					dirErrorHom = dirFomFileName - dirHom - 180;
-				if (dirErrorHom < -90.0)
-					dirErrorHom = dirFomFileName - dirHom + 180;
-				StringOutCommon += to_string(dirErrorHom);
-
-				dirErrorCor = dirFomFileName - dirCor;
-				if (dirErrorCor > 90.0)
-					dirErrorCor = dirFomFileName - dirCor - 180;
-				if (dirErrorCor < -90.0)
-					dirErrorCor = dirFomFileName - dirCor + 180;
-				StringOutCommon += to_string(dirErrorCor);
-
-
-				StringOutCommon += "\n";
-
-				if (!dir1IsNAN)//(& mean1 >= ProcOptions.treshold1))
+				for (int i = 0; i < modalityCount; i++)
 				{
+					getline(inFile1, Line1, '\t');
+					
+					StringOutCommon += Line1;
+					StringOutCommon += "\t";
+					if (Line1 == "NAN")
+					{
+						DirStatPar[i].localDirIsNan = 1;
+						DirStatPar[i].globalNaNCount++;
+						DirStatPar[i].naNCount++;
+						continue;
+
+					}
+
+					DirStatPar[i].localDirIsNan = 0;
+
+					double dir = stod(Line1);
+					//DirStatPar[i]. = dir;
+
+					double dirError = dirFomFileName - dir;
+					if (dirError > 90.0)
+						dirError = dirFomFileName - dir - 180;
+					if (dirError < -90.0)
+						dirError = dirFomFileName - dir + 180;
+					
+					DirStatPar[i].localDirError = dirError;
+
+
 					localCounter++;
 					globalCounter++;
-					sumOfErrorsCon += (double)(dirErrorCon);
-					sumOfAbsErrorsCon += abs((double)(dirErrorCon));
-					if (maxAbsErrorCon < abs(dirErrorCon))
-						maxAbsErrorCon = abs(dirErrorCon);
-					sumForStdCon += ((double)dirErrorCon) * ((double)dirErrorCon);
+					DirStatPar[i].sumOfErrors += dirError;
+					DirStatPar[i].sumOfAbsErrors += abs(dirError);
+					if (DirStatPar[i].maxAbsError < abs(dirError))
+						DirStatPar[i].maxAbsError = abs(dirError);
+					DirStatPar[i].sumForStd += dirError * dirError;
 
-					sumOfErrorsEne += (double)(dirErrorEne);
-					sumOfAbsErrorsEne += abs((double)(dirErrorEne));
-					if (maxAbsErrorEne < abs(dirErrorEne))
-						maxAbsErrorEne = abs(dirErrorEne);
-					sumForStdEne += ((double)dirErrorEne) * ((double)dirErrorEne);
+					DirStatPar[i].globalSumOfErrors += dirError;
+					DirStatPar[i].globalSumOfAbsErrors += abs(dirError);
+					if (DirStatPar[i].globalMaxAbsError < abs(dirError))
+						DirStatPar[i].globalMaxAbsError = abs(dirError);
+					DirStatPar[i].globalSumForStd += dirError * dirError;
 
-					sumOfErrorsHom += (double)(dirErrorHom);
-					sumOfAbsErrorsHom += abs((double)(dirErrorHom));
-					if (maxAbsErrorHom < abs(dirErrorHom))
-						maxAbsErrorHom = abs(dirErrorHom);
-					sumForStdHom += ((double)dirErrorHom) * ((double)dirErrorHom);
-
-					sumOfErrorsCor += (double)(dirErrorCor);
-					sumOfAbsErrorsCor += abs((double)(dirErrorCor));
-					if (maxAbsErrorCor < abs(dirErrorCor))
-						maxAbsErrorCor = abs(dirErrorCor);
-					sumForStdCor += ((double)dirErrorCor) * ((double)dirErrorCor);
-
-
-					globalSumOfErrorsCon += (double)(dirErrorCon);
-					globalSumOfAbsErrorsCon += abs((double)(dirErrorCon));
-					if (globalMaxAbsErrorCon < abs(dirErrorCon))
-						globalMaxAbsErrorCon = abs(dirErrorCon);
-					globalSumForStdCon += ((double)dirErrorCon) * ((double)dirErrorCon);
-
-					if (dirErrorCon)
+					if (dirError)
 					{
-						globalConDirErrorsCount++;
-						errorCounterCon++;
+						DirStatPar[i].globalDirErrorsCount++;
+						DirStatPar[i].errorCounter++;
 					}
 
-					globalSumOfErrorsEne += (double)(dirErrorEne);
-					globalSumOfAbsErrorsEne += abs((double)(dirErrorEne));
-					if (globalMaxAbsErrorEne < abs(dirErrorEne))
-						globalMaxAbsErrorEne = abs(dirErrorEne);
-					globalSumForStdEne += ((double)dirErrorEne) * ((double)dirErrorEne);
 
-					if (dirErrorEne)
-					{
-						globalEneDirErrorsCount++;
-						errorCounterEne++;
-					}
-
-					globalSumOfErrorsHom += (double)(dirErrorHom);
-					globalSumOfAbsErrorsHom += abs((double)(dirErrorHom));
-					if (globalMaxAbsErrorHom < abs(dirErrorHom))
-						globalMaxAbsErrorHom = abs(dirErrorHom);
-					globalSumForStdHom += ((double)dirErrorHom) * ((double)dirErrorHom);
-
-					if (dirErrorHom)
-					{
-						globalHomDirErrorsCount++;
-						errorCounterHom++;
-					}
-
-					globalSumOfErrorsCor += (double)(dirErrorCor);
-					globalSumOfAbsErrorsCor += abs((double)(dirErrorCor));
-					if (globalMaxAbsErrorCor < abs(dirErrorCor))
-						globalMaxAbsErrorCor = abs(dirErrorCor);
-					globalSumForStdCor += ((double)dirErrorCor) * ((double)dirErrorCor);
-
-					if (dirErrorCor)
-					{
-						globalCorDirErrorsCount++;
-						errorCounterCor++;
-					}
 				}
+				getline(inFile1, Line1);
+				StringOutCommon += Line1;
+				StringOutCommon += "\t";
+
+				for (int i = 0; i < modalityCount; i++)
+				{
+					if (!DirStatPar[i].localDirIsNan)
+						StringOutCommon += to_string(DirStatPar[i].localDirError);
+					else
+						StringOutCommon += "";
+					StringOutCommon += "\t";
+				}
+				StringOutCommon += "\n";
+
 			}
 		}
 
 		StringOutCommon += "\n";
 		//mean error estimation
 
-		float errorAbsMeanCon = (float)(sumOfAbsErrorsCon / (double)localCounter);
-		float errorMeanCon = (float)(sumOfErrorsCon / (double)localCounter);
+		for (int i = 0; i < modalityCount; i++)
+		{
+			DirStatPar[i].avgAbsError = DirStatPar[i].sumOfAbsErrors / (double)localCounter;
+			DirStatPar[i].avgError = DirStatPar[i].sumOfErrors / (double)localCounter;
 
-		DirConErrorsMean[(int)dirFomFileName] = errorMeanCon;
-		DirConErrorsAbsMean[(int)dirFomFileName] = errorAbsMeanCon;
-		DirConErrorsStd[(int)dirFomFileName] = (float)sqrt(sumForStdCon / (double)localCounter);
-		DirConErrorsMax[(int)dirFomFileName] = maxAbsErrorCon;
-		DirConErrorsCount[(int)dirFomFileName] = errorCounterCon;
+			DirStatPar[i].DirErrorsMean[(int)dirFomFileName] = DirStatPar[i].avgError;
+			DirStatPar[i].DirErrorsAbsMean[(int)dirFomFileName] = DirStatPar[i].avgAbsError;
+			DirStatPar[i].DirErrorsStd[(int)dirFomFileName] = sqrt(DirStatPar[i].sumForStd / (double)localCounter);
+			DirStatPar[i].DirErrorsMax[(int)dirFomFileName] = DirStatPar[i].maxAbsError;
+			DirStatPar[i].DirErrorsCount[(int)dirFomFileName] = DirStatPar[i].errorCounter;
 
-		float errorAbsMeanEne = (float)(sumOfAbsErrorsEne / (double)localCounter);
-		float errorMeanEne = (float)(sumOfErrorsEne / (double)localCounter);
-
-		DirEneErrorsMean[(int)dirFomFileName] = errorMeanEne;
-		DirEneErrorsAbsMean[(int)dirFomFileName] = errorAbsMeanEne;
-		DirEneErrorsStd[(int)dirFomFileName] = (float)sqrt(sumForStdEne / (double)localCounter);
-		DirEneErrorsMax[(int)dirFomFileName] = maxAbsErrorEne;
-		DirEneErrorsCount[(int)dirFomFileName] = errorCounterEne;
-
-		float errorAbsMeanHom = (float)(sumOfAbsErrorsHom / (double)localCounter);
-		float errorMeanHom = (float)(sumOfErrorsHom / (double)localCounter);
-
-		DirHomErrorsMean[(int)dirFomFileName] = errorMeanHom;
-		DirHomErrorsAbsMean[(int)dirFomFileName] = errorAbsMeanHom;
-		DirHomErrorsStd[(int)dirFomFileName] = (float)sqrt(sumForStdHom / (double)localCounter);
-		DirHomErrorsMax[(int)dirFomFileName] = maxAbsErrorHom;
-		DirHomErrorsCount[(int)dirFomFileName] = errorCounterHom;
-
-		float errorAbsMeanCor = (float)(sumOfAbsErrorsCor / (double)localCounter);
-		float errorMeanCor = (float)(sumOfErrorsCor / (double)localCounter);
-
-		DirCorErrorsMean[(int)dirFomFileName] = errorMeanCor;
-		DirCorErrorsAbsMean[(int)dirFomFileName] = errorAbsMeanCor;
-		DirCorErrorsStd[(int)dirFomFileName] = (float)sqrt(sumForStdCor / (double)localCounter);
-		DirCorErrorsMax[(int)dirFomFileName] = maxAbsErrorCor;
-		DirCorErrorsCount[(int)dirFomFileName] = errorCounterCor;
-
+		}
 
 		DirCount[(int)dirFomFileName] = localCounter;
 
-
 		inFile1.close();
 	}
-	globalConDirErrorsMean = (float)(globalSumOfErrorsCon / (double)globalCounter);
-	globalConDirErrorsAbsMean = (float)(globalSumOfAbsErrorsCon / (double)globalCounter);
-	globalConDirErrorsStd = (float)sqrt(globalSumForStdCon / (double)globalCounter);
 
-	globalEneDirErrorsMean = (float)(globalSumOfErrorsEne / (double)globalCounter);
-	globalEneDirErrorsAbsMean = (float)(globalSumOfAbsErrorsEne / (double)globalCounter);
-	globalEneDirErrorsStd = (float)sqrt(globalSumForStdEne / (double)globalCounter);
+	for (int i = 0; i < modalityCount; i++)
+	{
+		DirStatPar[i].globalDirErrorsMean = DirStatPar[i].globalSumOfErrors / (double)globalCounter;
+		DirStatPar[i].globalDirErrorsAbsMean = DirStatPar[i].globalSumOfAbsErrors / (double)globalCounter;
+		DirStatPar[i].globalDirErrorsStd = sqrt(DirStatPar[i].globalSumForStd / (double)globalCounter);
 
-	globalHomDirErrorsMean = (float)(globalSumOfErrorsHom / (double)globalCounter);
-	globalHomDirErrorsAbsMean = (float)(globalSumOfAbsErrorsHom / (double)globalCounter);
-	globalHomDirErrorsStd = (float)sqrt(globalSumForStdHom / (double)globalCounter);
-
-	globalCorDirErrorsMean = (float)(globalSumOfErrorsCor / (double)globalCounter);
-	globalCorDirErrorsAbsMean = (float)(globalSumOfAbsErrorsCor / (double)globalCounter);
-	globalCorDirErrorsStd = (float)sqrt(globalSumForStdCor / (double)globalCounter);
+	}
 
 	string CommonFullFileNameOut = ProcOptions.OutFolderName2 + ConfigFile.filename().string() + "_CommonNew" + ".txt";
 	std::ofstream outFileCommon(CommonFullFileNameOut);//FileToProcess.path().filename().string());
