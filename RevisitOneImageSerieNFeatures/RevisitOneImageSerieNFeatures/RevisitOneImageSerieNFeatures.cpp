@@ -57,9 +57,20 @@ int main(int argc, char* argv[])
 	}
 
 	DirectionalityStatParams *DirStatPar = new DirectionalityStatParams[modalityCount];
+	string *Headers = new string[modalityCount];
+	Headers[0] = "ContrastV";
+	Headers[1] = "EnegyV";
+	Headers[2] = "HomogeneityV";
+	Headers[3] = "CorrelationV";
+	Headers[4] = "CombinationV";
+	Headers[5] = "ContrastA";
+	Headers[6] = "EnegyA";
+	Headers[7] = "HomogeneityA";
+	Headers[8] = "CorrelationA";
 
-	int *DirCount = new int[91];
-	for (int i = 0; i < 91; i++)
+
+	int *DirCount = new int[181];
+	for (int i = 0; i < 181; i++)
 	{
 		DirCount[i] = 0;
 	}
@@ -71,6 +82,7 @@ int main(int argc, char* argv[])
 
 	int fileCount = 0;
 	int globalCounter = 0;
+
 
 
 
@@ -140,6 +152,20 @@ int main(int argc, char* argv[])
 			//StringOutCommon += "\n";
 
 		}
+		//int ValueCount = 0;
+		//size_t stringPos = 0;
+		//size_t stringPosOld = 0;
+		//vector <string> HeadersVect;
+		//while (1)
+		//{
+		//	stringPos = Line1.find("\t", stringPos);
+		//	ValueCount++;
+		//	HeadersVect.push_back(Line1.substr(stringPosOld,stringPos));
+
+		//	if (stringPos != string::npos)
+		//		break;
+		//	stringPos++;
+		//}
 		StringOutCommon += Line1;
 		//getline(inFile1, Line1);
 		//StringOutCommon += Line1;
@@ -260,11 +286,8 @@ int main(int argc, char* argv[])
 			DirStatPar[i].DirErrorsStd[(int)dirFomFileName] = sqrt(DirStatPar[i].sumForStd / (double)localCounter);
 			DirStatPar[i].DirErrorsMax[(int)dirFomFileName] = DirStatPar[i].maxAbsError;
 			DirStatPar[i].DirErrorsCount[(int)dirFomFileName] = DirStatPar[i].errorCounter;
-
 		}
-
 		DirCount[(int)dirFomFileName] = localCounter;
-
 		inFile1.close();
 	}
 
@@ -273,9 +296,7 @@ int main(int argc, char* argv[])
 		DirStatPar[i].globalDirErrorsMean = DirStatPar[i].globalSumOfErrors / (double)globalCounter;
 		DirStatPar[i].globalDirErrorsAbsMean = DirStatPar[i].globalSumOfAbsErrors / (double)globalCounter;
 		DirStatPar[i].globalDirErrorsStd = sqrt(DirStatPar[i].globalSumForStd / (double)globalCounter);
-
 	}
-
 	string CommonFullFileNameOut = ProcOptions.OutFolderName2 + ConfigFile.filename().string() + "_CommonNew" + ".txt";
 	std::ofstream outFileCommon(CommonFullFileNameOut);//FileToProcess.path().filename().string());
 
@@ -286,185 +307,54 @@ int main(int argc, char* argv[])
 	StringDirStats += "\n\n";
 	StringDirStats += "File\tfeature\tGlobal Error Mean\tGlobal Error ABS Mean\tGlobal Error Std\tGlobal Error Max\tGlobal Error Count\t Global Sample Count\t\tMin Offset\Max Offset";
 	StringDirStats += "\n";
-	StringDirStats += ConfigFile.string();
-	StringDirStats += "\t";
-	StringDirStats += "Contrast";
-	StringDirStats += "\t";
-	StringDirStats += to_string(globalConDirErrorsMean);
-	StringDirStats += "\t";
-	StringDirStats += to_string(globalConDirErrorsAbsMean);
-	StringDirStats += "\t";
-	StringDirStats += to_string(globalConDirErrorsStd);
-	StringDirStats += "\t";
-	StringDirStats += to_string(globalMaxAbsErrorCon);
-	StringDirStats += "\t";
-	StringDirStats += to_string(globalConDirErrorsCount);
-	StringDirStats += "\t";
-	StringDirStats += to_string(globalCounter);
-	StringDirStats += "\t\t";
-	StringDirStats += to_string(ProcOptions.minOfset);
-	StringDirStats += "\t";
-	StringDirStats += to_string(ProcOptions.maxOfset);
 
-	StringDirStats += "\n";
-	StringDirStats += ConfigFile.string();
-	StringDirStats += "\t";
-	StringDirStats += "Energy";
-	StringDirStats += "\t";
-	StringDirStats += to_string(globalEneDirErrorsMean);
-	StringDirStats += "\t";
-	StringDirStats += to_string(globalEneDirErrorsAbsMean);
-	StringDirStats += "\t";
-	StringDirStats += to_string(globalEneDirErrorsStd);
-	StringDirStats += "\t";
-	StringDirStats += to_string(globalMaxAbsErrorEne);
-	StringDirStats += "\t";
-	StringDirStats += to_string(globalEneDirErrorsCount);
-	StringDirStats += "\t";
-	StringDirStats += to_string(globalCounter);
-	StringDirStats += "\t\t";
-	StringDirStats += to_string(ProcOptions.minOfset);
-	StringDirStats += "\t";
-	StringDirStats += to_string(ProcOptions.maxOfset);
-
-	StringDirStats += "\n";
-	StringDirStats += ConfigFile.string();
-	StringDirStats += "\t";
-	StringDirStats += "Homogeneity";
-	StringDirStats += "\t";
-	StringDirStats += to_string(globalHomDirErrorsMean);
-	StringDirStats += "\t";
-	StringDirStats += to_string(globalHomDirErrorsAbsMean);
-	StringDirStats += "\t";
-	StringDirStats += to_string(globalHomDirErrorsStd);
-	StringDirStats += "\t";
-	StringDirStats += to_string(globalMaxAbsErrorHom);
-	StringDirStats += "\t";
-	StringDirStats += to_string(globalHomDirErrorsCount);
-	StringDirStats += "\t";
-	StringDirStats += to_string(globalCounter);
-	StringDirStats += "\t\t";
-	StringDirStats += to_string(ProcOptions.minOfset);
-	StringDirStats += "\t";
-	StringDirStats += to_string(ProcOptions.maxOfset);
-
-	StringDirStats += "\n";
-	StringDirStats += ConfigFile.string();
-	StringDirStats += "\t";
-	StringDirStats += "Correlation";
-	StringDirStats += "\t";
-	StringDirStats += to_string(globalCorDirErrorsMean);
-	StringDirStats += "\t";
-	StringDirStats += to_string(globalCorDirErrorsAbsMean);
-	StringDirStats += "\t";
-	StringDirStats += to_string(globalCorDirErrorsStd);
-	StringDirStats += "\t";
-	StringDirStats += to_string(globalMaxAbsErrorCor);
-	StringDirStats += "\t";
-	StringDirStats += to_string(globalCorDirErrorsCount);
-	StringDirStats += "\t";
-	StringDirStats += to_string(globalCounter);
-	StringDirStats += "\t\t";
-	StringDirStats += to_string(ProcOptions.minOfset);
-	StringDirStats += "\t";
-	StringDirStats += to_string(ProcOptions.maxOfset);
-
-
-
-	StringDirStats += "\n\n";
-	StringDirStats += "Contrast\n";
-	StringDirStats += "direction\tError Mean\tError ABS Mean\tError Std\tError Max\tError Count \tSample Count\t\tMin Offset\Max Offset";
-	StringDirStats += "\n";
-	for (int i = 0; i < 91; i++)
+	for (int i = 0; i < modalityCount; i++)
 	{
-		StringDirStats += to_string(i);
+		StringDirStats += ConfigFile.string();
 		StringDirStats += "\t";
-		StringDirStats += to_string(DirConErrorsMean[i]);
+		StringDirStats += Headers[i];
 		StringDirStats += "\t";
-		StringDirStats += to_string(DirConErrorsAbsMean[i]);
+		StringDirStats += to_string(DirStatPar[i].globalDirErrorsMean);
 		StringDirStats += "\t";
-		StringDirStats += to_string(DirConErrorsStd[i]);
+		StringDirStats += to_string(DirStatPar[i].globalDirErrorsAbsMean);
 		StringDirStats += "\t";
-		StringDirStats += to_string(DirConErrorsMax[i]);
+		StringDirStats += to_string(DirStatPar[i].globalDirErrorsStd);
 		StringDirStats += "\t";
-		StringDirStats += to_string(DirConErrorsCount[i]);
+		StringDirStats += to_string(DirStatPar[i].globalMaxAbsError);
 		StringDirStats += "\t";
-		StringDirStats += to_string(DirCount[i]);
-
-		StringDirStats += "\n";
-
+		StringDirStats += to_string(DirStatPar[i].globalDirErrorsCount);
+		StringDirStats += "\t";
+		StringDirStats += to_string(globalCounter);
+		StringDirStats += "\t\t";
+		StringDirStats += to_string(ProcOptions.minOfset);
+		StringDirStats += "\t";
+		StringDirStats += to_string(ProcOptions.maxOfset);
 	}
 
-	StringDirStats += "\n\n";
-	StringDirStats += "Energy\n";
-	StringDirStats += "direction\tError Mean\tError ABS Mean\tError Std\tError Max\tError Count \tSample Count\t\tMin Offset\Max Offset";
-	StringDirStats += "\n";
-	for (int i = 0; i < 91; i++)
+	for (int i = 0; i < modalityCount; i++)
 	{
-		StringDirStats += to_string(i);
-		StringDirStats += "\t";
-		StringDirStats += to_string(DirEneErrorsMean[i]);
-		StringDirStats += "\t";
-		StringDirStats += to_string(DirEneErrorsAbsMean[i]);
-		StringDirStats += "\t";
-		StringDirStats += to_string(DirEneErrorsStd[i]);
-		StringDirStats += "\t";
-		StringDirStats += to_string(DirEneErrorsMax[i]);
-		StringDirStats += "\t";
-		StringDirStats += to_string(DirEneErrorsCount[i]);
-		StringDirStats += "\t";
-		StringDirStats += to_string(DirCount[i]);
-
+		StringDirStats += "\n\n";
+		StringDirStats += Headers[i] + "\n";
+		StringDirStats += "direction\tError Mean\tError ABS Mean\tError Std\tError Max\tError Count \tSample Count\t\tMin Offset\Max Offset";
 		StringDirStats += "\n";
+		for (int i = 0; i < 91; i++)
+		{
+			StringDirStats += to_string(i);
+			StringDirStats += "\t";
+			StringDirStats += to_string(DirStatPar[i].DirErrorsMean[i]);
+			StringDirStats += "\t";
+			StringDirStats += to_string(DirStatPar[i].DirErrorsAbsMean[i]);
+			StringDirStats += "\t";
+			StringDirStats += to_string(DirStatPar[i].DirErrorsStd[i]);
+			StringDirStats += "\t";
+			StringDirStats += to_string(DirStatPar[i].DirErrorsMax[i]);
+			StringDirStats += "\t";
+			StringDirStats += to_string(DirStatPar[i].DirErrorsCount[i]);
+			StringDirStats += "\t";
+			StringDirStats += to_string(DirCount[i]);
 
-	}
-
-	StringDirStats += "\n\n";
-	StringDirStats += "Homogeneity\n";
-	StringDirStats += "direction\tError Mean\tError ABS Mean\tError Std\tError Max\tError Count \tSample Count\t\tMin Offset\Max Offset";
-	StringDirStats += "\n";
-	for (int i = 0; i < 91; i++)
-	{
-		StringDirStats += to_string(i);
-		StringDirStats += "\t";
-		StringDirStats += to_string(DirHomErrorsMean[i]);
-		StringDirStats += "\t";
-		StringDirStats += to_string(DirHomErrorsAbsMean[i]);
-		StringDirStats += "\t";
-		StringDirStats += to_string(DirHomErrorsStd[i]);
-		StringDirStats += "\t";
-		StringDirStats += to_string(DirHomErrorsMax[i]);
-		StringDirStats += "\t";
-		StringDirStats += to_string(DirHomErrorsCount[i]);
-		StringDirStats += "\t";
-		StringDirStats += to_string(DirCount[i]);
-
-		StringDirStats += "\n";
-
-	}
-
-	StringDirStats += "\n\n";
-	StringDirStats += "Correlation\n";
-	StringDirStats += "direction\tError Mean\tError ABS Mean\tError Std\tError Max\tError Count \tSample Count\t\tMin Offset\Max Offset";
-	StringDirStats += "\n";
-	for (int i = 0; i < 91; i++)
-	{
-		StringDirStats += to_string(i);
-		StringDirStats += "\t";
-		StringDirStats += to_string(DirCorErrorsMean[i]);
-		StringDirStats += "\t";
-		StringDirStats += to_string(DirCorErrorsAbsMean[i]);
-		StringDirStats += "\t";
-		StringDirStats += to_string(DirCorErrorsStd[i]);
-		StringDirStats += "\t";
-		StringDirStats += to_string(DirCorErrorsMax[i]);
-		StringDirStats += "\t";
-		StringDirStats += to_string(DirCorErrorsCount[i]);
-		StringDirStats += "\t";
-		StringDirStats += to_string(DirCount[i]);
-
-		StringDirStats += "\n";
-
+			StringDirStats += "\n";
+		}
 	}
 
 	string DirStatsFileNameOut = ProcOptions.OutFolderName2 + ConfigFile.filename().string() + "_DirStats" + ".txt";
