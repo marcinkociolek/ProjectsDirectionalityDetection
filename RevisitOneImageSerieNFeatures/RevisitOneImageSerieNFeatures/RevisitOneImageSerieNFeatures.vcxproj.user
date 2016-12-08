@@ -5,7 +5,7 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LocalDebuggerCommandArguments>C:\Data\ExtensiveDirectionalityTest\F08T04OutMap8Offsets\BarsA0-180F08T04N00000POSTa.txt</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>C:\Data\ExtensiveDirectionalityTest\F08T04OutMap6Offsets\BarsA90-180F08T04N00000OutF0C61Off06Min02.xml</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>

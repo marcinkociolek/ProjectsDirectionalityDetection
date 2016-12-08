@@ -36,7 +36,7 @@ public:
 	int		dirErrorsCount;
 	int		naNCount;
 
-	int errorCounter = 0;
+	//int errorCounter = 0;
 
 
 	double	*DirErrorsMean;
@@ -71,6 +71,7 @@ public:
 		sumForStd = 0;
 
 		dirErrorsCount = 0;
+		globalNaNCount = 0;
 		naNCount = 0;
 
 		for (int i = 0; i < 181; i++)

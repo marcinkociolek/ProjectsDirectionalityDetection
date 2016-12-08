@@ -119,7 +119,7 @@ int main(int argc, char* argv[])
 			continue;
 
 		string AngleValString = AngleValStringIterator[0];
-		float dirFomFileName = stof(AngleValString);
+		double dirFomFileName = stof(AngleValString);
 
 		fileCount++;
 
@@ -141,7 +141,7 @@ int main(int argc, char* argv[])
 		while (inFile1.good())
 		{
 			getline(inFile1, Line1);
-			regex LinePattern("Tile Y\tTile X\t.+");
+			regex LinePattern("Tile Y\t.+");
 			if (regex_match(Line1.c_str(), LinePattern))
 				break;
 
@@ -149,7 +149,7 @@ int main(int argc, char* argv[])
 			//				break;
 			StringOutCommon += Line1;
 			//StringOutCommon += "\t\t\t\t\t\t\t\t";
-			//StringOutCommon += "\n";
+			StringOutCommon += "\n";
 
 		}
 		//int ValueCount = 0;
@@ -234,8 +234,7 @@ int main(int argc, char* argv[])
 					DirStatPar[i].localDirError = dirError;
 
 
-					localCounter++;
-					globalCounter++;
+					
 					DirStatPar[i].sumOfErrors += dirError;
 					DirStatPar[i].sumOfAbsErrors += abs(dirError);
 					if (DirStatPar[i].maxAbsError < abs(dirError))
@@ -251,11 +250,13 @@ int main(int argc, char* argv[])
 					if (dirError)
 					{
 						DirStatPar[i].globalDirErrorsCount++;
-						DirStatPar[i].errorCounter++;
+						DirStatPar[i].dirErrorsCount++;
 					}
 
 
 				}
+				localCounter++;
+				globalCounter++;
 				getline(inFile1, Line1);
 				StringOutCommon += Line1;
 				StringOutCommon += "\t";
@@ -285,7 +286,7 @@ int main(int argc, char* argv[])
 			DirStatPar[i].DirErrorsAbsMean[(int)dirFomFileName] = DirStatPar[i].avgAbsError;
 			DirStatPar[i].DirErrorsStd[(int)dirFomFileName] = sqrt(DirStatPar[i].sumForStd / (double)localCounter);
 			DirStatPar[i].DirErrorsMax[(int)dirFomFileName] = DirStatPar[i].maxAbsError;
-			DirStatPar[i].DirErrorsCount[(int)dirFomFileName] = DirStatPar[i].errorCounter;
+			DirStatPar[i].DirErrorsCount[(int)dirFomFileName] = DirStatPar[i].dirErrorsCount;
 		}
 		DirCount[(int)dirFomFileName] = localCounter;
 		inFile1.close();
@@ -305,7 +306,7 @@ int main(int argc, char* argv[])
 
 	string StringDirStats = ProcOptions.ShowParams();
 	StringDirStats += "\n\n";
-	StringDirStats += "File\tfeature\tGlobal Error Mean\tGlobal Error ABS Mean\tGlobal Error Std\tGlobal Error Max\tGlobal Error Count\t Global Sample Count\t\tMin Offset\Max Offset";
+	StringDirStats += "File\tfeature\tGlobal Error Mean\tGlobal Error ABS Mean\tGlobal Error Std\tGlobal Error Max\tGlobal Error Count\t Global Sample Count\tGlobal NaN Countt\t\tMin Offset\Max Offset";
 	StringDirStats += "\n";
 
 	for (int i = 0; i < modalityCount; i++)
@@ -325,10 +326,13 @@ int main(int argc, char* argv[])
 		StringDirStats += to_string(DirStatPar[i].globalDirErrorsCount);
 		StringDirStats += "\t";
 		StringDirStats += to_string(globalCounter);
+		StringDirStats += "\t";
+		StringDirStats += to_string(DirStatPar[i].globalNaNCount);
 		StringDirStats += "\t\t";
 		StringDirStats += to_string(ProcOptions.minOfset);
 		StringDirStats += "\t";
 		StringDirStats += to_string(ProcOptions.maxOfset);
+		StringDirStats += "\n";
 	}
 
 	for (int i = 0; i < modalityCount; i++)
@@ -337,21 +341,21 @@ int main(int argc, char* argv[])
 		StringDirStats += Headers[i] + "\n";
 		StringDirStats += "direction\tError Mean\tError ABS Mean\tError Std\tError Max\tError Count \tSample Count\t\tMin Offset\Max Offset";
 		StringDirStats += "\n";
-		for (int i = 0; i < 91; i++)
+		for (int k = 0; k < 181; k++)
 		{
-			StringDirStats += to_string(i);
+			StringDirStats += to_string(k);
 			StringDirStats += "\t";
-			StringDirStats += to_string(DirStatPar[i].DirErrorsMean[i]);
+			StringDirStats += to_string(DirStatPar[i].DirErrorsMean[k]);
 			StringDirStats += "\t";
-			StringDirStats += to_string(DirStatPar[i].DirErrorsAbsMean[i]);
+			StringDirStats += to_string(DirStatPar[i].DirErrorsAbsMean[k]);
 			StringDirStats += "\t";
-			StringDirStats += to_string(DirStatPar[i].DirErrorsStd[i]);
+			StringDirStats += to_string(DirStatPar[i].DirErrorsStd[k]);
 			StringDirStats += "\t";
-			StringDirStats += to_string(DirStatPar[i].DirErrorsMax[i]);
+			StringDirStats += to_string(DirStatPar[i].DirErrorsMax[k]);
 			StringDirStats += "\t";
-			StringDirStats += to_string(DirStatPar[i].DirErrorsCount[i]);
+			StringDirStats += to_string(DirStatPar[i].DirErrorsCount[k]);
 			StringDirStats += "\t";
-			StringDirStats += to_string(DirCount[i]);
+			StringDirStats += to_string(DirCount[k]);
 
 			StringDirStats += "\n";
 		}
