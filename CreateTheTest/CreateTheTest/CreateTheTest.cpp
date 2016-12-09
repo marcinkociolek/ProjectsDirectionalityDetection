@@ -29,16 +29,16 @@ using namespace boost::filesystem;
 int main(int argc, char* argv[])
 {
 	
-	path ConfigFile("C:\\Data\\ExtensiveDirectionalityTest\\F08T04OutMap4Offsets\\config.xml");
+	path ConfigFile("C:\\Data\\ExtensiveDirectionalityTest\\F16T08OutMap8Offsets\\config.xml");
 	
 	path InFolder("C:\\Data\\ExtensiveDirectionalityTest\\InData");
 
 	int iterStart = 2;
-	int iterEnd = 24;
-	int ofsetRange = 4;
+	int iterEnd = 32;
+	int ofsetRange = 8;
 
 
-	string InputFolderName = "BarsA90-180F08T04N20000";//"BarsA0-90F16T08";
+	string InputFolderName = "BarsA0-180F16T08N00000";//"BarsA0-90F16T08";
 	string CommonName = InputFolderName + "OutF0C61Off" + ItoStrLZ(ofsetRange, 2) + "Min";
 	
 	
@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
 	//path ExeFile3("D:\\Data\\MSVSBuildDir\\PreparePlotBuild\\x64\\Debug\\PreparePlot.exe");
 	path ExeFile("C:\\SoftProjects\\MSVSBuildDir\\HaralickBasedDirectionalityMapBuild\\x64\\Release\\HaralickBasedDirectionalityMap.exe");
 	path ExeFile2("C:\\SoftProjects\\MSVSBuildDir\\RevisitOneImageSerie4featuresBuild\\x64\\Release\\RevisitOneImageSerie9features.exe");
-	path ExeFile3("C:\\SoftProjects\\Data\\MSVSBuildDir\\PreparePlotBuild\\x64\\Debug\\PreparePlot.exe");
+	path ExeFile3("C:\\SoftProjects\\MSVSBuildDir\\PreparePlotBuild\\x64\\Debug\\PreparePlot.exe");
 	
 	InFolder /= path(InputFolderName);
 
@@ -222,7 +222,7 @@ int main(int argc, char* argv[])
 	}
 	create_directory(Out2Folder);
 
-	PostAnalisisTxt += ExeFile3.string() + " " + Out2Folder.string() + " _plot" + InputFolderName + ".txt" + "\n";
+	PostAnalisisTxt += ExeFile3.string() + " " + Out2Folder.string() + " _plot" + InputFolderName + ".txt";
 
 	std::ofstream dirStatsFileCommon(AnalisisTxtFile.string());//FileToProcess.path().filename().string());
 
