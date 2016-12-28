@@ -29,15 +29,17 @@ using namespace boost::filesystem;
 int main(int argc, char* argv[])
 {
 	
-	path ConfigFile("C:\\Data\\ExtensiveDirectionalityTest\\F16T08OutMap8Offsets\\config.xml");
+	path ConfigFile("C:\\Data\\ExtensiveDirectionalityTest\\F08T04OutMap7Offsets\\config.xml");
 	
 
 
 	int iterStart = 2;
-	int iterEnd = 32;
-	int ofsetRange = 8;
+	int iterEnd = 40;
+	int ofsetRange = 7;
 
-	string InputFolderNameCommon = "BarsA0-90F16T08";
+	bool createFolders = true;
+	bool createPlotFolders = true;
+	string InputFolderNameCommon = "BarsA90-180F16T08";
 
 	string InputFolderNamesMod[11];
 	InputFolderNamesMod[0]	= "N00000";
@@ -234,10 +236,11 @@ int main(int argc, char* argv[])
 
 
 			doc.SaveFile(NewFile.string().c_str());
-
-			create_directory(NewFolder);
+			if(createFolders)
+				create_directory(NewFolder);
 		}
-		create_directory(Out2Folder);
+		if (createPlotFolders)
+			create_directory(Out2Folder);
 
 		PostAnalisisTxt += ExeFile3.string() + " " + Out2Folder.string() + " _plot" + InputFolderName + ".txt";
 
