@@ -29,17 +29,17 @@ using namespace boost::filesystem;
 int main(int argc, char* argv[])
 {
 	
-	path ConfigFile("C:\\Data\\ExtensiveDirectionalityTest\\F08T04OutMap7Offsets\\config.xml");
+	path ConfigFile("C:\\Data\\ExtensiveDirectionalityTest\\F08T04OutMap3Offsets\\config.xml");
 	
 
 
 	int iterStart = 2;
 	int iterEnd = 40;
-	int ofsetRange = 7;
+	int ofsetRange = 3;
 
 	bool createFolders = true;
 	bool createPlotFolders = true;
-	string InputFolderNameCommon = "BarsA90-180F16T08";
+	string InputFolderNameCommon = "BarsA90-180F08T04";
 
 	string InputFolderNamesMod[11];
 	InputFolderNamesMod[0]	= "N00000";
@@ -242,7 +242,7 @@ int main(int argc, char* argv[])
 		if (createPlotFolders)
 			create_directory(Out2Folder);
 
-		PostAnalisisTxt += ExeFile3.string() + " " + Out2Folder.string() + " _plot" + InputFolderName + ".txt";
+		PostAnalisisTxt += ExeFile3.string() + " " + Out2Folder.string() + InputFolderName + "plotRNG" + ItoStrLZ(ofsetRange,1) + ".txt";
 
 		std::ofstream dirStatsFileCommon(AnalisisTxtFile.string());//FileToProcess.path().filename().string());
 

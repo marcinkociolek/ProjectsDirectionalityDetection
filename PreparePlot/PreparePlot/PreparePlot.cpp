@@ -35,11 +35,18 @@ int main(int argc, char* argv[])
 
 	string arg2 = "DataAnalisisBarsA0-90F16T08N2000";
 
-	if (argc >2 )
-		arg2 = argv[2];
+	string arg3;
 
 	if (argc > 1)
 		arg1 = argv[1];
+
+	if (argc > 2)
+		arg2 = argv[2];
+
+	if (argc > 3)
+		arg3 = argv[3];
+	else
+		arg3 = arg1;
 
 	path PathToProcess(arg1);
 	if (!exists(PathToProcess))
