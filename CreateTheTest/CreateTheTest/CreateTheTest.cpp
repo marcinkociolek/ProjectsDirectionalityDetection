@@ -29,19 +29,32 @@ using namespace boost::filesystem;
 int main(int argc, char* argv[])
 {
 	
-	path ConfigFile("C:\\Data\\ExtensiveDirectionalityTest\\F08T04OutMap3Offsets\\config.xml");
+	path ConfigFile("C:\\Data\\ExtensiveDirectionalityTest\\PaperTestF16T08AVGBlur\\config.xml");
 	
 
 
 	int iterStart = 2;
-	int iterEnd = 40;
-	int ofsetRange = 3;
+	int iterEnd = 2;
+	int ofsetRange = 16;
 
 	bool createFolders = true;
 	bool createPlotFolders = true;
-	string InputFolderNameCommon = "BarsA90-180F08T04";
+	string InputFolderNameCommon = "BarsA0-90F16T08";
 
 	string InputFolderNamesMod[11];
+
+	InputFolderNamesMod[0] = "B01";
+	InputFolderNamesMod[1] = "B03";
+	InputFolderNamesMod[2] = "B05";
+	InputFolderNamesMod[3] = "B07";
+	InputFolderNamesMod[4] = "B09";
+	InputFolderNamesMod[5] = "B11";
+	InputFolderNamesMod[6] = "B13";
+	InputFolderNamesMod[7] = "B15";
+	InputFolderNamesMod[8] = "B17";
+	InputFolderNamesMod[9] = "B19";
+	InputFolderNamesMod[10] = "B21";
+	/*
 	InputFolderNamesMod[0]	= "N00000";
 	InputFolderNamesMod[1]	= "N02000";
 	InputFolderNamesMod[2]	= "N04000";
@@ -53,7 +66,7 @@ int main(int argc, char* argv[])
 	InputFolderNamesMod[8]	= "N16000";
 	InputFolderNamesMod[9]	= "N18000";
 	InputFolderNamesMod[10]	= "N20000";
-
+	*/
 
 	//path ExeFile("C:\\Data\\MSVSBuildDir\\HaralickDirectionalityAvgBuildR\\x64\\Release\\HaralickDirectionalityAvg.exe");
 	//path ExeFile("C:\\Data\\MSVSBuildDir\\HaralickBasedDirectionalityMapBuild\\x64\\Release\\HaralickBasedDirectionalityMap.exe");
