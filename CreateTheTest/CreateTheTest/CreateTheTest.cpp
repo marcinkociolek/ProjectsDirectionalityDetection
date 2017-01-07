@@ -29,19 +29,21 @@ using namespace boost::filesystem;
 int main(int argc, char* argv[])
 {
 	
-	path ConfigFile("C:\\Data\\ExtensiveDirectionalityTest\\PaperTestF08T04Noise\\config.xml");
+	path ConfigFile("C:\\Data\\ExtensiveDirectionalityTest\\PaperTestF24T12AVGBlur\\config.xml");
 	
-	bool blur = false;
+	bool blur = true;
 
 	int iterStart = 2;
 	int iterEnd = 2;
 	int ofsetRange = 16;
 
+	int commonAnalisisCount = 11;
+
 	bool createFolders = true;
 	bool createPlotFolders = true;
 	bool postAnalisis = true;
 
-	string InputFolderNameCommon = "BarsA0-90F04T02";
+	string InputFolderNameCommon = "BarsA0-90F24T12";
 
 	string InputFolderNamesMod[11];
 	if (blur)
@@ -84,7 +86,7 @@ int main(int argc, char* argv[])
 	path ExeFile3("C:\\SoftProjects\\MSVSBuildDir\\PreparePlotBuild\\x64\\Debug\\PreparePlot.exe");
 	path ExeFile4("C:\\SoftProjects\\MSVSBuildDir\\MultithreadExecutionBuild\\x64\\Release\\MultithreadExecution.exe");
 	
-	int commonAnalisisCount = 2;
+
 	string CommonAnalisisTxt = "";
 	path CommonAnalisisTxtFile;
 
