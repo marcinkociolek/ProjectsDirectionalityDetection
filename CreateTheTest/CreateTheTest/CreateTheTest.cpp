@@ -29,9 +29,9 @@ using namespace boost::filesystem;
 int main(int argc, char* argv[])
 {
 	
-	path ConfigFile("C:\\Data\\ExtensiveDirectionalityTest\\PaperTestF16T08AVGBlur\\config.xml");
+	path ConfigFile("C:\\Data\\ExtensiveDirectionalityTest\\PaperTestF08T04Noise\\config.xml");
 	
-
+	bool blur = false;
 
 	int iterStart = 2;
 	int iterEnd = 2;
@@ -39,34 +39,39 @@ int main(int argc, char* argv[])
 
 	bool createFolders = true;
 	bool createPlotFolders = true;
-	string InputFolderNameCommon = "BarsA0-90F16T08";
+	bool postAnalisis = true;
+
+	string InputFolderNameCommon = "BarsA0-90F04T02";
 
 	string InputFolderNamesMod[11];
-
-	InputFolderNamesMod[0] = "B01";
-	InputFolderNamesMod[1] = "B03";
-	InputFolderNamesMod[2] = "B05";
-	InputFolderNamesMod[3] = "B07";
-	InputFolderNamesMod[4] = "B09";
-	InputFolderNamesMod[5] = "B11";
-	InputFolderNamesMod[6] = "B13";
-	InputFolderNamesMod[7] = "B15";
-	InputFolderNamesMod[8] = "B17";
-	InputFolderNamesMod[9] = "B19";
-	InputFolderNamesMod[10] = "B21";
-	/*
-	InputFolderNamesMod[0]	= "N00000";
-	InputFolderNamesMod[1]	= "N02000";
-	InputFolderNamesMod[2]	= "N04000";
-	InputFolderNamesMod[3]	= "N06000";
-	InputFolderNamesMod[4]	= "N08000";
-	InputFolderNamesMod[5]	= "N10000";
-	InputFolderNamesMod[6]	= "N12000";
-	InputFolderNamesMod[7]	= "N14000";
-	InputFolderNamesMod[8]	= "N16000";
-	InputFolderNamesMod[9]	= "N18000";
-	InputFolderNamesMod[10]	= "N20000";
-	*/
+	if (blur)
+	{
+		InputFolderNamesMod[0] = "B01";
+		InputFolderNamesMod[1] = "B03";
+		InputFolderNamesMod[2] = "B05";
+		InputFolderNamesMod[3] = "B07";
+		InputFolderNamesMod[4] = "B09";
+		InputFolderNamesMod[5] = "B11";
+		InputFolderNamesMod[6] = "B13";
+		InputFolderNamesMod[7] = "B15";
+		InputFolderNamesMod[8] = "B17";
+		InputFolderNamesMod[9] = "B19";
+		InputFolderNamesMod[10] = "B21";
+	}
+	else
+	{
+		InputFolderNamesMod[0] = "N00000";
+		InputFolderNamesMod[1] = "N02000";
+		InputFolderNamesMod[2] = "N04000";
+		InputFolderNamesMod[3] = "N06000";
+		InputFolderNamesMod[4] = "N08000";
+		InputFolderNamesMod[5] = "N10000";
+		InputFolderNamesMod[6] = "N12000";
+		InputFolderNamesMod[7] = "N14000";
+		InputFolderNamesMod[8] = "N16000";
+		InputFolderNamesMod[9] = "N18000";
+		InputFolderNamesMod[10] = "N20000";
+	}
 
 	//path ExeFile("C:\\Data\\MSVSBuildDir\\HaralickDirectionalityAvgBuildR\\x64\\Release\\HaralickDirectionalityAvg.exe");
 	//path ExeFile("C:\\Data\\MSVSBuildDir\\HaralickBasedDirectionalityMapBuild\\x64\\Release\\HaralickBasedDirectionalityMap.exe");
@@ -77,7 +82,16 @@ int main(int argc, char* argv[])
 	path ExeFile("C:\\SoftProjects\\MSVSBuildDir\\HaralickBasedDirectionalityMapBuild\\x64\\Release\\HaralickBasedDirectionalityMap.exe");
 	path ExeFile2("C:\\SoftProjects\\MSVSBuildDir\\RevisitOneImageSerieNFeaturesBuild\\x64\\Release\\RevisitOneImageSerieNFeatures.exe");
 	path ExeFile3("C:\\SoftProjects\\MSVSBuildDir\\PreparePlotBuild\\x64\\Debug\\PreparePlot.exe");
+	path ExeFile4("C:\\SoftProjects\\MSVSBuildDir\\MultithreadExecutionBuild\\x64\\Release\\MultithreadExecution.exe");
 	
+	int commonAnalisisCount = 2;
+	string CommonAnalisisTxt = "";
+	path CommonAnalisisTxtFile;
+
+	string CommandLine = "";
+	string CommandLineCommon = "";
+
+	path CommandLineFile;
 	for (int k = 0; k < 11; k++)
 	{
 		path InFolder("C:\\Data\\ExtensiveDirectionalityTest\\InData");
@@ -97,7 +111,7 @@ int main(int argc, char* argv[])
 
 		path PostAnalisisTxtFile = BaseFolder;
 		PostAnalisisTxtFile /= path(InputFolderName + "POST.txt");
-
+		
 		cout << ConfigFile.string();
 		cout << "\n";
 		cout << BaseFolder.string();
@@ -255,7 +269,7 @@ int main(int argc, char* argv[])
 		if (createPlotFolders)
 			create_directory(Out2Folder);
 
-		PostAnalisisTxt += ExeFile3.string() + " " + Out2Folder.string() + InputFolderName + "plotRNG" + ItoStrLZ(ofsetRange,1) + ".txt";
+		PostAnalisisTxt += ExeFile3.string() + " " + Out2Folder.string() + InputFolderName + "plotRNG" + to_string(ofsetRange) + ".txt";
 
 		std::ofstream dirStatsFileCommon(AnalisisTxtFile.string());//FileToProcess.path().filename().string());
 
@@ -273,7 +287,42 @@ int main(int argc, char* argv[])
 		dirStatsFile2Common.close();
 		//string in;
 		//cin >> in;
+
+		// cteate commonanalisis files
+		if (!(k%commonAnalisisCount))
+		{
+
+			CommonAnalisisTxtFile = BaseFolder;
+			CommonAnalisisTxtFile /= path(InputFolderName + "c.txt");
+
+		}
+		CommonAnalisisTxt += AnalisisTxt;
+		CommonAnalisisTxt += PostAnalisisTxt;
+		if ((!((k+1)%commonAnalisisCount) && k) || k == 10)
+		{
+			std::ofstream dirStatsFile3Common(CommonAnalisisTxtFile.string());//FileToProcess.path().filename().string());
+
+			dirStatsFile3Common << CommonAnalisisTxt;
+			dirStatsFile3Common.close();
+			CommonAnalisisTxt = "";
+			CommandLineCommon += ExeFile4.string() + " " + CommonAnalisisTxtFile.string() + "\n";
+		}
+		else
+		{
+			CommonAnalisisTxt += "\n";
+		}
+		// end of cteate commonanalisis files
+
+		CommandLine += ExeFile4.string() + " " + AnalisisTxtFile.string() + "\n";
 	}
+	CommandLineFile = ConfigFile.parent_path();;
+	CommandLineFile /= path("CommandLine.txt");
+	std::ofstream CommandLineFileStream(CommandLineFile.string());//FileToProcess.path().filename().string());
+
+	CommandLineFileStream << CommandLine;
+	CommandLineFileStream << "\n";
+	CommandLineFileStream << CommandLineCommon;
+	CommandLineFileStream.close();
 	return 0;
 }
 
