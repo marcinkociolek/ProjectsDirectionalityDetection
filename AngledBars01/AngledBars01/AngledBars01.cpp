@@ -22,7 +22,7 @@ using namespace boost::filesystem;
 int main(int argc, char* argv[])
 {
 	std::string FileName, FolderName, BaseFolderName, FileNameBase, FileNameExtension;
-	BaseFolderName = "C:\\Data\\ExtensiveDirectionalityTest\\InData\\Test\\"; // folder where to save outpute test images (use double slashes, even at the end)
+	BaseFolderName = "C:\\Data\\ExtensiveDirectionalityTest\\InData\\"; // folder where to save outpute test images (use double slashes, even at the end)
 	
 	FileNameBase = "Bars"; // beginning of test file name
 	FileNameExtension = ".tif"; // test file name extension
@@ -31,12 +31,12 @@ int main(int argc, char* argv[])
 	bool displayResult = 0; // 1 --> files only displayed
 	// only one of the following three options should be chosen, or none (type of noise)
 	bool preprocessBlurr = 0;
-	bool addNoise = 0;
+	bool addNoise = 1;
 	bool gausBlur = 0; // blur kernel if going to have a Gaussian shape (opencv function below, parameter fixed for now)
-	bool averageBlur = 1; // blur kernel if going to have constant value (1/number of pixels in the kernel)
+	bool averageBlur = 0; // blur kernel if going to have constant value (1/number of pixels in the kernel)
 	
-	int barTickness = 12;
-	int barFrequency = 24; // distance between corresponding bar location (i.e., barFrequency - barTickness = distance between bars)
+	int barTickness = 8;
+	int barFrequency = 16; // distance between corresponding bar location (i.e., barFrequency - barTickness = distance between bars)
 
 	// other parameters
 	int intensityBright = 65535.0/4.0*3.0;
@@ -62,7 +62,7 @@ int main(int argc, char* argv[])
 	int offset = 0;
 
 	// section below for tiled images
-	bool makeTiles = 0;
+	bool makeTiles = 1;
 	int tileSizeX = 61;
 	int tileSizeY = 61;
 

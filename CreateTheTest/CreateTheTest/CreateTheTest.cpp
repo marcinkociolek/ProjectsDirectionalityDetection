@@ -29,21 +29,22 @@ using namespace boost::filesystem;
 int main(int argc, char* argv[])
 {
 	
-	path ConfigFile("C:\\Data\\ExtensiveDirectionalityTest\\PaperTestF24T12AVGBlur\\config.xml");
+	path ConfigFile("C:\\Data\\ExtensiveDirectionalityTest\\PaperTestF16T08AVGBlur\\config.xml");
 	
-	bool blur = true;
+	bool blur = true; // if false Noise test will be prepared
 
 	int iterStart = 2;
 	int iterEnd = 2;
-	int ofsetRange = 16;
+	int ofsetRange = 15;
 
-	int commonAnalisisCount = 11;
+	int commonAnalisisCount = 3;
 
 	bool createFolders = true;
 	bool createPlotFolders = true;
 	bool postAnalisis = true;
 
-	string InputFolderNameCommon = "BarsA0-90F24T12";
+	string InputFolderNameCommon = "BarsA0-90F16T08";
+
 
 	string InputFolderNamesMod[11];
 	if (blur)
@@ -81,10 +82,14 @@ int main(int argc, char* argv[])
 	//path ExeFile("D:\\MSVSBuildDir\\HaralickBasedDirectionalityMapBuild\\x64\\Release\\HaralickBasedDirectionalityMap.exe");
 	//path ExeFile2("D:\\Data\\MSVSBuildDir\\RevisitOneImageSerie4featuresBuild\\x64\\Release\\RevisitOneImageSerie9features.exe");
 	//path ExeFile3("D:\\Data\\MSVSBuildDir\\PreparePlotBuild\\x64\\Debug\\PreparePlot.exe");
-	path ExeFile("C:\\SoftProjects\\MSVSBuildDir\\HaralickBasedDirectionalityMapBuild\\x64\\Release\\HaralickBasedDirectionalityMap.exe");
-	path ExeFile2("C:\\SoftProjects\\MSVSBuildDir\\RevisitOneImageSerieNFeaturesBuild\\x64\\Release\\RevisitOneImageSerieNFeatures.exe");
-	path ExeFile3("C:\\SoftProjects\\MSVSBuildDir\\PreparePlotBuild\\x64\\Debug\\PreparePlot.exe");
-	path ExeFile4("C:\\SoftProjects\\MSVSBuildDir\\MultithreadExecutionBuild\\x64\\Release\\MultithreadExecution.exe");
+	//path ExeFile("C:\\SoftProjects\\MSVSBuildDir\\HaralickBasedDirectionalityMapBuild\\x64\\Release\\HaralickBasedDirectionalityMap.exe");
+	//path ExeFile2("C:\\SoftProjects\\MSVSBuildDir\\RevisitOneImageSerieNFeaturesBuild\\x64\\Release\\RevisitOneImageSerieNFeatures.exe");
+	//path ExeFile3("C:\\SoftProjects\\MSVSBuildDir\\PreparePlotBuild\\x64\\Debug\\PreparePlot.exe");
+	//path ExeFile4("C:\\SoftProjects\\MSVSBuildDir\\MultithreadExecutionBuild\\x64\\Release\\MultithreadExecution.exe");
+	path ExeFile("C:\\MKApp\\HaralickBasedDirectionalityMap.exe");
+	path ExeFile2("C:\\MKApp\\RevisitOneImageSerieNFeatures.exe");
+	path ExeFile3("C:\\MKApp\\PreparePlot.exe");
+	path ExeFile4("C:\\MKApp\\MultithreadExecution.exe");
 	
 
 	string CommonAnalisisTxt = "";
