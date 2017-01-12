@@ -35,8 +35,8 @@ int main(int argc, char* argv[])
 	bool gausBlur = 0; // blur kernel if going to have a Gaussian shape (opencv function below, parameter fixed for now)
 	bool averageBlur = 0; // blur kernel if going to have constant value (1/number of pixels in the kernel)
 	
-	int barTickness = 8;
-	int barFrequency = 16; // distance between corresponding bar location (i.e., barFrequency - barTickness = distance between bars)
+	int barTickness = 1;
+	int barFrequency = 2; // distance between corresponding bar location (i.e., barFrequency - barTickness = distance between bars)
 
 	// other parameters
 	int intensityBright = 65535.0/4.0*3.0;
@@ -62,7 +62,7 @@ int main(int argc, char* argv[])
 	int offset = 0;
 
 	// section below for tiled images
-	bool makeTiles = 1;
+	bool makeTiles = 0;
 	int tileSizeX = 61;
 	int tileSizeY = 61;
 

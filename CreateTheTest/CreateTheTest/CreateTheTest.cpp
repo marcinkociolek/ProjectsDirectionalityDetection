@@ -29,21 +29,21 @@ using namespace boost::filesystem;
 int main(int argc, char* argv[])
 {
 	
-	path ConfigFile("C:\\Data\\ExtensiveDirectionalityTest\\PaperTestF16T08AVGBlur\\config.xml");
+	path ConfigFile("C:\\Data\\ExtensiveDirectionalityTest\\F02T01OutMap3Offsets\\config.xml");
 	
-	bool blur = true; // if false Noise test will be prepared
+	bool blur = false; // if false Noise test will be prepared
 
 	int iterStart = 2;
-	int iterEnd = 2;
-	int ofsetRange = 15;
+	int iterEnd = 40;
+	int ofsetRange = 3;
 
-	int commonAnalisisCount = 3;
+	int commonAnalisisCount = 2;
 
 	bool createFolders = true;
 	bool createPlotFolders = true;
 	bool postAnalisis = true;
 
-	string InputFolderNameCommon = "BarsA0-90F16T08";
+	string InputFolderNameCommon = "BarsA0-90F02T01";
 
 
 	string InputFolderNamesMod[11];
@@ -276,7 +276,7 @@ int main(int argc, char* argv[])
 		if (createPlotFolders)
 			create_directory(Out2Folder);
 
-		PostAnalisisTxt += ExeFile3.string() + " " + Out2Folder.string() + InputFolderName + "plotRNG" + to_string(ofsetRange) + ".txt";
+		PostAnalisisTxt += ExeFile3.string() + " " + Out2Folder.string() + "\\ " + InputFolderName + "plot" + to_string(ofsetRange) + "Ofs.txt";
 
 		std::ofstream dirStatsFileCommon(AnalisisTxtFile.string());//FileToProcess.path().filename().string());
 
