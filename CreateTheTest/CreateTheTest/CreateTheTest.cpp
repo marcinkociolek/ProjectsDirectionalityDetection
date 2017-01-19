@@ -29,7 +29,7 @@ using namespace boost::filesystem;
 int main(int argc, char* argv[])
 {
 	
-	path ConfigFile("C:\\Data\\ExtensiveDirectionalityTest\\F02T01OutMap3Offsets\\config.xml");
+	path ConfigFile("C:\\Data\\ExtensiveDirectionalityTest\\S20T08L16OutMap3Offsets\\config.xml");
 	
 	bool blur = false; // if false Noise test will be prepared
 
@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
 	bool createPlotFolders = true;
 	bool postAnalisis = true;
 
-	string InputFolderNameCommon = "BarsA0-90F02T01";
+	string InputFolderNameCommon = "RectA0-90S20T08L16";
 
 
 	string InputFolderNamesMod[11];
