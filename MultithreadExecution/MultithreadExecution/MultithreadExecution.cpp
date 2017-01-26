@@ -61,6 +61,76 @@ int main(int argc, char* argv[])
 	STARTUPINFOA si[8];
 	int processIndex = 0;
 
+
+	list<string> Commands;
+	while (inFile1.good())
+	{
+		getline(inFile1, Line);
+		if (Line == "")
+			continue;
+		Commands.push_back(Line);
+	}
+	inFile1.close();
+
+	
+
+	while (!Commands.empty())
+	{
+		
+		path CommandLineFile2 = ConfigFile.parent_path();;
+		CommandLineFile2 /= path(ConfigFile.filename().stem().string() +"x.txt");
+		cout << CommandLineFile2.string() << "\n";
+
+		string in;
+		cin >> in;
+
+//		std::ofstream CommandLineFileStream(CommandLineFile.string());//FileToProcess.path().filename().string());
+
+//		CommandLineFileStream << CommandLine;
+//		CommandLineFileStream << "\n";
+//		CommandLineFileStream << CommandLineCommon;
+//		CommandLineFileStream.close();
+		for (list<string>::iterator iterCommands = Commands.begin(); iterCommands != Commands.end(); iterCommands++)
+		{
+			cout << *iterCommands << "\n";
+	
+		}
+
+		//list<string>::iterator iterCommands = Commands.begin();
+		string Command = *Commands.begin();
+		//cout << Command << "\n";
+		ZeroMemory(&pi[processIndex], sizeof(pi[processIndex]));
+		ZeroMemory(&si[processIndex], sizeof(si[processIndex]));
+		si[processIndex].cb = sizeof(si[processIndex]);
+		LPSTR cmdline((char *)Command.c_str());
+		//CreateProcessA
+		if (!CreateProcessA(NULL, cmdline, NULL, NULL, FALSE, 0, NULL, NULL, &si[processIndex], &pi[processIndex]))
+			cout << "no process created";
+		WaitForSingleObject(pi[processIndex].hProcess, INFINITE);
+
+		DWORD exitcode;
+		while (!GetExitCodeProcess(pi[processIndex].hProcess, &exitcode))
+		{
+			//processIndex++;
+			//if (processIndex > 6)
+			//	processIndex = 0;
+
+		}
+		CloseHandle(pi[processIndex].hProcess);
+		CloseHandle(pi[processIndex].hThread);
+		cout << "exitcode recived " << exitcode;
+
+		Commands.pop_front();
+	}
+
+	/*
+	for (list<string>::iterator iterCommands = Commands.begin(); iterCommands != Commands.end(); iterCommands++)
+	{
+		cout << *iterCommands << "\n";
+		Commands.pop_front();
+	}
+	*/
+	/*
 	while (inFile1.good())
 	{
 		getline(inFile1, Line);
@@ -89,9 +159,12 @@ int main(int argc, char* argv[])
 		cout << "exitcode recived " << exitcode;
 
 	}
+	
 	inFile1.close();
-//	string in;
-//	cin >> in;
+
+	*/
+	string in;
+	cin >> in;
 	return 0;
 }
 

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LocalDebuggerCommandArguments>C:\Data\ExtensiveDirAvgTest\OutNoise02Offsets\BarsA0-90F16T08.txt</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>C:\Data\ExtensiveDirectionalityTest\F02T01OutMap3Offsets\BarsA0-90F02T01N20000POST.txt</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>
