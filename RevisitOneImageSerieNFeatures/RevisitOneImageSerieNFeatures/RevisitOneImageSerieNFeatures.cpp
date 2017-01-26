@@ -106,7 +106,8 @@ int main(int argc, char* argv[])
 		match_results<std::string::const_iterator> AngleStringIterator;
 		match_flag_type flags = boost::match_default;
 		regex AngleStringPattern("Angle[[:digit:]]{3}");
-		if (!regex_search(start, end, AngleStringIterator, AngleStringPattern, flags))
+		regex AngleStringPattern2("A[[:digit:]]{3}");
+		if (!regex_search(start, end, AngleStringIterator, AngleStringPattern, flags) && !regex_search(start, end, AngleStringIterator, AngleStringPattern2, flags))
 			continue;
 
 		string AngleString = AngleStringIterator[0];
