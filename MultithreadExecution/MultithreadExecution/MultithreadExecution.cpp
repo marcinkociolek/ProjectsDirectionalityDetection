@@ -72,19 +72,13 @@ int main(int argc, char* argv[])
 	}
 	inFile1.close();
 
-	
+	path CommandLineFile2 = ConfigFile.parent_path();;
+	CommandLineFile2 /= path(ConfigFile.filename().stem().string() + "x.txt");
+//	cout << CommandLineFile2.string() << "\n";
 
 	while (!Commands.empty())
 	{
-		
-		path CommandLineFile2 = ConfigFile.parent_path();;
-		CommandLineFile2 /= path(ConfigFile.filename().stem().string() +"x.txt");
-		cout << CommandLineFile2.string() << "\n";
-
-		string in;
-		cin >> in;
-
-//		std::ofstream CommandLineFileStream(CommandLineFile.string());//FileToProcess.path().filename().string());
+		std::ofstream CommandLineFileStream(CommandLineFile2.string());//FileToProcess.path().filename().string());
 
 //		CommandLineFileStream << CommandLine;
 //		CommandLineFileStream << "\n";
@@ -92,13 +86,11 @@ int main(int argc, char* argv[])
 //		CommandLineFileStream.close();
 		for (list<string>::iterator iterCommands = Commands.begin(); iterCommands != Commands.end(); iterCommands++)
 		{
-			cout << *iterCommands << "\n";
-	
+			CommandLineFileStream << *iterCommands << "\n";
 		}
+		CommandLineFileStream.close();
 
-		//list<string>::iterator iterCommands = Commands.begin();
 		string Command = *Commands.begin();
-		//cout << Command << "\n";
 		ZeroMemory(&pi[processIndex], sizeof(pi[processIndex]));
 		ZeroMemory(&si[processIndex], sizeof(si[processIndex]));
 		si[processIndex].cb = sizeof(si[processIndex]);
