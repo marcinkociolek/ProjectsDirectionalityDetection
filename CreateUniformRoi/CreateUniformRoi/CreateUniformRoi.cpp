@@ -38,7 +38,7 @@ using namespace boost::filesystem;
 int main(int argc, char* argv[])
 {
 	std::string FileName, FolderName, FileNameBase, FileNameExtension;
-	FolderName = "E:\\ROIcollections\\MazdaTest\\"; // folder where to save outpute test images (use double slashes, even at the end)
+	FolderName = "C:\\Data\\FeatureVariabilityTest\\InData\\ROIs512x512c51x51xCount001\\"; // folder where to save outpute test images (use double slashes, even at the end)
 	FileNameBase = "ROI"; // beginning of test file name
 	FileNameExtension = ".tif"; // test file name extension
 
