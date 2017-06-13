@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
 	bool gausBlur = 0; // blur kernel if going to have a Gaussian shape (opencv function below, parameter fixed for now)
 	bool averageBlur = 0; // blur kernel if going to have constant value (1/number of pixels in the kernel)
 	
-	int barTickness = 12;
+	int barTickness = 2;
 	int barFrequency = 16; // distance between corresponding bar location (i.e., barFrequency - barTickness = distance between bars)
 
 	// other parameters

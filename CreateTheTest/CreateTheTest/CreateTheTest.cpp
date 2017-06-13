@@ -29,21 +29,21 @@ using namespace boost::filesystem;
 int main(int argc, char* argv[])
 {
 	
-	path ConfigFile("C:\\Data\\ExtensiveDirectionalityTest\\F16T12\\F16T12OutMap5Offsets\\config.xml");
+	path ConfigFile("C:\\Data\\ExtensiveDirectionalityTest\\F16T08c51\\F16T08OutMap8Offsets\\config.xml");
 	
 	bool blur = false; // if false Noise test will be prepared
 
 	int iterStart = 2;
 	int iterEnd = 40;
-	int ofsetRange = 5;
+	int ofsetRange = 8;
 
-	int commonAnalisisCount = 3;
+	int commonAnalisisCount = 2;
 
 	bool createFolders = true;
 	bool createPlotFolders = true;
 	bool postAnalisis = true;
 
-	string InputFolderNameCommon = "BarsA0-90F16T12";
+	string InputFolderNameCommon = "BarsA0-90F16T08";
 
 
 	string InputFolderNamesMod[11];
