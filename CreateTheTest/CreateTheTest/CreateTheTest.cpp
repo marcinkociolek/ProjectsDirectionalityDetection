@@ -29,13 +29,13 @@ using namespace boost::filesystem;
 int main(int argc, char* argv[])
 {
 	
-	path ConfigFile("C:\\Data\\ExtensiveDirectionalityTest\\F16T08c51\\F16T08OutMap8Offsets\\config.xml");
+	path ConfigFile("C:\\Data\\ExtensiveDirectionalityTest\\F16T08Rot\\F16T08OutMap3Offsets\\config.xml");
 	
 	bool blur = false; // if false Noise test will be prepared
 
 	int iterStart = 2;
 	int iterEnd = 40;
-	int ofsetRange = 8;
+	int ofsetRange = 3;
 
 	int commonAnalisisCount = 2;
 
@@ -86,7 +86,8 @@ int main(int argc, char* argv[])
 	//path ExeFile2("C:\\SoftProjects\\MSVSBuildDir\\RevisitOneImageSerieNFeaturesBuild\\x64\\Release\\RevisitOneImageSerieNFeatures.exe");
 	//path ExeFile3("C:\\SoftProjects\\MSVSBuildDir\\PreparePlotBuild\\x64\\Debug\\PreparePlot.exe");
 	//path ExeFile4("C:\\SoftProjects\\MSVSBuildDir\\MultithreadExecutionBuild\\x64\\Release\\MultithreadExecution.exe");
-	path ExeFile("C:\\MKApp\\HaralickBasedDirectionalityMap.exe");
+	//path ExeFile("C:\\MKApp\\HaralickBasedDirectionalityMap.exe");
+	path ExeFile("C:\\MKApp\\RotationHaralickBasedDirectionalityMap.exe");
 	path ExeFile2("C:\\MKApp\\RevisitOneImageSerieNFeatures.exe");
 	path ExeFile3("C:\\MKApp\\PreparePlot.exe");
 	path ExeFile4("C:\\MKApp\\MultithreadExecution.exe");
